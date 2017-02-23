@@ -137,7 +137,16 @@ public class BluetoothLeService extends Service {
 //            readNextSensor(gatt);
             if (status == BluetoothGatt.GATT_SUCCESS) {
 //                broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-                Log.d("onCharacteristicWrite", characteristic.getValue().toString());
+
+
+                final byte[] data = characteristic.getValue();
+                if (data != null && data.length > 0) {
+                    final StringBuilder stringBuilder = new StringBuilder(data.length);
+                    for (byte byteChar : data)
+                        stringBuilder.append(String.format("%02X ", byteChar));
+
+                    Log.d("onCharacteristicWrite", "" +  new String(data) + "\n" + stringBuilder.toString());
+                }
 
                 mState++;
             }

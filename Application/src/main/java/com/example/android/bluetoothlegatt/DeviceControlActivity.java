@@ -395,7 +395,7 @@ public class DeviceControlActivity extends Activity {
 
     public int getHeartRate() {
         BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
-        return SingleByteCommand.getHeartRate(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1000);
+        return SingleByteCommand.getBloodPressure(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1000);
     }
 
 

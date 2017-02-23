@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Feb 23 14:40:57 ICT 2017
+#Thu Feb 23 15:22:29 ICT 2017
 175.set=ANDROID_RESOURCE
 122.file=D\:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\resources-debug.ap_\\res\\color\\abc_search_url_text.xml
 60.set=ANDROID_RESOURCE
