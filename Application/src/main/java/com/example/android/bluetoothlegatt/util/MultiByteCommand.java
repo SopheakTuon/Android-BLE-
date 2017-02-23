@@ -66,7 +66,7 @@ public class MultiByteCommand {
         return getDataByType(bluetoothGatt, bluetoothGattCharacteristic, userid, (byte) 0x12, (byte) 0x04);
     }
 
-    public static int responseTobinding(BluetoothGatt bluetoothGatt, BluetoothGattCharacteristic bluetoothGattCharacteristic, int userid) {
+    public static int responseToBinding(BluetoothGatt bluetoothGatt, BluetoothGattCharacteristic bluetoothGattCharacteristic, int userid) {
         return getDataByType(bluetoothGatt, bluetoothGattCharacteristic, userid, (byte) 0x13, (byte) 0x04);
     }
 

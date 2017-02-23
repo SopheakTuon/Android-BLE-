@@ -375,7 +375,7 @@ public class DeviceControlActivity extends Activity {
 
     public int responseToBinding() {
         BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
-        return MultiByteCommand.responseTobinding(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1);
+        return MultiByteCommand.responseToBinding(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1);
     }
 
     public int secondMatch() {
