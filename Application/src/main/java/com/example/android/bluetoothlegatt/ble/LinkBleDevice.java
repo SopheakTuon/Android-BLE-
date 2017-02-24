@@ -19,8 +19,8 @@ public class LinkBleDevice {
     private ServiceConnection mServiceConn;
 
     /* renamed from: com.worldgn.helo.ble.LinkBleDevice.1 */
-    class C06651 implements ServiceConnection {
-        C06651() {
+    class BleServiceConnection implements ServiceConnection {
+        BleServiceConnection() {
         }
 
         public void onServiceConnected(ComponentName componentName, IBinder service) {
@@ -50,7 +50,7 @@ public class LinkBleDevice {
     public LinkBleDevice(Context context) {
         this.bindStatus = false;
         this.mServiceConn = null;
-        this.mServiceConn = new C06651();
+        this.mServiceConn = new BleServiceConnection();
     }
 
     private boolean connectBle() {

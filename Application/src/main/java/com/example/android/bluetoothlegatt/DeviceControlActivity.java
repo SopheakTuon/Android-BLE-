@@ -27,8 +27,10 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +40,7 @@ import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
+import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.WriteToDevice;
 import com.example.android.bluetoothlegatt.util.MultiByteCommand;
 import com.example.android.bluetoothlegatt.util.SingleByteCommand;
@@ -364,6 +367,7 @@ public class DeviceControlActivity extends Activity {
 //                responseToBinding();
 //                secondMatch();
 //                datetimeSynchronization();
+                new BleOnBondListener().onBond(true);
                 WriteToDevice.ackForBindRequest(DeviceControlActivity.this, 1);
             }
         });
@@ -408,6 +412,68 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         return intentFilter;
+    }
+
+
+    public interface OnBondListener {
+        void onBond(boolean z);
+    }
+
+    /* renamed from: com.seedmorn.w22androidapp.activity.MainActivity.7 */
+    class BleOnBondListener implements OnBondListener {
+
+        /* renamed from: com.seedmorn.w22androidapp.activity.MainActivity.7.1 */
+        class C03481 implements Runnable {
+            C03481() {
+            }
+
+            public void run() {
+//                Log.i(MainActivity.TAG, "\u66f4\u65b0\u65f6\u95f4\u5931\u8d25\uff0c\u518d\u6b21\u66f4\u65b0\u65f6\u95f4");
+                WriteToDevice.UpdateNewTime(DeviceControlActivity.this);
+            }
+        }
+
+        /* renamed from: com.seedmorn.w22androidapp.activity.MainActivity.7.2 */
+        class HeartRunnable implements Runnable {
+            HeartRunnable() {
+            }
+
+            public void run() {
+                BleServiceHelper.heartPackage(DeviceControlActivity.this);
+            }
+        }
+
+        BleOnBondListener() {
+        }
+
+        public void onBond(boolean result) {
+            if (result) {
+                BleServiceHelper.sendBroadcast(DeviceControlActivity.this, GlobalData.ACTION_GATT_SUCCESS_CONN, true);
+                GlobalData.status_Connecting = false;
+                GlobalData.status_Connected = true;
+                String token = "";
+//                token = PrefUtils.getString(MainActivity.mApplication, GlobalData.SHARED_PREFRENCE_DECRY_TOKEN, "");
+                if (!"".equals(token)) {
+                    byte[] decode = Base64.decode(token.getBytes(), 1);
+                    String decodeStr = null;
+                    for (byte append : decode) {
+                        decodeStr = new StringBuilder(String.valueOf(decodeStr)).append(append).append(" ").toString();
+                    }
+                    Log.e("sqs", "decode \u957f\u5ea61111111111:" + decodeStr);
+                    int startSendDecryToken = WriteToDevice.startSendDecryToken(DeviceControlActivity.this, decode.length);
+                    WriteToDevice.sendDecryTokenContent1(DeviceControlActivity.this, decode);
+                }
+                int done = WriteToDevice.UpdateNewTime(DeviceControlActivity.this);
+                Handler handler = new Handler();
+                if (done == -1) {
+                    handler.postDelayed(new C03481(), 200);
+                }
+//                PrefUtils.setString(MainActivity.mApplication, GlobalData.DEVICE_TARGET_MAC, GlobalData.TOP_MAC);
+                handler.postDelayed(new HeartRunnable(), 500);
+            } else if (DeviceControlActivity.this != null) {
+//                UIToastUtil.setToast(MainActivity.mActivity, MainActivity.mActivity.getResources().getString(C0328R.string.ble_bind_bind_failures));
+            }
+        }
     }
 
 }
