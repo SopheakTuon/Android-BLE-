@@ -27,6 +27,7 @@ public class SampleGattAttributes {
 //    public static String CLIENT_CHARACTERISTIC_CONFIG = "00002902-0000-1000-8000-00805f9b34fb";
 
 
+    //ECG and PW Service
     public static String SERVICE1 = "0aabcdef-1111-2222-0000-facebeadaaaa";
     public static String SERVICE2 = "1aabcdef-1111-2222-0000-facebeadaaaa";
     public static String SERVICE3 = "2aabcdef-1111-2222-0000-facebeadaaaa";
@@ -41,6 +42,7 @@ public class SampleGattAttributes {
     public static String CHAR3 = "facebead-ffff-eeee-0003-facebeadaaaa";
     //ECG
     public static String CHAR4 = "facebead-ffff-eeee-0004-facebeadaaaa";
+    //PW
     public static String CHAR5 = "facebead-ffff-eeee-0005-facebeadaaaa";
 
     //Characteristics Service Two
@@ -81,8 +83,8 @@ public class SampleGattAttributes {
         attributes.put(CHAR1, "Characteristics 1");
         attributes.put(CHAR2, "Characteristics 2");
         attributes.put(CHAR3, "Characteristics 3");
-        attributes.put(CHAR4, "Characteristics 4");
-        attributes.put(CHAR5, "Characteristics 5");
+        attributes.put(CHAR4, "ECG");
+        attributes.put(CHAR5, "PW");
 
         attributes.put(CHAR6, "Characteristics 6");
         attributes.put(CHAR7, "Characteristics 7");

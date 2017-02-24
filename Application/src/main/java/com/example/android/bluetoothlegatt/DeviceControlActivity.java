@@ -186,7 +186,23 @@ public class DeviceControlActivity extends Activity {
 
         init();
         initEventListener();
+
+
     }
+
+    private String byeteToString(byte[] bytes) {
+        String s = "[";
+        for (int i = 0; i < bytes.length; i++) {
+            if (i == bytes.length - 1) {
+                s += bytes[i] + "]";
+            } else {
+                s += bytes[i] + ",";
+            }
+
+        }
+        return s;
+    }
+
 
     private void init() {
         buttonPair = (Button) findViewById(R.id.buttonPair);
@@ -355,7 +371,33 @@ public class DeviceControlActivity extends Activity {
         mGattServicesList.setAdapter(gattServiceAdapter);
 //        Log.d("UUID", allServiceUUID);
 
+        Log.d("Mac", "" + WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
 
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                matchInfo();
+                bind();
+                updateTime();
+                secondMatch();
+            }
+        });
+    }
+
+    private void matchInfo() {
+        MultiByteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
+    }
+
+    private void bind() {
+        MultiByteCommand.ackForBindRequest(mBluetoothLeService.getmBluetoothGatt(), 1);
+    }
+
+    private void secondMatch() {
+        MultiByteCommand.secondMach(mBluetoothLeService.getmBluetoothGatt());
+    }
+
+    private void updateTime() {
+        MultiByteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
     }
 
 
@@ -363,36 +405,13 @@ public class DeviceControlActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-//                pairDevice();
-//                responseToBinding();
-//                secondMatch();
-//                datetimeSynchronization();
-                new BleOnBondListener().onBond(true);
-                WriteToDevice.ackForBindRequest(DeviceControlActivity.this, 1);
+                matchInfo();
+
+
             }
         });
     }
 
-
-    public int pairDevice() {
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
-        return MultiByteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1000);
-    }
-
-    public int responseToBinding() {
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
-        return MultiByteCommand.responseToBinding(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1);
-    }
-
-    public int secondMatch() {
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
-        return MultiByteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1);
-    }
-
-    public int datetimeSynchronization() {
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
-        return MultiByteCommand.datetimeSynchronization(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1000);
-    }
 
     public int turnOffDevice() {
         BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
