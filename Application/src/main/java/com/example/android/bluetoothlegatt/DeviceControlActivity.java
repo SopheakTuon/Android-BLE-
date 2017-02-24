@@ -38,6 +38,7 @@ import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
+import com.example.android.bluetoothlegatt.ble.WriteToDevice;
 import com.example.android.bluetoothlegatt.util.MultiByteCommand;
 import com.example.android.bluetoothlegatt.util.SingleByteCommand;
 
@@ -359,10 +360,11 @@ public class DeviceControlActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                pairDevice();
-                responseToBinding();
-                secondMatch();
-                datetimeSynchronization();
+//                pairDevice();
+//                responseToBinding();
+//                secondMatch();
+//                datetimeSynchronization();
+                WriteToDevice.ackForBindRequest(DeviceControlActivity.this, 1);
             }
         });
     }

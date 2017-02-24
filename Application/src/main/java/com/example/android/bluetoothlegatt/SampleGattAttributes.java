@@ -36,8 +36,10 @@ public class SampleGattAttributes {
 
     //Characteristics Service One
     public static String CHAR1 = "facebead-ffff-eeee-0001-facebeadaaaa";
+    //Heart Rate, Blood Pressure
     public static String CHAR2 = "facebead-ffff-eeee-0002-facebeadaaaa";
     public static String CHAR3 = "facebead-ffff-eeee-0003-facebeadaaaa";
+    //ECG
     public static String CHAR4 = "facebead-ffff-eeee-0004-facebeadaaaa";
     public static String CHAR5 = "facebead-ffff-eeee-0005-facebeadaaaa";
 
