@@ -42,11 +42,12 @@ import android.widget.TextView;
 
 import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.WriteToDevice;
+import com.example.android.bluetoothlegatt.util.HexUtil;
 import com.example.android.bluetoothlegatt.util.MultiByteCommand;
 import com.example.android.bluetoothlegatt.util.SingleByteCommand;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -75,7 +76,9 @@ public class DeviceControlActivity extends Activity {
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
 
-    private Button buttonPair, buttonTurnOff, buttonHeart;
+    private Button buttonECG, buttonPW, buttonHeart;
+
+    private boolean isMeasuring;
 
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -97,6 +100,9 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
+
+    List<Float> ecgdataallList = new ArrayList<>();
+    private List<String> ecgdataSaveStr = new ArrayList<>();
     // Handles various events fired by the Service.
     // ACTION_GATT_CONNECTED: connected to a GATT server.
     // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
@@ -121,9 +127,77 @@ public class DeviceControlActivity extends Activity {
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+            } else if (GlobalData.ACTION_MAIN_DATA_ECGALLDATA.equals(action)) {
+                String ecg = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
+                Log.d("ECG", ecg);
+                if (ecg != null) {
+                    if (time < TIME_DONE) {
+                        if (ecgdataallList.size() == 0) {
+                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(48))));
+                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(36, 47))));
+                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(24, 35))));
+                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(12, 23))));
+                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(0, 11))));
+                            listToEcgAlg2();
+                        } else {
+                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(0, 11))));
+                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(12, 23))));
+                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(24, 35))));
+                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(36, 47))));
+                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(48))));
+                            listToEcgAlg2();
+                            float ecgNumber1 = ((Float) ecgdataallList.get(0)).floatValue();
+                            float ecgNumber2 = ((Float) ecgdataallList.get(1)).floatValue();
+                            float ecgNumber3 = ((Float) ecgdataallList.get(2)).floatValue();
+                            float ecgNumber4 = ((Float) ecgdataallList.get(3)).floatValue();
+                            float ecgNumber5 = ((Float) ecgdataallList.get(4)).floatValue();
+                            String ecgNumber1Str = String.valueOf((int) ecgNumber1);
+                            String ecgNumber2Str = String.valueOf((int) ecgNumber2);
+                            String ecgNumber3Str = String.valueOf((int) ecgNumber3);
+                            String ecgNumber4Str = String.valueOf((int) ecgNumber4);
+                            String ecgNumber5Str = String.valueOf((int) ecgNumber5);
+                            ecgdataSaveStr.add(0, new StringBuilder(String.valueOf(ecgNumber5Str)).append(",").append(ecgNumber4Str).append(",").append(ecgNumber3Str).append(",").append(ecgNumber2Str).append(",").append(ecgNumber1Str).append(",").toString());
+                        }
+                        displayData(ecg);
+                    } else if (time == TIME_DONE && isMeasuring) {
+                        String ecgString = "[";
+                        for (int i = 0; i < ecgdataallList.size(); i++) {
+                            if (i == ecgdataallList.size() - 1) {
+                                ecgString += ecgdataallList.get(i) + "]";
+                            } else {
+                                ecgString += ecgdataallList.get(i) + ", ";
+                            }
+                        }
+                        stopMeasureECG();
+                        Log.d("ECG", ecgString);
+                        displayData(ecgString);
+                        enableElements(true);
+                    }
+
+                }
             }
         }
     };
+    private int time = 0;
+    public static final int TIME_DONE = 120;
+
+    private void listToEcgAlg2() {
+        int[] result = new int[5];
+        if (this.ecgdataallList != null && this.ecgdataallList.size() != 0) {
+            time++;
+            Log.d("sqs", "time ==== " + time);
+            for (int i = 0; i < 5; i++) {
+                result[i] = (int) ((Float) this.ecgdataallList.get(i)).floatValue();
+            }
+//            int[] hpass_Filter = this.data_process.Hpass_Filter(5, this.data_process.filters(5, result));
+//            Log.d("sqs", "hpass_Filter" + hpass_Filter[2]);
+//            int[] wave_Show = this.data_process.Wave_Show(5, hpass_Filter, time);
+//            Log.d("sqs", "wave_Show" + wave_Show[2]);
+//            for (int j = 0; j < 5; j++) {
+//                ecgdataallList2.add(0, Float.valueOf((float) wave_Show[j]));
+//            }
+        }
+    }
 
     // If a given GATT characteristic is selected, check for supported features.  This sample
     // demonstrates 'Read' and 'Notify' features.  See
@@ -157,6 +231,20 @@ public class DeviceControlActivity extends Activity {
                 }
             };
 
+    protected float parsePwdata(String string) {
+        String hex = string.substring(9, 11) + string.substring(6, 8) + string.substring(3, 5) + string.substring(0, 2);
+        Log.d("sqs", "hex:  " + hex);
+        byte[] hexStringToBytes = HexUtil.hexStringToBytes(hex);
+        Log.d("sqs", "PPG+bytesToString:  " + HexUtil.bytesToHexString(hexStringToBytes));
+        int bytesToInt = HexUtil.getInt(hexStringToBytes, false, 4);
+        Log.d("sqs", "PPG+bytesToInt" + bytesToInt);
+        return (float) bytesToInt;
+    }
+
+    protected float parseEcgdata(String string) {
+        return (float) new BigInteger(string.substring(9, 11) + string.substring(6, 8) + string.substring(3, 5) + string.substring(0, 2), 16).intValue();
+    }
+
     private void clearUI() {
         mGattServicesList.setAdapter((SimpleExpandableListAdapter) null);
         mDataField.setText(R.string.no_data);
@@ -189,6 +277,12 @@ public class DeviceControlActivity extends Activity {
 
     }
 
+    private void enableElements(boolean enable) {
+        buttonECG.setEnabled(enable);
+        buttonPW.setEnabled(enable);
+        buttonHeart.setEnabled(enable);
+    }
+
     private String byeteToString(byte[] bytes) {
         String s = "[";
         for (int i = 0; i < bytes.length; i++) {
@@ -204,23 +298,29 @@ public class DeviceControlActivity extends Activity {
 
 
     private void init() {
-        buttonPair = (Button) findViewById(R.id.buttonPair);
-        buttonTurnOff = (Button) findViewById(R.id.buttonTurnOff);
+        buttonECG = (Button) findViewById(R.id.buttonPair);
+        buttonPW = (Button) findViewById(R.id.buttonTurnOff);
         buttonHeart = (Button) findViewById(R.id.buttonHeart);
     }
 
     private void initEventListener() {
-        buttonPair.setOnClickListener(new View.OnClickListener() {
+        buttonECG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                measureECG();
+                if (isMeasuring) {
+                    stopMeasureECG();
+                    enableElements(true);
+                } else {
+                    isMeasuring = measureECG() == 1;
+                    enableElements(false);
+                }
             }
         });
 
-        buttonTurnOff.setOnClickListener(new View.OnClickListener() {
+        buttonPW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//                measurePW();
             }
         });
         buttonHeart.setOnClickListener(new View.OnClickListener() {
@@ -293,9 +393,14 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
-    private void displayData(String data) {
+    private void displayData(final String data) {
         if (data != null) {
-            mDataField.setText(data);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mDataField.setText(data);
+                }
+            });
         }
     }
 
@@ -304,55 +409,55 @@ public class DeviceControlActivity extends Activity {
     // on the UI.
     private void displayGattServices(List<BluetoothGattService> gattServices) {
         if (gattServices == null) return;
-        String uuid = null;
-        String unknownServiceString = getResources().getString(R.string.unknown_service);
-        String unknownCharaString = getResources().getString(R.string.unknown_characteristic);
-        ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<>();
-        ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData = new ArrayList<>();
-        mGattCharacteristics = new ArrayList<>();
-//        String allServiceUUID = "";
-        // Loops through available GATT Services.
-        for (BluetoothGattService gattService : gattServices) {
-            HashMap<String, String> currentServiceData = new HashMap<>();
-            uuid = gattService.getUuid().toString();
-//            Log.d("Service", "UUID : " + uuid + "\n" + "Type : " + gattService.getType() + "\n" + "InstanceId : " + gattService.getInstanceId());
-//            allServiceUUID += uuid + "\n";
-            currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
-            currentServiceData.put(LIST_UUID, uuid);
-            gattServiceData.add(currentServiceData);
-
-            ArrayList<HashMap<String, String>> gattCharacteristicGroupData = new ArrayList<>();
-            List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
-            ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<>();
-
-//            String stringChar = "Service UUID  = " + uuid + "\n";
-            // Loops through available Characteristics.
-            for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-                charas.add(gattCharacteristic);
-                HashMap<String, String> currentCharaData = new HashMap<>();
-                uuid = gattCharacteristic.getUuid().toString();
-//                stringChar += uuid + "\n";
-                currentCharaData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownCharaString));
-                currentCharaData.put(LIST_UUID, uuid);
-                gattCharacteristicGroupData.add(currentCharaData);
-            }
-//            Log.d("UUID", stringChar);
-            mGattCharacteristics.add(charas);
-            gattCharacteristicData.add(gattCharacteristicGroupData);
-        }
-
-        SimpleExpandableListAdapter gattServiceAdapter = new SimpleExpandableListAdapter(
-                this,
-                gattServiceData,
-                android.R.layout.simple_expandable_list_item_2,
-                new String[]{LIST_NAME, LIST_UUID},
-                new int[]{android.R.id.text1, android.R.id.text2},
-                gattCharacteristicData,
-                android.R.layout.simple_expandable_list_item_2,
-                new String[]{LIST_NAME, LIST_UUID},
-                new int[]{android.R.id.text1, android.R.id.text2}
-        );
-        mGattServicesList.setAdapter(gattServiceAdapter);
+//        String uuid = null;
+//        String unknownServiceString = getResources().getString(R.string.unknown_service);
+//        String unknownCharaString = getResources().getString(R.string.unknown_characteristic);
+//        ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<>();
+//        ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData = new ArrayList<>();
+//        mGattCharacteristics = new ArrayList<>();
+////        String allServiceUUID = "";
+//        // Loops through available GATT Services.
+//        for (BluetoothGattService gattService : gattServices) {
+//            HashMap<String, String> currentServiceData = new HashMap<>();
+//            uuid = gattService.getUuid().toString();
+////            Log.d("Service", "UUID : " + uuid + "\n" + "Type : " + gattService.getType() + "\n" + "InstanceId : " + gattService.getInstanceId());
+////            allServiceUUID += uuid + "\n";
+//            currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
+//            currentServiceData.put(LIST_UUID, uuid);
+//            gattServiceData.add(currentServiceData);
+//
+//            ArrayList<HashMap<String, String>> gattCharacteristicGroupData = new ArrayList<>();
+//            List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
+//            ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<>();
+//
+////            String stringChar = "Service UUID  = " + uuid + "\n";
+//            // Loops through available Characteristics.
+//            for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
+//                charas.add(gattCharacteristic);
+//                HashMap<String, String> currentCharaData = new HashMap<>();
+//                uuid = gattCharacteristic.getUuid().toString();
+////                stringChar += uuid + "\n";
+//                currentCharaData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownCharaString));
+//                currentCharaData.put(LIST_UUID, uuid);
+//                gattCharacteristicGroupData.add(currentCharaData);
+//            }
+////            Log.d("UUID", stringChar);
+//            mGattCharacteristics.add(charas);
+//            gattCharacteristicData.add(gattCharacteristicGroupData);
+//        }
+//
+//        SimpleExpandableListAdapter gattServiceAdapter = new SimpleExpandableListAdapter(
+//                this,
+//                gattServiceData,
+//                android.R.layout.simple_expandable_list_item_2,
+//                new String[]{LIST_NAME, LIST_UUID},
+//                new int[]{android.R.id.text1, android.R.id.text2},
+//                gattCharacteristicData,
+//                android.R.layout.simple_expandable_list_item_2,
+//                new String[]{LIST_NAME, LIST_UUID},
+//                new int[]{android.R.id.text1, android.R.id.text2}
+//        );
+//        mGattServicesList.setAdapter(gattServiceAdapter);
 //        Log.d("UUID", allServiceUUID);
 
         Log.d("Mac", "" + WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
@@ -399,8 +504,17 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
-    private void measureECG() {
-        SingleByteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
+    private int measureECG() {
+        return SingleByteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
+    }
+
+    private int stopMeasureECG() {
+        isMeasuring = false;
+        return SingleByteCommand.stopMeasuring(mBluetoothLeService.getmBluetoothGatt());
+    }
+
+    private void measurePW() {
+        SingleByteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
     }
 
 
@@ -410,6 +524,7 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
+        intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
         return intentFilter;
     }
 

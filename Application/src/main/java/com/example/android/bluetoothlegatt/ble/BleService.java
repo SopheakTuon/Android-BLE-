@@ -33,7 +33,7 @@ public class BleService extends Service {
     private static final UUID SEEDMORN_BNAD_ONE_CHARACTERISTIC_UUID;
     private static final UUID SEEDMORN_BNAD_SERVICE_UUID;
     private static final UUID SEEDMORN_BNAD_TWO_CHARACTERISTIC_UUID;
-    private static final String TAG;
+    public static final String TAG;
     private static Runnable guardian_timetask;
     private static Handler handler;
     private static boolean isMatchInfo;

@@ -7,6 +7,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import com.example.android.bluetoothlegatt.GlobalData;
+import com.example.android.bluetoothlegatt.SmileConstants;
 
 import java.util.UUID;
 
@@ -268,11 +269,11 @@ public class SingleByteCommand {
         while (!writeStatus) {
             bluetoothGattCharacteristic.setValue(bb);
             bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
-            if (GlobalData.status_Connected == false)
-                return -1;
-            if (count > 50000) {
-                break;
-            } else count++;
+//            if (GlobalData.status_Connected == false)
+//                return -1;
+//            if (count > 50000) {
+//                break;
+//            } else count++;
         }
         if (writeStatus) {
             count = 0;
@@ -280,11 +281,11 @@ public class SingleByteCommand {
             while (!writeStatus) {
                 bluetoothGattCharacteristic.setValue(cc);
                 bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
-                if (GlobalData.status_Connected == false)
-                    return -1;
-                if (count > 100000) {
-                    break;
-                } else count++;
+//                if (GlobalData.status_Connected == false)
+//                    return -1;
+//                if (count > 100000) {
+//                    break;
+//                } else count++;
             }
 
             if (writeStatus) {
@@ -300,6 +301,32 @@ public class SingleByteCommand {
             return -1;
         }
 
+    }
+
+    public static int stopMeasuring(BluetoothGatt bluetoothGatt) {
+        int i = 1;
+        Log.i(TAG, "\u505c\u6b62\u5f53\u524d\u6d4b\u91cf\uff0c\u8ba9\u8bbe\u5907\u5173\u706f");
+        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 15, (byte) 25, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        int count = 0;
+        boolean writeStatus = false;
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0001-facebeadaaaa"));
+        while (!writeStatus) {
+            bluetoothGattCharacteristic.setValue(bytes);
+            writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+            if (GlobalData.status_Connected) {
+                if (count > 5000) {
+                    break;
+                }
+                count++;
+            } else {
+                return -1;
+            }
+        }
+        Log.i(TAG, "\u505c\u6b62\u5f53\u524d\u6d4b\u91cf \u53d1\u9001\u8bbe\u5907\u5173\u706f\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
+        if (!writeStatus) {
+            i = -1;
+        }
+        return i;
     }
 
     private static int bytesToInt(byte[] src, int offset) {

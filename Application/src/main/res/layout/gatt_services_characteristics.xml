@@ -14,7 +14,7 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:orientation="vertical">
 
@@ -65,10 +65,12 @@
             android:textSize="18sp" />
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="10dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
@@ -81,19 +83,27 @@
             android:layout_width="5dp"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/data_value"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/no_data"
-            android:textSize="18sp" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/data_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data"
+                android:textSize="18sp" />
+        </ScrollView>
+
+
     </LinearLayout>
 
     <ExpandableListView
         android:id="@+id/gatt_services_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -104,7 +114,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pair" />
+            android:text="ECG" />
 
 
         <Button
@@ -112,7 +122,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Turn Off" />
+            android:text="PW" />
 
         <Button
             android:id="@+id/buttonHeart"

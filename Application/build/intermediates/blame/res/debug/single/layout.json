@@ -16,12 +16,12 @@
         "source": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout\\notification_template_part_chronometer.xml"
     },
     {
-        "merged": "C:\\Users\\rinda-PC\\Desktop\\BluetoothLeGatt\\BluetoothLeGatt\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
-        "source": "C:\\Users\\rinda-PC\\Desktop\\BluetoothLeGatt\\BluetoothLeGatt\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout\\abc_popup_menu_item_layout.xml"
-    },
-    {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
         "source": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout\\notification_template_media.xml"
+    },
+    {
+        "merged": "C:\\Users\\rinda-PC\\Desktop\\BluetoothLeGatt\\BluetoothLeGatt\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
+        "source": "C:\\Users\\rinda-PC\\Desktop\\BluetoothLeGatt\\BluetoothLeGatt\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout\\abc_popup_menu_item_layout.xml"
     },
     {
         "merged": "C:\\Users\\rinda-PC\\Desktop\\BluetoothLeGatt\\BluetoothLeGatt\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_checkbox.xml",
