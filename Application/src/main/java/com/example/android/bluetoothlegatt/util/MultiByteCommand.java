@@ -100,13 +100,19 @@ public class MultiByteCommand {
         byte b = (byte) 1;
         Log.i(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f");
         byte[] bytes = new byte[12];
+        bytes[0] = (byte) 0x12;
+        bytes[1] = (byte) 0x34;
+        bytes[2] = (byte) 0x0b;// type
+        bytes[3] = (byte) 0x13;// cmd
+        bytes[4] = (byte) 0x01;// length
+        bytes[5] = (byte) status;
         byte[] chksum;
         Log.v(TAG, "Bind : " + "CHKSUM = " + (Integer.parseInt("0b", 16) + Integer.parseInt("13", 16) + Integer.parseInt("01", 16) + status));
         chksum = intToBytes(((Integer.parseInt("0b", 16) + Integer.parseInt("13", 16)) + Integer.parseInt("01", 16)) + status);
-        bytes[6] = chksum[0];
-        bytes[7] = chksum[1];
-        bytes[8] = chksum[2];
-        bytes[9] = chksum[3];
+        bytes[6] = chksum[3];
+        bytes[7] = chksum[2];
+        bytes[8] = chksum[0];
+        bytes[9] = chksum[1];
         bytes[10] = (byte) 67;
         bytes[11] = SmileConstants.TOKEN_LITERAL_NULL;
 //        Log.v(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f = " + bytesToInt(chksum, 0));
@@ -142,14 +148,20 @@ public class MultiByteCommand {
         byte b = (byte) 1;
         Log.i(TAG, "\u4e8c\u6b21\u5339\u914d\u6307\u4ee4");
         byte[] bytes = new byte[12];
+        bytes[0] = (byte) 0x12;
+        bytes[1] = (byte) 0x34;
+        bytes[2] = (byte) 0x0b;// type
+        bytes[3] = (byte) 0x11;// cmd
+        bytes[4] = (byte) 0x01;// length
+        bytes[5] = (byte) cmd;
         int chk = cmd + 39;
         Log.i(TAG, "Second Match : " + "CHKSUM==" + chk);
         byte[] r2 = new byte[4];
         r2 = intToBytes(chk);
-        bytes[6] = r2[0];
-        bytes[7] = r2[1];
-        bytes[8] = r2[2];
-        bytes[9] = r2[3];
+        bytes[6] = r2[3];
+        bytes[7] = r2[2];
+        bytes[8] = r2[0];
+        bytes[9] = r2[1];
         bytes[10] = (byte) 67;
         bytes[11] = SmileConstants.TOKEN_LITERAL_NULL;
         int count = 0;

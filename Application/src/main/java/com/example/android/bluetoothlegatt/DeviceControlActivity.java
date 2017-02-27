@@ -364,9 +364,9 @@ public class DeviceControlActivity extends Activity {
             @Override
             public void run() {
                 matchInfo();
-//                bind();
+                bind();
 //                updateTime();
-//                secondMatch();
+                secondMatch();
             }
         });
     }
