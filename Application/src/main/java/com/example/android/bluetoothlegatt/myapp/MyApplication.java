@@ -24,7 +24,6 @@ import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.LinkBleDevice;
 import com.example.android.bluetoothlegatt.ble.WriteToDevice;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -531,37 +530,37 @@ public class MyApplication extends Application {
             mApplication = this;
             isNewUser = true;
 //            this.connManager = (ConnectivityManager) mApplication.getSystemService("connectivity");
-            new Thread(new Runnable() {
-                public void run() {
-                    MyApplication.this.timerTask();
-                }
-            }).start();
-            mList_Devices = new ArrayList();
-            if (mScanHandler == null) {
-                mScanHandler = new Handler();
-            }
-            if (mAckHandler == null) {
-                mAckHandler = new Handler();
-            }
-            if (mMatchHandler == null) {
-                mMatchHandler = new Handler();
-            }
-            if (mTimeHandler == null) {
-                mTimeHandler = new Handler();
-            }
-            if (upDateTimeHandler == null) {
-                upDateTimeHandler = new Handler();
-            }
-            linkDevice = LinkBleDevice.getInstance(mApplication);
-            registerReceiver();
-            if (PrefUtils.getString(mApplication, GlobalData.DEVICE_TARGET_MAC, "").equals("")) {
-                Log.i(TAG, "GlobalData.TARGET_MAC = NULL");
-                return;
-            }
-            Log.i(TAG, "\u540e\u53f0\u641c\u7d22\u84dd\u7259  initBleBack GO");
-            if (openBle(mApplication)) {
-                scanLeDevice(mApplication, true);
-            }
+//            new Thread(new Runnable() {
+//                public void run() {
+//                    MyApplication.this.timerTask();
+//                }
+//            }).start();
+//            mList_Devices = new ArrayList();
+//            if (mScanHandler == null) {
+//                mScanHandler = new Handler();
+//            }
+//            if (mAckHandler == null) {
+//                mAckHandler = new Handler();
+//            }
+//            if (mMatchHandler == null) {
+//                mMatchHandler = new Handler();
+//            }
+//            if (mTimeHandler == null) {
+//                mTimeHandler = new Handler();
+//            }
+//            if (upDateTimeHandler == null) {
+//                upDateTimeHandler = new Handler();
+//            }
+//            linkDevice = LinkBleDevice.getInstance(mApplication);
+//            registerReceiver();
+//            if (PrefUtils.getString(mApplication, GlobalData.DEVICE_TARGET_MAC, "").equals("")) {
+//                Log.i(TAG, "GlobalData.TARGET_MAC = NULL");
+//                return;
+//            }
+//            Log.i(TAG, "\u540e\u53f0\u641c\u7d22\u84dd\u7259  initBleBack GO");
+//            if (openBle(mApplication)) {
+//                scanLeDevice(mApplication, true);
+//            }
         }
 
         public boolean openBle(Context context) {

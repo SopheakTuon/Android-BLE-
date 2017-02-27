@@ -43,12 +43,10 @@ import android.widget.TextView;
 import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.WriteToDevice;
 import com.example.android.bluetoothlegatt.util.MultiByteCommand;
-import com.example.android.bluetoothlegatt.util.SingleByteCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * For a given BLE device, this Activity provides the user interface to connect, display data,
@@ -226,23 +224,12 @@ public class DeviceControlActivity extends Activity {
         buttonTurnOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        turnOffDevice();
-                    }
-                });
+
             }
         });
         buttonHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getHeartRate();
-                    }
-                });
             }
         });
     }
@@ -393,7 +380,7 @@ public class DeviceControlActivity extends Activity {
     }
 
     private void secondMatch() {
-        MultiByteCommand.secondMach(mBluetoothLeService.getmBluetoothGatt());
+        MultiByteCommand.secondMach(mBluetoothLeService.getmBluetoothGatt(), 1);
     }
 
     private void updateTime() {
@@ -407,20 +394,8 @@ public class DeviceControlActivity extends Activity {
             public void run() {
                 matchInfo();
 
-
             }
         });
-    }
-
-
-    public int turnOffDevice() {
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
-        return SingleByteCommand.turnOffDevice(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1000);
-    }
-
-    public int getHeartRate() {
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString(SampleGattAttributes.SERVICE2)).getCharacteristic(UUID.fromString(SampleGattAttributes.CHAR6));
-        return SingleByteCommand.getBloodPressure(mBluetoothLeService.getmBluetoothGatt(), bluetoothGattCharacteristic, 1000);
     }
 
 
