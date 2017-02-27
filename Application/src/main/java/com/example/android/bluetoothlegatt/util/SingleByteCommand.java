@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothGattService;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
+import com.example.android.bluetoothlegatt.GlobalData;
+
 import java.util.UUID;
 
 import static com.example.android.bluetoothlegatt.util.ConvertUtil.intToBytes;
@@ -152,14 +154,14 @@ public class SingleByteCommand {
         return getDataByType(bluetoothGatt, bluetoothGattCharacteristic, (byte) 0x24);
     }
 
-    public static int unbindDevice(BluetoothGatt bluetoothGatt){
+    public static int unbindDevice(BluetoothGatt bluetoothGatt) {
         Log.i(TAG, "Unbind with the device");
         byte[] bytes = new byte[10];
         bytes[0] = (byte) 0x12;
         bytes[1] = (byte) 0x34;
         bytes[2] = (byte) 0x0a;// type
         bytes[3] = (byte) 0x09;// cmd
-        int a =  Integer.parseInt("0a", 16) + Integer.parseInt("09", 16);
+        int a = Integer.parseInt("0a", 16) + Integer.parseInt("09", 16);
 
         //Log.d(TAG, "CHKSUM==" + a);
         byte[] chksum = new byte[4];
@@ -190,10 +192,11 @@ public class SingleByteCommand {
 
     /**
      * ECG Measurement CMD
+     *
      * @param bluetoothGatt
      * @return
      */
-    public static int measureECG(BluetoothGatt bluetoothGatt){
+    public static int measureECG(BluetoothGatt bluetoothGatt) {
         Log.i(TAG, "ECG Measurement CMD");
         byte[] bytes = new byte[10];
         bytes[0] = (byte) 0x12;
@@ -206,12 +209,12 @@ public class SingleByteCommand {
         bytes[7] = (byte) 0x00;
         bytes[8] = (byte) 0x43;
         bytes[9] = (byte) 0x21;
-        int count=0;
+        int count = 0;
         boolean writeStatus = false;
 
         BluetoothGattService bluetoothGattService = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
-        while(!writeStatus) {
+        while (!writeStatus) {
             bluetoothGattCharacteristic.setValue(bytes);
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
 //            if (GlobalData.status_Connected == false)
@@ -227,6 +230,76 @@ public class SingleByteCommand {
         }
         Log.i(TAG, "result of ECG Measurement CMD£ºwriteStatus = " + writeStatus);
         return writeStatus ? 1 : -1;
+    }
+
+    /**
+     * PPG Measurement CMD
+     *
+     * @param bluetoothGatt
+     * @return 1 -1
+     */
+    public static int measurePW(BluetoothGatt bluetoothGatt) {
+        Log.i(TAG, "PPG Measurement CMD");
+        byte[] bb, cc;
+        bb = new byte[10];
+        cc = new byte[10];
+        cc[0] = bb[0] = (byte) 0x12;
+        cc[1] = bb[1] = (byte) 0x34;
+
+        cc[2] = bb[2] = (byte) 0x0A;
+
+        bb[3] = (byte) 0x61;
+        bb[4] = (byte) 0x6b;
+
+        cc[3] = (byte) 0x03;
+        cc[4] = (byte) 0x0d;
+
+        cc[5] = bb[5] = (byte) 0x00;
+        cc[6] = bb[6] = (byte) 0x00;
+        cc[7] = bb[7] = (byte) 0x00;
+
+        cc[8] = bb[8] = (byte) 0x43;
+        cc[9] = bb[9] = (byte) 0x21;
+        int count = 0;
+        boolean writeStatus = false;
+
+        BluetoothGattService bluetoothGattService = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
+        while (!writeStatus) {
+            bluetoothGattCharacteristic.setValue(bb);
+            bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+            if (GlobalData.status_Connected == false)
+                return -1;
+            if (count > 50000) {
+                break;
+            } else count++;
+        }
+        if (writeStatus) {
+            count = 0;
+            writeStatus = false;
+            while (!writeStatus) {
+                bluetoothGattCharacteristic.setValue(cc);
+                bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+                if (GlobalData.status_Connected == false)
+                    return -1;
+                if (count > 100000) {
+                    break;
+                } else count++;
+            }
+
+            if (writeStatus) {
+                BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0005-facebeadaaaa"));
+                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic1, true);
+                BluetoothGattCharacteristic bluetoothGattCharacteristic2 = bluetoothGattService.getCharacteristic(UUID.fromString("ffacebead-ffff-eeee-0004-facebeadaaaa"));
+                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic2, true);
+            }
+            Log.i(TAG, "result of PPG Measurement CMD£ºwriteStatus = " + writeStatus);
+            return writeStatus ? 1 : -1;
+        } else {
+            Log.i(TAG, "result of PPG Measurement CMD£ºwriteStatus = " + writeStatus);
+            return -1;
+        }
+
     }
 
     private static int bytesToInt(byte[] src, int offset) {
