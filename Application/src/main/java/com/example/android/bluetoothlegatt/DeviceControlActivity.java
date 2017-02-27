@@ -43,6 +43,7 @@ import android.widget.TextView;
 import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.WriteToDevice;
 import com.example.android.bluetoothlegatt.util.MultiByteCommand;
+import com.example.android.bluetoothlegatt.util.SingleByteCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -253,6 +254,7 @@ public class DeviceControlActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unBindDevice();
         unbindService(mServiceConnection);
         mBluetoothLeService = null;
     }
@@ -385,6 +387,10 @@ public class DeviceControlActivity extends Activity {
 
     private void updateTime() {
         MultiByteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
+    }
+
+    private void unBindDevice() {
+        SingleByteCommand.unbindDevice(mBluetoothLeService.getmBluetoothGatt());
     }
 
 
