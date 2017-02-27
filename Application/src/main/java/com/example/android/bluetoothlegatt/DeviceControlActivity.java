@@ -509,6 +509,7 @@ public class DeviceControlActivity extends Activity {
     }
 
     private int stopMeasureECG() {
+        time = 0;
         isMeasuring = false;
         return SingleByteCommand.stopMeasuring(mBluetoothLeService.getmBluetoothGatt());
     }
