@@ -2,6 +2,7 @@ package com.example.android.bluetoothlegatt.util;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
@@ -184,6 +185,47 @@ public class SingleByteCommand {
                 bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         }
         Log.i(TAG, "the result of Unbind with the device CMD£ºwriteStatus = " + writeStatus);
+        return writeStatus ? 1 : -1;
+    }
+
+    /**
+     * ECG Measurement CMD
+     * @param bluetoothGatt
+     * @return
+     */
+    public static int measureECG(BluetoothGatt bluetoothGatt){
+        Log.i(TAG, "ECG Measurement CMD");
+        byte[] bytes = new byte[10];
+        bytes[0] = (byte) 0x12;
+        bytes[1] = (byte) 0x34;
+        bytes[2] = (byte) 0x0A;
+        bytes[3] = (byte) 0x0A;
+        bytes[4] = (byte) 0x14;
+        bytes[5] = (byte) 0x00;
+        bytes[6] = (byte) 0x00;
+        bytes[7] = (byte) 0x00;
+        bytes[8] = (byte) 0x43;
+        bytes[9] = (byte) 0x21;
+        int count=0;
+        boolean writeStatus = false;
+
+        BluetoothGattService bluetoothGattService = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
+        while(!writeStatus) {
+            bluetoothGattCharacteristic.setValue(bytes);
+            writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+//            if (GlobalData.status_Connected == false)
+//                return -1;
+//            if (count > 5000) {
+//                break;
+//            } else count++;
+        }
+        if (writeStatus) {
+            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+            BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0004-facebeadaaaa"));
+            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic1, true);
+        }
+        Log.i(TAG, "result of ECG Measurement CMD£ºwriteStatus = " + writeStatus);
         return writeStatus ? 1 : -1;
     }
 

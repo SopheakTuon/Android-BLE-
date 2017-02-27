@@ -213,12 +213,7 @@ public class DeviceControlActivity extends Activity {
         buttonPair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        startPairDevice();
-                    }
-                });
+                measureECG();
             }
         });
 
@@ -402,6 +397,10 @@ public class DeviceControlActivity extends Activity {
 
             }
         });
+    }
+
+    private void measureECG() {
+        SingleByteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
     }
 
 
