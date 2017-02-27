@@ -75,10 +75,10 @@ public class MultiByteCommand {
         Log.v(TAG, "Match Info : " + "CHKSUM = " + ((((a + s5) + s6) + s3) + s4));
         byte[] chksum = new byte[4];
         chksum = intToBytes((((a + s5) + s6) + s3) + s4);
-        byte_info[9] = chksum[0];
-        byte_info[10] = chksum[1];
-        byte_info[11] = chksum[2];
-        byte_info[12] = chksum[3];
+        byte_info[9] = chksum[3];
+        byte_info[10] = chksum[2];
+        byte_info[11] = chksum[0];
+        byte_info[12] = chksum[1];
         byte_info[13] = (byte) 0x43;
         byte_info[14] = (byte) 0x21;
         Log.v(TAG, "\u53d1\u9001MAC\u5339\u914d\u4fe1\u606f  = " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(byte_info));
