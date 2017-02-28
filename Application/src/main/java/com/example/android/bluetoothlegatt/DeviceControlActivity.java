@@ -128,7 +128,7 @@ public class DeviceControlActivity extends Activity {
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             } else if (GlobalData.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
-                new Handler().postDelayed(new Bind(), 50);
+                new Handler().postDelayed(new Bind(), 500);
                 new Handler().postDelayed(new SecondMatch(), 50);
                 enableElements(true);
             } else if (GlobalData.ACTION_MAIN_DATA_ECGALLDATA.equals(action)) {
