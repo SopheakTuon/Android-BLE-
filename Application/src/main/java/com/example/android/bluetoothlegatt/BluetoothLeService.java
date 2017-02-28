@@ -145,7 +145,7 @@ public class BluetoothLeService extends Service {
             }
             String uuid = characteristic.getService().getUuid().toString();
             String charactUUID = characteristic.getUuid().toString();
-//            Log.d("onCharacteristicChanged", stringBuilder.toString());
+            Log.d("onCharacteristicChanged", stringBuilder.toString());
             if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0004-facebeadaaaa")) {
                 BluetoothLeService.this.broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECGALLDATA, stringBuilder.toString());
             }else if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0005-facebeadaaaa")) {
@@ -153,7 +153,8 @@ public class BluetoothLeService extends Service {
             } else if (uuid.equals("1aabcdef-1111-2222-0000-facebeadaaaa")) {
                 BluetoothLeService.this.sendBindBroadcast(stringBuilder.toString());
             }else {
-                broadcastUpdate(ACTION_DATA_AVAILABLE, stringBuilder.toString());
+//                broadcastUpdate(ACTION_DATA_AVAILABLE, stringBuilder.toString());
+                BluetoothLeService.this.sendDataBroadcast(stringBuilder.toString());
             }
         }
 
@@ -200,6 +201,25 @@ public class BluetoothLeService extends Service {
             broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
         }
     }
+
+    private void sendDataBroadcast(String data) {
+        Log.v(TAG, "210 \u53d1\u9001\u5e7f\u64ad\u7684\u6570\u636e = " + data);
+        if (!data.equals("CF")) {
+            String dataType = data.substring(9, 11);
+            Log.v(TAG, "\u6570\u636e\u7c7b\u522b =========== " + dataType);
+            if (dataType.equals("32")) {
+                Log.v(TAG, "\u5fc3\u7387 = " + parseSingeData(data));
+                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_HR, parseSingeData(data));
+                return;
+            }
+        }
+    }
+
+    private String parseSingeData(String data) {
+        String dataStr = data.substring(27, 38);
+        return new StringBuilder(String.valueOf((long) Integer.parseInt(dataStr.substring(9, 11) + dataStr.substring(6, 8) + dataStr.substring(3, 5) + dataStr.substring(0, 2), 16))).toString();
+    }
+
 
     private void broadcastUpdate(String action, long dataf) {
         Intent intent = new Intent(action);

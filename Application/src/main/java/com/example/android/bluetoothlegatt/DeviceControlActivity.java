@@ -43,8 +43,7 @@ import android.widget.TextView;
 import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.WriteToDevice;
 import com.example.android.bluetoothlegatt.util.HexUtil;
-import com.example.android.bluetoothlegatt.util.MultiByteCommand;
-import com.example.android.bluetoothlegatt.util.SingleByteCommand;
+import com.example.android.bluetoothlegatt.util.WriteCommand;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -591,23 +590,23 @@ public class DeviceControlActivity extends Activity {
     }
 
     private void matchInfo() {
-        MultiByteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
+        WriteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
     }
 
     private void bind() {
-        MultiByteCommand.ackForBindRequest(mBluetoothLeService.getmBluetoothGatt(), 1);
+        WriteCommand.ackForBindRequest(mBluetoothLeService.getmBluetoothGatt(), 1);
     }
 
     private void secondMatch() {
-        MultiByteCommand.secondMach(mBluetoothLeService.getmBluetoothGatt(), 1);
+        WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 1);
     }
 
     private void updateTime() {
-        MultiByteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
+        WriteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
     }
 
     private void unBindDevice() {
-        SingleByteCommand.unbindDevice(mBluetoothLeService.getmBluetoothGatt());
+        WriteCommand.unbindDevice(mBluetoothLeService.getmBluetoothGatt());
     }
 
 
@@ -623,18 +622,18 @@ public class DeviceControlActivity extends Activity {
 
     private int measureECG() {
         time = 0;
-        return SingleByteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
+        return WriteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
     }
 
     private int stopMeasure() {
         time = 0;
         isMeasuring = false;
-        return SingleByteCommand.stopMeasuring(mBluetoothLeService.getmBluetoothGatt());
+        return WriteCommand.stopMeasuring(mBluetoothLeService.getmBluetoothGatt());
     }
 
     private int measurePW() {
         time = 0;
-        return SingleByteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
+        return WriteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
     }
 
 
@@ -648,6 +647,7 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_PW);
         intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK);
         intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
+        intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_HR);
         return intentFilter;
     }
 

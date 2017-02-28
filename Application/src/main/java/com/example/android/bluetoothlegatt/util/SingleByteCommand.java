@@ -330,6 +330,34 @@ public class SingleByteCommand {
         return i;
     }
 
+    public static int measureHr(BluetoothGatt bluetoothGatt) {
+        boolean z = true;
+        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 2, (byte) 12, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        int count = 0;
+        boolean writeStatus = false;
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
+        while (!writeStatus) {
+//            count++;
+            bluetoothGattCharacteristic.setValue(bytes);
+            writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+//            if (GlobalData.status_Connected) {
+//                if (count > 5000) {
+//                    break;
+//                }
+//                count++;
+//            } else {
+//                return -1;
+//            }
+        }
+        if (writeStatus) {
+            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        }
+        if (!writeStatus) {
+            z = true;
+        }
+        return z? 1 : -1;
+    }
+
     private static int bytesToInt(byte[] src, int offset) {
         return (((src[offset] & MotionEventCompat.ACTION_MASK) | ((src[offset + 1] & MotionEventCompat.ACTION_MASK) << 8)) | ((src[offset + 2] & MotionEventCompat.ACTION_MASK) << 16)) | ((src[offset + 3] & MotionEventCompat.ACTION_MASK) << 24);
     }
