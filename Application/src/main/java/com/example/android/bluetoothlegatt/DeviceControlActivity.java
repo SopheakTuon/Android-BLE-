@@ -30,7 +30,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,8 +71,8 @@ public class DeviceControlActivity extends Activity {
     private boolean mConnected = false;
     private BluetoothGattCharacteristic mNotifyCharacteristic;
 
-    private final String LIST_NAME = "NAME";
-    private final String LIST_UUID = "UUID";
+//    private final String LIST_NAME = "NAME";
+//    private final String LIST_UUID = "UUID";
 
     private Button buttonECG, buttonPW, buttonHeart;
 
@@ -143,24 +142,24 @@ public class DeviceControlActivity extends Activity {
 //                            Log.d("sqs", "time ==== " + time);
                             if (time < TIME_DONE && isMeasuring) {
                                 if (ecgdataallList.size() == 0) {
-                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(48))));
-                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(36, 47))));
-                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(24, 35))));
-                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(12, 23))));
-                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(0, 11))));
+                                    ecgdataallList.add(parseEcgdata(ecg.substring(48)));
+                                    ecgdataallList.add(parseEcgdata(ecg.substring(36, 47)));
+                                    ecgdataallList.add(parseEcgdata(ecg.substring(24, 35)));
+                                    ecgdataallList.add(parseEcgdata(ecg.substring(12, 23)));
+                                    ecgdataallList.add(parseEcgdata(ecg.substring(0, 11)));
                                     listToEcgAlg2();
                                 } else {
-                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(0, 11))));
-                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(12, 23))));
-                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(24, 35))));
-                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(36, 47))));
-                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(48))));
+                                    ecgdataallList.add(0, parseEcgdata(ecg.substring(0, 11)));
+                                    ecgdataallList.add(0, parseEcgdata(ecg.substring(12, 23)));
+                                    ecgdataallList.add(0, parseEcgdata(ecg.substring(24, 35)));
+                                    ecgdataallList.add(0, parseEcgdata(ecg.substring(36, 47)));
+                                    ecgdataallList.add(0, parseEcgdata(ecg.substring(48)));
                                     listToEcgAlg2();
-                                    float ecgNumber1 = ((Float) ecgdataallList.get(0)).floatValue();
-                                    float ecgNumber2 = ((Float) ecgdataallList.get(1)).floatValue();
-                                    float ecgNumber3 = ((Float) ecgdataallList.get(2)).floatValue();
-                                    float ecgNumber4 = ((Float) ecgdataallList.get(3)).floatValue();
-                                    float ecgNumber5 = ((Float) ecgdataallList.get(4)).floatValue();
+                                    float ecgNumber1 = ecgdataallList.get(0);
+                                    float ecgNumber2 = ecgdataallList.get(1);
+                                    float ecgNumber3 = ecgdataallList.get(2);
+                                    float ecgNumber4 = ecgdataallList.get(3);
+                                    float ecgNumber5 = ecgdataallList.get(4);
                                     String ecgNumber1Str = String.valueOf((int) ecgNumber1);
                                     String ecgNumber2Str = String.valueOf((int) ecgNumber2);
                                     String ecgNumber3Str = String.valueOf((int) ecgNumber3);
@@ -204,16 +203,16 @@ public class DeviceControlActivity extends Activity {
                         String pwNumber3Strs;
                         String pwNumber4Strs;
                         if (DeviceControlActivity.this.pwdataAllList == null) {
-                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(48))));
-                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(36, 47))));
-                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(24, 35))));
-                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(12, 23))));
-                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(0, 11))));
-                            pwNumber1 = ((Float) DeviceControlActivity.this.pwdataAllList.get(0)).floatValue();
-                            pwNumber2 = ((Float) DeviceControlActivity.this.pwdataAllList.get(1)).floatValue();
-                            pwNumber3 = ((Float) DeviceControlActivity.this.pwdataAllList.get(2)).floatValue();
-                            pwNumber4 = ((Float) DeviceControlActivity.this.pwdataAllList.get(3)).floatValue();
-                            pwNumber5 = ((Float) DeviceControlActivity.this.pwdataAllList.get(4)).floatValue();
+                            DeviceControlActivity.this.pwdataAllList.add(DeviceControlActivity.this.parsePwdata(pw.substring(48)));
+                            DeviceControlActivity.this.pwdataAllList.add(DeviceControlActivity.this.parsePwdata(pw.substring(36, 47)));
+                            DeviceControlActivity.this.pwdataAllList.add(DeviceControlActivity.this.parsePwdata(pw.substring(24, 35)));
+                            DeviceControlActivity.this.pwdataAllList.add(DeviceControlActivity.this.parsePwdata(pw.substring(12, 23)));
+                            DeviceControlActivity.this.pwdataAllList.add(DeviceControlActivity.this.parsePwdata(pw.substring(0, 11)));
+                            pwNumber1 = DeviceControlActivity.this.pwdataAllList.get(0);
+                            pwNumber2 = DeviceControlActivity.this.pwdataAllList.get(1);
+                            pwNumber3 = DeviceControlActivity.this.pwdataAllList.get(2);
+                            pwNumber4 = DeviceControlActivity.this.pwdataAllList.get(3);
+                            pwNumber5 = DeviceControlActivity.this.pwdataAllList.get(4);
                             pwNumber1Strs = String.valueOf((int) pwNumber1);
                             pwNumber2Strs = String.valueOf((int) pwNumber2);
                             pwNumber3Strs = String.valueOf((int) pwNumber3);
@@ -221,16 +220,16 @@ public class DeviceControlActivity extends Activity {
                             String pwNumber5Strs = String.valueOf((int) pwNumber5);
                             DeviceControlActivity.this.pwDataSaveStr.add(0, new StringBuilder(String.valueOf(pwNumber1Strs)).append(",").append(pwNumber2Strs).append(",").append(pwNumber3Strs).append(",").append(pwNumber4Strs).append(",").append(pwNumber5Strs).append(",").toString());
                         } else {
-                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(0, 11))));
-                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(12, 23))));
-                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(24, 35))));
-                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(36, 47))));
-                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(48))));
-                            pwNumber1 = ((Float) DeviceControlActivity.this.pwdataAllList.get(0)).floatValue();
-                            pwNumber2 = ((Float) DeviceControlActivity.this.pwdataAllList.get(1)).floatValue();
-                            pwNumber3 = ((Float) DeviceControlActivity.this.pwdataAllList.get(2)).floatValue();
-                            pwNumber4 = ((Float) DeviceControlActivity.this.pwdataAllList.get(3)).floatValue();
-                            pwNumber5 = ((Float) DeviceControlActivity.this.pwdataAllList.get(4)).floatValue();
+                            DeviceControlActivity.this.pwdataAllList.add(0, DeviceControlActivity.this.parsePwdata(pw.substring(0, 11)));
+                            DeviceControlActivity.this.pwdataAllList.add(0, DeviceControlActivity.this.parsePwdata(pw.substring(12, 23)));
+                            DeviceControlActivity.this.pwdataAllList.add(0, DeviceControlActivity.this.parsePwdata(pw.substring(24, 35)));
+                            DeviceControlActivity.this.pwdataAllList.add(0, DeviceControlActivity.this.parsePwdata(pw.substring(36, 47)));
+                            DeviceControlActivity.this.pwdataAllList.add(0, DeviceControlActivity.this.parsePwdata(pw.substring(48)));
+                            pwNumber1 = DeviceControlActivity.this.pwdataAllList.get(0);
+                            pwNumber2 = DeviceControlActivity.this.pwdataAllList.get(1);
+                            pwNumber3 = DeviceControlActivity.this.pwdataAllList.get(2);
+                            pwNumber4 = DeviceControlActivity.this.pwdataAllList.get(3);
+                            pwNumber5 = DeviceControlActivity.this.pwdataAllList.get(4);
                             pwNumber1Strs = String.valueOf((int) pwNumber1);
                             pwNumber2Strs = String.valueOf((int) pwNumber2);
                             pwNumber3Strs = String.valueOf((int) pwNumber3);
@@ -265,7 +264,7 @@ public class DeviceControlActivity extends Activity {
         int[] result = new int[5];
         if (this.ecgdataallList != null && this.ecgdataallList.size() != 0) {
             for (int i = 0; i < 5; i++) {
-                result[i] = (int) ((Float) this.ecgdataallList.get(i)).floatValue();
+                result[i] = (int) this.ecgdataallList.get(i).floatValue();
             }
 //            int[] hpass_Filter = this.data_process.Hpass_Filter(5, this.data_process.filters(5, result));
 //            Log.d("sqs", "hpass_Filter" + hpass_Filter[2]);
@@ -649,68 +648,6 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
         intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_HR);
         return intentFilter;
-    }
-
-
-    public interface OnBondListener {
-        void onBond(boolean z);
-    }
-
-    /* renamed from: com.seedmorn.w22androidapp.activity.MainActivity.7 */
-    class BleOnBondListener implements OnBondListener {
-
-        /* renamed from: com.seedmorn.w22androidapp.activity.MainActivity.7.1 */
-        class C03481 implements Runnable {
-            C03481() {
-            }
-
-            public void run() {
-//                Log.i(MainActivity.TAG, "\u66f4\u65b0\u65f6\u95f4\u5931\u8d25\uff0c\u518d\u6b21\u66f4\u65b0\u65f6\u95f4");
-                WriteToDevice.UpdateNewTime(DeviceControlActivity.this);
-            }
-        }
-
-        /* renamed from: com.seedmorn.w22androidapp.activity.MainActivity.7.2 */
-        class HeartRunnable implements Runnable {
-            HeartRunnable() {
-            }
-
-            public void run() {
-                BleServiceHelper.heartPackage(DeviceControlActivity.this);
-            }
-        }
-
-        BleOnBondListener() {
-        }
-
-        public void onBond(boolean result) {
-            if (result) {
-                BleServiceHelper.sendBroadcast(DeviceControlActivity.this, GlobalData.ACTION_GATT_SUCCESS_CONN, true);
-                GlobalData.status_Connecting = false;
-                GlobalData.status_Connected = true;
-                String token = "";
-//                token = PrefUtils.getString(MainActivity.mApplication, GlobalData.SHARED_PREFRENCE_DECRY_TOKEN, "");
-                if (!"".equals(token)) {
-                    byte[] decode = Base64.decode(token.getBytes(), 1);
-                    String decodeStr = null;
-                    for (byte append : decode) {
-                        decodeStr = new StringBuilder(String.valueOf(decodeStr)).append(append).append(" ").toString();
-                    }
-//                    Log.e("sqs", "decode \u957f\u5ea61111111111:" + decodeStr);
-                    int startSendDecryToken = WriteToDevice.startSendDecryToken(DeviceControlActivity.this, decode.length);
-                    WriteToDevice.sendDecryTokenContent1(DeviceControlActivity.this, decode);
-                }
-                int done = WriteToDevice.UpdateNewTime(DeviceControlActivity.this);
-                Handler handler = new Handler();
-                if (done == -1) {
-                    handler.postDelayed(new C03481(), 200);
-                }
-//                PrefUtils.setString(MainActivity.mApplication, GlobalData.DEVICE_TARGET_MAC, GlobalData.TOP_MAC);
-                handler.postDelayed(new HeartRunnable(), 500);
-            } else if (DeviceControlActivity.this != null) {
-//                UIToastUtil.setToast(MainActivity.mActivity, MainActivity.mActivity.getResources().getString(C0328R.string.ble_bind_bind_failures));
-            }
-        }
     }
 
 }
