@@ -183,20 +183,20 @@ public class BluetoothLeService extends Service {
     };
 
     private void sendBindBroadcast(String data) {
-        Log.d(TAG, "71 \u6536\u5230\u7ed1\u5b9a\u7684\u76f8\u5173\u6570\u636e\u53d1\u5e7f\u64ad \u7c7b\u578b:");
+//        Log.d(TAG, "71 \u6536\u5230\u7ed1\u5b9a\u7684\u76f8\u5173\u6570\u636e\u53d1\u5e7f\u64ad \u7c7b\u578b:");
         String cmdType = data.substring(9, 11);
         if (cmdType.equals("37")) {
-            Log.i(TAG, "74 \u5339\u914d\u54cd\u5e94");
+//            Log.i(TAG, "74 \u5339\u914d\u54cd\u5e94");
             GlobalData.isMatchInfo = true;
-            Log.d("sqs", "\u6536\u5230\u5339\u914d\u54cd\u5e94 IS_MATCH_INFO_FROM_DEVICE = true");
+//            Log.d("sqs", "\u6536\u5230\u5339\u914d\u54cd\u5e94 IS_MATCH_INFO_FROM_DEVICE = true");
             broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16).longValue());
         } else if (cmdType.equals("38")) {
             String valuse = data.substring(15, 17);
-            Log.i(TAG, "80 \u89e3\u7ed1\u54cd\u5e94");
+//            Log.i(TAG, "80 \u89e3\u7ed1\u54cd\u5e94");
             broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16).longValue());
         } else if (cmdType.equals("23")) {
-            Log.i(TAG, "84 \u8bbe\u5907\u8bf7\u6c42\u7ed1\u5b9a");
-            Log.d("sqs", "\u6536\u5230\u8bf7\u6c42\u7ed1\u5b9a IS_MATCH_INFO_FROM_DEVICE");
+//            Log.i(TAG, "84 \u8bbe\u5907\u8bf7\u6c42\u7ed1\u5b9a");
+//            Log.d("sqs", "\u6536\u5230\u8bf7\u6c42\u7ed1\u5b9a IS_MATCH_INFO_FROM_DEVICE");
             broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
         }
     }
@@ -281,9 +281,9 @@ public class BluetoothLeService extends Service {
     }
 
     private String parseEcgData(String data) {
-        Log.v(TAG, "Ecg data = " + data);
+//        Log.v(TAG, "Ecg data = " + data);
         String dataStr = data.substring(27, 29);
-        Log.v(TAG, "Ecg dataStr = " + dataStr);
+//        Log.v(TAG, "Ecg dataStr = " + dataStr);
         return dataStr;
     }
 

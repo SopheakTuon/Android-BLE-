@@ -35,7 +35,7 @@ public class MultiByteCommand {
         bytes[12] = chksum[3];
         bytes[13] = (byte) 67;
         bytes[14] = SmileConstants.TOKEN_LITERAL_NULL;
-        Log.v(TAG, "\u5339\u914d\u4fe1\u606f: " + bytesToInt(chksum, 0));
+        Log.v(TAG, "Match: " + bytesToInt(chksum, 0));
         int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0010-facebeadaaaa"));
@@ -43,7 +43,7 @@ public class MultiByteCommand {
             bluetoothGattCharacteristic.setValue(bytes);
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
         }
-        Log.i(TAG, "\u53d1\u9001useid\u5339\u914d\u4fe1\u606f\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
+//        Log.i(TAG, "\u53d1\u9001useid\u5339\u914d\u4fe1\u606f\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
         if (writeStatus) {
             if (bluetoothGattCharacteristic != null)
                 bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
@@ -53,7 +53,7 @@ public class MultiByteCommand {
     }
 
     public static int matchInfo(BluetoothGatt bluetoothGatt, String mac) {
-        Log.i("sqs", "\u53d1\u9001MAC\u5339\u914d\u4fe1\u606f");
+//        Log.i("sqs", "\u53d1\u9001MAC\u5339\u914d\u4fe1\u606f");
         int s1 = Integer.parseInt(mac.substring(0, 2), 16);
         int s2 = Integer.parseInt(mac.substring(2, 4), 16);
         int s3 = Integer.parseInt(mac.substring(4, 6), 16);
@@ -81,7 +81,7 @@ public class MultiByteCommand {
         byte_info[12] = chksum[1];
         byte_info[13] = (byte) 0x43;
         byte_info[14] = (byte) 0x21;
-        Log.v(TAG, "\u53d1\u9001MAC\u5339\u914d\u4fe1\u606f  = " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(byte_info));
+        Log.v(TAG, "Match  = " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(byte_info));
         int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0010-facebeadaaaa"));
@@ -89,7 +89,7 @@ public class MultiByteCommand {
             bluetoothGattCharacteristic.setValue(byte_info);
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
         }
-        Log.i(TAG, "\u53d1\u9001MAC\u5339\u914d\u4fe1\u606f\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
+//        Log.i(TAG, "\u53d1\u9001MAC\u5339\u914d\u4fe1\u606f\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
         if (writeStatus) {
             bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         }
@@ -98,7 +98,7 @@ public class MultiByteCommand {
 
     public static int ackForBindRequest(BluetoothGatt bluetoothGatt, int status) {
         byte b = (byte) 1;
-        Log.i(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f");
+//        Log.i(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f");
         byte[] bytes = new byte[12];
         bytes[0] = (byte) 0x12;
         bytes[1] = (byte) 0x34;
@@ -116,7 +116,7 @@ public class MultiByteCommand {
         bytes[10] = (byte) 67;
         bytes[11] = SmileConstants.TOKEN_LITERAL_NULL;
 //        Log.v(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f = " + bytesToInt(chksum, 0));
-        Log.v(TAG, "绑定设备 响应信息 " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(bytes));
+        Log.v(TAG, "Ack For Bind Request " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(bytes));
         int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0010-facebeadaaaa"));
@@ -132,7 +132,7 @@ public class MultiByteCommand {
 //                return -1;
 //            }
         }
-        Log.i(TAG, "\u53d1\u9001\u5339\u914d\u4fe1\u606f\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
+//        Log.i(TAG, "\u53d1\u9001\u5339\u914d\u4fe1\u606f\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
 //        if (MainActivity.iOnBondListener != null) {
 //            MainActivity.iOnBondListener.onBond(writeStatus);
 //        }
@@ -146,7 +146,7 @@ public class MultiByteCommand {
 
     public static int secondMach(BluetoothGatt bluetoothGatt, int cmd) {
         byte b = (byte) 1;
-        Log.i(TAG, "\u4e8c\u6b21\u5339\u914d\u6307\u4ee4");
+//        Log.i(TAG, "\u4e8c\u6b21\u5339\u914d\u6307\u4ee4");
         byte[] bytes = new byte[12];
         bytes[0] = (byte) 0x12;
         bytes[1] = (byte) 0x34;
@@ -173,7 +173,7 @@ public class MultiByteCommand {
             bluetoothGattCharacteristic.setValue(bytes);
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
         }
-        Log.i(TAG, "\u4e8c\u6b21\u5339\u914d\u6307\u4ee4\uff1awriteStatus = " + writeStatus);
+//        Log.i(TAG, "\u4e8c\u6b21\u5339\u914d\u6307\u4ee4\uff1awriteStatus = " + writeStatus);
         if (!writeStatus) {
             b = (byte) -1;
             if (bluetoothGattCharacteristic != null)
@@ -213,7 +213,7 @@ public class MultiByteCommand {
             temp = "0" + Integer.toHexString(b).toString();
             bytes[10] = (byte) Integer.parseInt(temp.substring(0, 2), 16);
             bytes[9] = (byte) Integer.parseInt(temp.substring(2, 4), 16);
-            Log.v(TAG, "\u5f00\u59cb\u540c\u6b65\u65f6\u95f4 bytes[10]= " + bytes[10] + " bytes[9]= " + bytes[9]);
+            Log.v(TAG, "Update Time bytes[10]= " + bytes[10] + " bytes[9]= " + bytes[9]);
         } else if (Integer.toHexString(b).length() == 4) {
             temp = Integer.toHexString(b).toString();
             bytes[9] = (byte) Integer.parseInt(temp.substring(0, 2), 16);
@@ -237,7 +237,7 @@ public class MultiByteCommand {
 //            }
             count++;
         }
-        Log.i(TAG, "\u540c\u6b65\u65f6\u95f4 result = " + result);
+//        Log.i(TAG, "\u540c\u6b65\u65f6\u95f4 result = " + result);
         if (result) {
             if (bluetoothGattCharacteristic != null) {
                 bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);

@@ -138,10 +138,10 @@ public class DeviceControlActivity extends Activity {
                     @Override
                     public void run() {
                         String ecg = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
-                        Log.d("ECG", ecg);
+//                        Log.d("ECG", ecg);
                         if (ecg != null) {
                             time++;
-                            Log.d("sqs", "time ==== " + time);
+//                            Log.d("sqs", "time ==== " + time);
                             if (time < TIME_DONE && isMeasuring) {
                                 if (ecgdataallList.size() == 0) {
                                     ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(48))));
@@ -179,7 +179,7 @@ public class DeviceControlActivity extends Activity {
                                         ecgString += ecgdataallList.get(i) + ", ";
                                     }
                                 }
-                                Log.d("ECG", ecgString);
+//                                Log.d("ECG", ecgString);
                                 displayData("ECG Data : " + "\n" + ecgString);
                                 enableElements(true);
                                 stopMeasure();
@@ -193,7 +193,7 @@ public class DeviceControlActivity extends Activity {
                 String pw = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_PW);
                 if (pw != null) {
                     time++;
-                    Log.d("sqs", "time ==== " + time);
+//                    Log.d("sqs", "time ==== " + time);
                     if (time < TIME_DONE && isMeasuring) {
                         float pwNumber1;
                         float pwNumber2;
@@ -248,7 +248,7 @@ public class DeviceControlActivity extends Activity {
                                 pwString += pwdataAllList.get(i) + ", ";
                             }
                         }
-                        Log.d("ECG", pwString);
+//                        Log.d("ECG", pwString);
                         displayData("PW Data : " + "\n" + pwString);
                         enableElements(true);
                         stopMeasure();
@@ -312,11 +312,11 @@ public class DeviceControlActivity extends Activity {
 
     protected float parsePwdata(String string) {
         String hex = string.substring(9, 11) + string.substring(6, 8) + string.substring(3, 5) + string.substring(0, 2);
-        Log.d("sqs", "hex:  " + hex);
+//        Log.d("sqs", "hex:  " + hex);
         byte[] hexStringToBytes = HexUtil.hexStringToBytes(hex);
-        Log.d("sqs", "PPG+bytesToString:  " + HexUtil.bytesToHexString(hexStringToBytes));
+//        Log.d("sqs", "PPG+bytesToString:  " + HexUtil.bytesToHexString(hexStringToBytes));
         int bytesToInt = HexUtil.getInt(hexStringToBytes, false, 4);
-        Log.d("sqs", "PPG+bytesToInt" + bytesToInt);
+//        Log.d("sqs", "PPG+bytesToInt" + bytesToInt);
         return (float) bytesToInt;
     }
 
@@ -552,7 +552,7 @@ public class DeviceControlActivity extends Activity {
 //        mGattServicesList.setAdapter(gattServiceAdapter);
 //        Log.d("UUID", allServiceUUID);
 
-        Log.d("Mac", "" + WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
+//        Log.d("Mac", "" + WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
 
 //        runOnUiThread(new Runnable() {
 //            @Override
@@ -696,7 +696,7 @@ public class DeviceControlActivity extends Activity {
                     for (byte append : decode) {
                         decodeStr = new StringBuilder(String.valueOf(decodeStr)).append(append).append(" ").toString();
                     }
-                    Log.e("sqs", "decode \u957f\u5ea61111111111:" + decodeStr);
+//                    Log.e("sqs", "decode \u957f\u5ea61111111111:" + decodeStr);
                     int startSendDecryToken = WriteToDevice.startSendDecryToken(DeviceControlActivity.this, decode.length);
                     WriteToDevice.sendDecryTokenContent1(DeviceControlActivity.this, decode);
                 }
