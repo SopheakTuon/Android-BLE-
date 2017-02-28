@@ -258,7 +258,7 @@ public class DeviceControlActivity extends Activity {
         }
     };
     private int time = 0;
-    public static final int TIME_DONE = 240;
+    public static final int TIME_DONE = 300;
 
     private void listToEcgAlg2() {
         int[] result = new int[5];
