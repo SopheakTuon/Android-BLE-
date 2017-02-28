@@ -137,7 +137,6 @@ public class BluetoothLeService extends Service {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic) {
-            Log.d("onCharacteristicChanged", characteristic.getValue().toString());
             byte[] data = characteristic.getValue();
             StringBuilder stringBuilder = new StringBuilder(data.length);
             int length = data.length;
@@ -146,6 +145,7 @@ public class BluetoothLeService extends Service {
             }
             String uuid = characteristic.getService().getUuid().toString();
             String charactUUID = characteristic.getUuid().toString();
+//            Log.d("onCharacteristicChanged", stringBuilder.toString());
             if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0004-facebeadaaaa")) {
                 BluetoothLeService.this.broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECGALLDATA, stringBuilder.toString());
             }else if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0005-facebeadaaaa")) {
