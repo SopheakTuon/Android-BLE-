@@ -22,19 +22,27 @@ public class WriteCommand {
     private static final String TAG = "WriteCommand";
 
     /**
-     *
      * @param bluetoothGatt
      * @param userid
      * @return
      */
     public static int matchInfo(BluetoothGatt bluetoothGatt, int userid) {
         Log.i(TAG, "\u53d1\u9001useid\u5339\u914d\u4fe1\u606f");
-        byte[] r4 = new byte[4];
+        byte[] r4;
         r4 = intToBytes(userid);
         byte[] bytes = new byte[15];
+        bytes[0] = (byte) 0x12;
+        bytes[1] = (byte) 0x34;
+        bytes[2] = (byte) 0x0b;// type
+        bytes[3] = (byte) 0x11;// cmd
+        bytes[4] = (byte) 0x04;// length
+        bytes[5] = r4[0];
+        bytes[6] = r4[1];
+        bytes[7] = r4[2];
+        bytes[8] = r4[3];
         int a = (Integer.parseInt("0b", 16) + Integer.parseInt("11", 16)) + Integer.parseInt("04", 16);
         Log.v(TAG, "CHKSUM = " + (a + userid));
-        byte[] chksum = new byte[4];
+        byte[] chksum;
         chksum = intToBytes(a + userid);
         bytes[9] = chksum[0];
         bytes[10] = chksum[1];
@@ -43,7 +51,7 @@ public class WriteCommand {
         bytes[13] = (byte) 67;
         bytes[14] = SmileConstants.TOKEN_LITERAL_NULL;
         Log.v(TAG, "Match: " + bytesToInt(chksum, 0));
-        int count = 0;
+//        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0010-facebeadaaaa"));
         while (!writeStatus) {
@@ -59,7 +67,6 @@ public class WriteCommand {
     }
 
     /**
-     *
      * @param bluetoothGatt
      * @param mac
      * @return
@@ -84,7 +91,7 @@ public class WriteCommand {
         byte_info[8] = (byte) s6;
         int a = (Integer.parseInt("0b", 16) + Integer.parseInt("11", 16)) + Integer.parseInt("04", 16);
         Log.v(TAG, "Match Info : " + "CHKSUM = " + ((((a + s5) + s6) + s3) + s4));
-        byte[] chksum = new byte[4];
+        byte[] chksum;
         chksum = intToBytes((((a + s5) + s6) + s3) + s4);
         byte_info[9] = chksum[3];
         byte_info[10] = chksum[2];
@@ -93,7 +100,7 @@ public class WriteCommand {
         byte_info[13] = (byte) 0x43;
         byte_info[14] = (byte) 0x21;
         Log.v(TAG, "Match  = " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(byte_info));
-        int count = 0;
+//        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0010-facebeadaaaa"));
         while (!writeStatus) {
@@ -107,7 +114,6 @@ public class WriteCommand {
     }
 
     /**
-     *
      * @param bluetoothGatt
      * @param status
      * @return
@@ -159,7 +165,6 @@ public class WriteCommand {
     }
 
     /**
-     *
      * @param bluetoothGatt
      * @param cmd
      * @return
@@ -175,7 +180,7 @@ public class WriteCommand {
         bytes[5] = (byte) cmd;
         int chk = cmd + 39;
         Log.i(TAG, "Second Match : " + "CHKSUM==" + chk);
-        byte[] r2 = new byte[4];
+        byte[] r2;
         r2 = intToBytes(chk);
         bytes[6] = r2[3];
         bytes[7] = r2[2];
@@ -183,7 +188,7 @@ public class WriteCommand {
         bytes[9] = r2[1];
         bytes[10] = (byte) 67;
         bytes[11] = SmileConstants.TOKEN_LITERAL_NULL;
-        int count = 0;
+//        int count = 0;
         boolean writeStatus = false;
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
@@ -201,7 +206,6 @@ public class WriteCommand {
     }
 
     /**
-     *
      * @param bluetoothGatt
      * @return
      */
@@ -270,7 +274,6 @@ public class WriteCommand {
     }
 
     /**
-     *
      * @param bluetoothGatt
      * @return
      */
@@ -283,8 +286,8 @@ public class WriteCommand {
         bytes[3] = (byte) 0x09;// cmd
         int a = Integer.parseInt("0a", 16) + Integer.parseInt("09", 16);
 
-        //Log.d(TAG, "CHKSUM==" + a);
-        byte[] chksum = new byte[4];
+        Log.d(TAG, "CHKSUM==" + a);
+        byte[] chksum;
         chksum = intToBytes(a);
         bytes[4] = chksum[0];
         bytes[5] = chksum[1];
@@ -294,19 +297,17 @@ public class WriteCommand {
         bytes[9] = (byte) 0x21;
 
         Log.v(TAG, "Unbind with the device" + bytesToInt(chksum, 0));
-        int count = 0;
+//        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0010-facebeadaaaa"));
         while (!writeStatus) {
             bluetoothGattCharacteristic.setValue(bytes);
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
         }
-        Log.i(TAG, "\u4e8c\u6b21\u5339\u914d\u6307\u4ee4\uff1awriteStatus = " + writeStatus);
         if (!writeStatus) {
             if (bluetoothGattCharacteristic != null)
                 bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         }
-        Log.i(TAG, "the result of Unbind with the device CMD£ºwriteStatus = " + writeStatus);
         return writeStatus ? 1 : -1;
     }
 
@@ -329,7 +330,7 @@ public class WriteCommand {
         bytes[7] = (byte) 0x00;
         bytes[8] = (byte) 0x43;
         bytes[9] = (byte) 0x21;
-        int count = 0;
+//        int count = 0;
         boolean writeStatus = false;
 
         BluetoothGattService bluetoothGattService = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
@@ -360,13 +361,13 @@ public class WriteCommand {
      */
     public static int measurePW(BluetoothGatt bluetoothGatt) {
         Log.i(TAG, "PPG Measurement CMD");
-        byte[] bb,cc;
-        bb= new byte[10];
-        cc= new byte[10];
-        cc[0]=bb[0] = (byte) 0x12;
-        cc[1]=bb[1] = (byte) 0x34;
+        byte[] bb, cc;
+        bb = new byte[10];
+        cc = new byte[10];
+        cc[0] = bb[0] = (byte) 0x12;
+        cc[1] = bb[1] = (byte) 0x34;
 
-        cc[2]=bb[2] = (byte) 0x0A;
+        cc[2] = bb[2] = (byte) 0x0A;
 
         bb[3] = (byte) 0x61;
         bb[4] = (byte) 0x6b;
@@ -374,12 +375,12 @@ public class WriteCommand {
         cc[3] = (byte) 0x03;
         cc[4] = (byte) 0x0d;
 
-        cc[5]=bb[5] = (byte) 0x00;
-        cc[6]=bb[6] = (byte) 0x00;
-        cc[7]=bb[7] = (byte) 0x00;
+        cc[5] = bb[5] = (byte) 0x00;
+        cc[6] = bb[6] = (byte) 0x00;
+        cc[7] = bb[7] = (byte) 0x00;
 
-        cc[8]=bb[8] = (byte) 0x43;
-        cc[9]=bb[9] = (byte) 0x21;
+        cc[8] = bb[8] = (byte) 0x43;
+        cc[9] = bb[9] = (byte) 0x21;
         int count = 0;
         boolean writeStatus = false;
 
@@ -395,11 +396,11 @@ public class WriteCommand {
 //            } else count++;
         }
         if (writeStatus) {
-            count = 0;
+//            count = 0;
             writeStatus = false;
             while (!writeStatus) {
                 bluetoothGattCharacteristic.setValue(cc);
-                writeStatus =  bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+                writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
 //                if (GlobalData.status_Connected == false)
 //                    return -1;
 //                if (count > 100000) {
@@ -424,7 +425,6 @@ public class WriteCommand {
     }
 
     /**
-     *
      * @param bluetoothGatt
      * @return
      */
@@ -455,14 +455,13 @@ public class WriteCommand {
     }
 
     /**
-     *
      * @param bluetoothGatt
      * @return
      */
     public static int measureHr(BluetoothGatt bluetoothGatt) {
         boolean z = true;
         byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 2, (byte) 12, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
-        int count = 0;
+//        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
         while (!writeStatus) {
@@ -484,7 +483,7 @@ public class WriteCommand {
         if (!writeStatus) {
             z = true;
         }
-        return z? 1 : -1;
+        return z ? 1 : -1;
     }
 
     private static String getNowTime() {
@@ -494,11 +493,11 @@ public class WriteCommand {
     }
 
 
-    private static byte[] intToBytes(int value) {
+    public static byte[] intToBytes(int value) {
         return new byte[]{(byte) ((value >> 24) & MotionEventCompat.ACTION_MASK), (byte) ((value >> 16) & MotionEventCompat.ACTION_MASK), (byte) ((value >> 8) & MotionEventCompat.ACTION_MASK), (byte) (value & MotionEventCompat.ACTION_MASK)};
     }
 
-    private static int bytesToInt(byte[] src, int offset) {
+    public static int bytesToInt(byte[] src, int offset) {
         return (((src[offset] & MotionEventCompat.ACTION_MASK) | ((src[offset + 1] & MotionEventCompat.ACTION_MASK) << 8)) | ((src[offset + 2] & MotionEventCompat.ACTION_MASK) << 16)) | ((src[offset + 3] & MotionEventCompat.ACTION_MASK) << 24);
     }
 
