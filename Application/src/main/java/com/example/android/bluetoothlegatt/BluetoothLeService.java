@@ -184,20 +184,14 @@ public class BluetoothLeService extends Service {
     };
 
     private void sendBindBroadcast(String data) {
-//        Log.d(TAG, "71 \u6536\u5230\u7ed1\u5b9a\u7684\u76f8\u5173\u6570\u636e\u53d1\u5e7f\u64ad \u7c7b\u578b:");
         String cmdType = data.substring(9, 11);
         if (cmdType.equals("37")) {
-//            Log.i(TAG, "74 \u5339\u914d\u54cd\u5e94");
             GlobalData.isMatchInfo = true;
-//            Log.d("sqs", "\u6536\u5230\u5339\u914d\u54cd\u5e94 IS_MATCH_INFO_FROM_DEVICE = true");
-            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16).longValue());
+            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16));
         } else if (cmdType.equals("38")) {
             String valuse = data.substring(15, 17);
-//            Log.i(TAG, "80 \u89e3\u7ed1\u54cd\u5e94");
-            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16).longValue());
+            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16));
         } else if (cmdType.equals("23")) {
-//            Log.i(TAG, "84 \u8bbe\u5907\u8bf7\u6c42\u7ed1\u5b9a");
-//            Log.d("sqs", "\u6536\u5230\u8bf7\u6c42\u7ed1\u5b9a IS_MATCH_INFO_FROM_DEVICE");
             broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
         }
     }
@@ -235,76 +229,12 @@ public class BluetoothLeService extends Service {
     private void broadcastUpdate(final String action,
                                  final String data) {
         final Intent intent = new Intent(action);
-
-        // This is special handling for the Heart Rate Measurement profile.  Data parsing is
-        // carried out as per profile specifications:
-        // http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-//        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-//            int flag = characteristic.getProperties();
-//            int format = -1;
-//            if ((flag & 0x01) != 0) {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT16;
-//                Log.d(TAG, "Heart rate format UINT16.");
-//            } else {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT8;
-//                Log.d(TAG, "Heart rate format UINT8.");
-//            }
-//            final int heartRate = characteristic.getIntValue(format, 1);
-//            Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-//            intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
-//        } else if (UUID_CHAR10.equals(characteristic.getUuid())) {
-//            int flag = characteristic.getProperties();
-//            int format = -1;
-//            if ((flag & 0x01) != 0) {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT16;
-//                Log.d(TAG, "Heart rate format UINT16.");
-//            } else {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT8;
-//                Log.d(TAG, "Heart rate format UINT8.");
-//            }
-//            final int heartRate = characteristic.getIntValue(format, 1);
-//            Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-//            intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
-//        }  else {
-//            // For all other profiles, writes the data formatted in HEX.
-//            final byte[] data = characteristic.getValue();
-//            if (data != null && data.length > 0) {
-//                final StringBuilder stringBuilder = new StringBuilder(data.length);
-//                for (byte byteChar : data)
-//                    stringBuilder.append(String.format("%02X ", byteChar));
-//                intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
-//            }
-//        }
         if (ACTION_DATA_AVAILABLE.equals(action)) {
-//            Log.d("onCharacteristicChanged", characteristic.getValue().toString());
-//            byte[] data = characteristic.getValue();
-//            StringBuilder stringBuilder = new StringBuilder(data.length);
-//            int length = data.length;
-//            for (int i = 0; i < length; i++) {
-//                stringBuilder.append(String.format("%02X ", new Object[]{Byte.valueOf(data[i])}));
-//            }
-//            intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
             intent.putExtra(EXTRA_DATA, data);
-
         } else {
-            // For all other profiles, writes the data formatted in HEX.
-//            final byte[] data = characteristic.getValue();
-//            if (data != null && data.length > 0) {
-//                final StringBuilder stringBuilder = new StringBuilder(data.length);
-//                for (byte byteChar : data)
-//                    stringBuilder.append(String.format("%02X ", byteChar));
-//                intent.putExtra(EXTRA_DATA, stringBuilder.toString());
-//            }
             intent.putExtra(action, data);
         }
         sendBroadcast(intent);
-    }
-
-    private String parseEcgData(String data) {
-//        Log.v(TAG, "Ecg data = " + data);
-        String dataStr = data.substring(27, 29);
-//        Log.v(TAG, "Ecg dataStr = " + dataStr);
-        return dataStr;
     }
 
     public class LocalBinder extends Binder {
@@ -491,40 +421,68 @@ public class BluetoothLeService extends Service {
         return mBluetoothGatt;
     }
 
-    public void readCustomCharacteristic() {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
-        }
-        /*check if the service is available on the device*/
-        BluetoothGattService mCustomService = mBluetoothGatt.getService(UUID.fromString("00001110-0000-1000-8000-00805f9b34fb"));
-        if (mCustomService == null) {
-            Log.w(TAG, "Custom BLE Service not found");
-            return;
-        }
-        /*get the read characteristic from the service*/
-        BluetoothGattCharacteristic mReadCharacteristic = mCustomService.getCharacteristic(UUID.fromString("00000002-0000-1000-8000-00805f9b34fb"));
-        if (mBluetoothGatt.readCharacteristic(mReadCharacteristic) == false) {
-            Log.w(TAG, "Failed to read characteristic");
+
+
+    public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
+        if (this.mBluetoothAdapter == null || this.mBluetoothGatt == null) {
+        } else {
+            this.mBluetoothGatt.writeCharacteristic(characteristic);
         }
     }
 
-    public void writeCustomCharacteristic(int value) {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
+    protected boolean writeRXCharacteristic(String serviceUUID, String charactersticUUID, byte[] value) {
+        BluetoothGattService RxService = null;
+        if (this.mBluetoothGatt != null) {
+            try {
+                RxService = this.mBluetoothGatt.getService(UUID.fromString(serviceUUID));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        /*check if the service is available on the device*/
-        BluetoothGattService mCustomService = mBluetoothGatt.getService(UUID.fromString("00001110-0000-1000-8000-00805f9b34fb"));
-        if (mCustomService == null) {
-            Log.w(TAG, "Custom BLE Service not found");
-            return;
+        if (RxService == null) {
+            return false;
         }
-        /*get the read characteristic from the service*/
-        BluetoothGattCharacteristic mWriteCharacteristic = mCustomService.getCharacteristic(UUID.fromString("00000001-0000-1000-8000-00805f9b34fb"));
-        mWriteCharacteristic.setValue(value, android.bluetooth.BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-        if (mBluetoothGatt.writeCharacteristic(mWriteCharacteristic) == false) {
-            Log.w(TAG, "Failed to write characteristic");
+        BluetoothGattCharacteristic RxChar = RxService.getCharacteristic(UUID.fromString(charactersticUUID));
+        if (RxChar == null) {
+            return false;
         }
+        RxChar.setValue(value);
+        return this.mBluetoothGatt.writeCharacteristic(RxChar);
+    }
+
+    public boolean writeUDCharacteristic(String serviceUUID, String charactersticUUID, byte[] value) {
+        BluetoothGattService RxService = null;
+        try {
+            RxService = this.mBluetoothGatt.getService(UUID.fromString(serviceUUID));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (RxService == null) {
+            return false;
+        }
+        BluetoothGattCharacteristic RxChar = RxService.getCharacteristic(UUID.fromString(charactersticUUID));
+        if (RxChar == null) {
+            return false;
+        }
+        RxChar.setValue(value);
+        RxChar.setWriteType(1);
+        boolean status = this.mBluetoothGatt.writeCharacteristic(RxChar);
+        return status;
+    }
+
+    public boolean setCharacteristicNotification(String serviceUUID, String characteristicUUID, boolean enabled) {
+        if (this.mBluetoothAdapter == null || this.mBluetoothGatt == null) {
+            return false;
+        }
+        BluetoothGattService RxService = this.mBluetoothGatt.getService(UUID.fromString(serviceUUID));
+        if (RxService == null) {
+            return false;
+        }
+        BluetoothGattCharacteristic TxChar = RxService.getCharacteristic(UUID.fromString(characteristicUUID));
+        if (TxChar == null) {
+            return false;
+        }
+        boolean status = this.mBluetoothGatt.setCharacteristicNotification(TxChar, enabled);
+        return status;
     }
 }

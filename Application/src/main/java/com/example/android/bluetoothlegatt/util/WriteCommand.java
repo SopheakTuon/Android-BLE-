@@ -69,7 +69,7 @@ public class WriteCommand {
     /**
      * @param bluetoothGatt
      * @param mac
-     * @return
+     * @return int
      */
     public static int matchInfo(BluetoothGatt bluetoothGatt, String mac) {
         int s1 = Integer.parseInt(mac.substring(0, 2), 16);
@@ -107,19 +107,16 @@ public class WriteCommand {
             bluetoothGattCharacteristic.setValue(byte_info);
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
         }
-        if (writeStatus) {
-            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-        }
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         return -1;
     }
 
     /**
      * @param bluetoothGatt
      * @param status
-     * @return
+     * @return int
      */
     public static int ackForBindRequest(BluetoothGatt bluetoothGatt, int status) {
-        byte b = (byte) 1;
         byte[] bytes = new byte[12];
         bytes[0] = (byte) 0x12;
         bytes[1] = (byte) 0x34;
@@ -138,7 +135,7 @@ public class WriteCommand {
         bytes[11] = SmileConstants.TOKEN_LITERAL_NULL;
 //        Log.v(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f = " + bytesToInt(chksum, 0));
         Log.v(TAG, "Ack For Bind Request " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(bytes));
-        int count = 0;
+//        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0010-facebeadaaaa"));
         while (!writeStatus) {
@@ -156,21 +153,16 @@ public class WriteCommand {
 //        if (MainActivity.iOnBondListener != null) {
 //            MainActivity.iOnBondListener.onBond(writeStatus);
 //        }
-        if (!writeStatus) {
-            b = (byte) -1;
-            if (bluetoothGattCharacteristic != null)
-                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-        }
-        return b;
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        return writeStatus ? 1 : -1;
     }
 
     /**
      * @param bluetoothGatt
      * @param cmd
-     * @return
+     * @return int
      */
     public static int secondMatch(BluetoothGatt bluetoothGatt, int cmd) {
-        byte b = (byte) 1;
         byte[] bytes = new byte[12];
         bytes[0] = (byte) 0x12;
         bytes[1] = (byte) 0x34;
@@ -197,17 +189,13 @@ public class WriteCommand {
             bluetoothGattCharacteristic.setValue(bytes);
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
         }
-        if (!writeStatus) {
-            b = (byte) -1;
-            if (bluetoothGattCharacteristic != null)
-                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-        }
-        return b;
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        return writeStatus ? 1 : -1;
     }
 
     /**
      * @param bluetoothGatt
-     * @return
+     * @return int
      */
     public static int UpdateNewTime(BluetoothGatt bluetoothGatt) {
         String times = getNowTime();
@@ -236,12 +224,12 @@ public class WriteCommand {
             bytes[9] = (byte) Integer.parseInt(Integer.toHexString(b), 16);
             bytes[10] = (byte) 0;
         } else if (Integer.toHexString(b).length() == 3) {
-            temp = "0" + Integer.toHexString(b).toString();
+            temp = "0" + Integer.toHexString(b);
             bytes[10] = (byte) Integer.parseInt(temp.substring(0, 2), 16);
             bytes[9] = (byte) Integer.parseInt(temp.substring(2, 4), 16);
             Log.v(TAG, "Update Time bytes[10]= " + bytes[10] + " bytes[9]= " + bytes[9]);
         } else if (Integer.toHexString(b).length() == 4) {
-            temp = Integer.toHexString(b).toString();
+            temp = Integer.toHexString(b);
             bytes[9] = (byte) Integer.parseInt(temp.substring(0, 2), 16);
             bytes[10] = (byte) Integer.parseInt(temp.substring(2, 4), 16);
         }
@@ -251,8 +239,7 @@ public class WriteCommand {
         bytes[14] = SmileConstants.TOKEN_LITERAL_NULL;
         boolean result = false;
         int count = 0;
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = null;
-        bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0020-facebeadaaaa"));
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0020-facebeadaaaa"));
         while (!result && count < 100000) {
 //            result = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0020-facebeadaaaa", bytes);
 
@@ -275,7 +262,7 @@ public class WriteCommand {
 
     /**
      * @param bluetoothGatt
-     * @return
+     * @return int
      */
     public static int unbindDevice(BluetoothGatt bluetoothGatt) {
         Log.i(TAG, "Unbind with the device");
@@ -315,7 +302,7 @@ public class WriteCommand {
      * ECG Measurement CMD
      *
      * @param bluetoothGatt
-     * @return
+     * @return int
      */
     public static int measureECG(BluetoothGatt bluetoothGatt) {
         Log.i(TAG, "ECG Measurement CMD");
@@ -344,11 +331,9 @@ public class WriteCommand {
 //                break;
 //            } else count++;
         }
-        if (writeStatus) {
-            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-            BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0004-facebeadaaaa"));
-            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic1, true);
-        }
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0004-facebeadaaaa"));
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic1, true);
         Log.i(TAG, "result of ECG Measurement CMD£ºwriteStatus = " + writeStatus);
         return writeStatus ? 1 : -1;
     }
@@ -456,10 +441,9 @@ public class WriteCommand {
 
     /**
      * @param bluetoothGatt
-     * @return
+     * @return int
      */
     public static int measureHr(BluetoothGatt bluetoothGatt) {
-        boolean z = true;
         byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 2, (byte) 12, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
 //        int count = 0;
         boolean writeStatus = false;
@@ -477,13 +461,8 @@ public class WriteCommand {
 //                return -1;
 //            }
         }
-        if (writeStatus) {
-            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-        }
-        if (!writeStatus) {
-            z = true;
-        }
-        return z ? 1 : -1;
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        return writeStatus ? 1 : -1;
     }
 
     private static String getNowTime() {
