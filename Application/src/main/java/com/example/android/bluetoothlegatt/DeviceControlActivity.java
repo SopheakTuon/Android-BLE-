@@ -132,6 +132,7 @@ public class DeviceControlActivity extends Activity {
             } else if (GlobalData.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
                 new Handler().postDelayed(new Bind(), 50);
                 new Handler().postDelayed(new SecondMatch(), 50);
+                enableElements(true);
             } else if (GlobalData.ACTION_MAIN_DATA_ECGALLDATA.equals(action)) {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -179,7 +180,7 @@ public class DeviceControlActivity extends Activity {
                                     }
                                 }
                                 Log.d("ECG", ecgString);
-                                displayData(ecgString);
+                                displayData("ECG Data : " + "\n" + ecgString);
                                 enableElements(true);
                                 stopMeasure();
                             }
@@ -248,7 +249,7 @@ public class DeviceControlActivity extends Activity {
                             }
                         }
                         Log.d("ECG", pwString);
-                        displayData(pwString);
+                        displayData("PW Data : " + "\n" + pwString);
                         enableElements(true);
                         stopMeasure();
                     }
@@ -355,10 +356,15 @@ public class DeviceControlActivity extends Activity {
 
     }
 
-    private void enableElements(boolean enable) {
-        buttonECG.setEnabled(enable);
-        buttonPW.setEnabled(enable);
-        buttonHeart.setEnabled(enable);
+    private void enableElements(final boolean enable) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                buttonECG.setEnabled(enable);
+                buttonPW.setEnabled(enable);
+                buttonHeart.setEnabled(enable);
+            }
+        });
     }
 
     private String byeteToString(byte[] bytes) {
@@ -379,6 +385,7 @@ public class DeviceControlActivity extends Activity {
         buttonECG = (Button) findViewById(R.id.buttonPair);
         buttonPW = (Button) findViewById(R.id.buttonTurnOff);
         buttonHeart = (Button) findViewById(R.id.buttonHeart);
+        enableElements(false);
     }
 
     private void initEventListener() {

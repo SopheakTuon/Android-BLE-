@@ -16,9 +16,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/BluetoothLeService$1.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/BluetoothLeService$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/BluetoothLeService$LocalBinder.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/BluetoothLeService$LocalBinder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/BluetoothLeService.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/BluetoothLeService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$2$1.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$2$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$2.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$3.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$3.class" />
@@ -35,15 +32,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$MatchInfo.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$MatchInfo.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$SecondMatch.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$SecondMatch.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/util/SingleByteCommand.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/util/SingleByteCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/pre-dexed/debug/debug_e89da08c3f4071e51f2b2568cc62590f70ebf1c3.jar" afterPath="$PROJECT_DIR$/Application/build/intermediates/pre-dexed/debug/debug_e89da08c3f4071e51f2b2568cc62590f70ebf1c3.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex" afterPath="$PROJECT_DIR$/Application/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/outputs/apk/Application-debug.apk" afterPath="$PROJECT_DIR$/Application/build/outputs/apk/Application-debug.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/incremental/packageDebug/dex-renamer-state.txt" afterPath="$PROJECT_DIR$/Application/build/intermediates/incremental/packageDebug/dex-renamer-state.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/BluetoothLeService.java" afterPath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/BluetoothLeService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java" afterPath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/SingleByteCommand.java" afterPath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/SingleByteCommand.java" />
     </list>
     <ignored path="Android-BLE-.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -372,24 +366,26 @@
       <file leaf-file-name="DeviceControlActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="215" column="95" selection-start-line="215" selection-start-column="95" selection-end-line="215" selection-end-column="95" />
+            <state relative-caret-position="167">
+              <caret line="387" column="8" selection-start-line="387" selection-start-column="8" selection-end-line="387" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4534#15393#0" expanded="true" />
-                <element signature="e#5915#9838#0" expanded="true" />
-                <element signature="e#9837#9838#0" expanded="true" />
-                <element signature="e#15392#15393#0" expanded="true" />
-                <element signature="e#21401#21767#0" expanded="true" />
-                <element signature="e#21766#21767#0" expanded="true" />
-                <element signature="e#28014#28015#0" expanded="true" />
-                <element signature="e#28049#28050#0" expanded="true" />
-                <element signature="e#28140#28141#0" expanded="true" />
-                <element signature="e#28170#28171#0" expanded="true" />
-                <element signature="e#28268#28269#0" expanded="true" />
-                <element signature="e#28305#28306#0" expanded="true" />
-                <marker date="1488254438943" expanded="false" signature="24548:24598" ph="&quot;Unknown service&quot;" />
-                <marker date="1488254438943" expanded="false" signature="24638:24695" ph="&quot;Unknown characteristic&quot;" />
+                <element signature="e#4534#15476#0" expanded="true" />
+                <element signature="e#5953#9899#0" expanded="true" />
+                <element signature="e#9898#9899#0" expanded="true" />
+                <element signature="e#15475#15476#0" expanded="true" />
+                <element signature="e#20380#20613#0" expanded="true" />
+                <element signature="e#20612#20613#0" expanded="true" />
+                <element signature="e#21664#22030#0" expanded="true" />
+                <element signature="e#22029#22030#0" expanded="true" />
+                <element signature="e#28277#28278#0" expanded="true" />
+                <element signature="e#28312#28313#0" expanded="true" />
+                <element signature="e#28403#28404#0" expanded="true" />
+                <element signature="e#28433#28434#0" expanded="true" />
+                <element signature="e#28531#28532#0" expanded="true" />
+                <element signature="e#28568#28569#0" expanded="true" />
+                <marker date="1488254975423" expanded="false" signature="24811:24861" ph="&quot;Unknown service&quot;" />
+                <marker date="1488254975423" expanded="false" signature="24901:24958" ph="&quot;Unknown characteristic&quot;" />
               </folding>
             </state>
           </provider>
@@ -2741,19 +2737,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java</url>
-          <line>255</line>
+          <line>256</line>
           <properties />
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java</url>
-          <line>195</line>
+          <line>196</line>
           <properties />
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java</url>
-          <line>197</line>
+          <line>198</line>
           <properties />
           <option name="timeStamp" value="38" />
         </line-breakpoint>
@@ -2899,20 +2895,22 @@
           <caret line="387" column="74" selection-start-line="387" selection-start-column="74" selection-end-line="387" selection-end-column="74" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4534#15393#0" expanded="true" />
-            <element signature="e#5915#9838#0" expanded="true" />
-            <element signature="e#9837#9838#0" expanded="true" />
-            <element signature="e#15392#15393#0" expanded="true" />
-            <element signature="e#21401#21767#0" expanded="true" />
-            <element signature="e#21766#21767#0" expanded="true" />
-            <element signature="e#28014#28015#0" expanded="true" />
-            <element signature="e#28049#28050#0" expanded="true" />
-            <element signature="e#28140#28141#0" expanded="true" />
-            <element signature="e#28170#28171#0" expanded="true" />
-            <element signature="e#28268#28269#0" expanded="true" />
-            <element signature="e#28305#28306#0" expanded="true" />
-            <marker date="1488254438943" expanded="false" signature="24548:24598" ph="&quot;Unknown service&quot;" />
-            <marker date="1488254438943" expanded="false" signature="24638:24695" ph="&quot;Unknown characteristic&quot;" />
+            <element signature="e#4534#15476#0" expanded="true" />
+            <element signature="e#5953#9899#0" expanded="true" />
+            <element signature="e#9898#9899#0" expanded="true" />
+            <element signature="e#15475#15476#0" expanded="true" />
+            <element signature="e#20380#20613#0" expanded="true" />
+            <element signature="e#20612#20613#0" expanded="true" />
+            <element signature="e#21664#22030#0" expanded="true" />
+            <element signature="e#22029#22030#0" expanded="true" />
+            <element signature="e#28277#28278#0" expanded="true" />
+            <element signature="e#28312#28313#0" expanded="true" />
+            <element signature="e#28403#28404#0" expanded="true" />
+            <element signature="e#28433#28434#0" expanded="true" />
+            <element signature="e#28531#28532#0" expanded="true" />
+            <element signature="e#28568#28569#0" expanded="true" />
+            <marker date="1488254975423" expanded="false" signature="24811:24861" ph="&quot;Unknown service&quot;" />
+            <marker date="1488254975423" expanded="false" signature="24901:24958" ph="&quot;Unknown characteristic&quot;" />
           </folding>
         </state>
       </provider>
@@ -3004,20 +3002,22 @@
           <caret line="148" column="98" selection-start-line="148" selection-start-column="94" selection-end-line="148" selection-end-column="98" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4534#15393#0" expanded="true" />
-            <element signature="e#5915#9838#0" expanded="true" />
-            <element signature="e#9837#9838#0" expanded="true" />
-            <element signature="e#15392#15393#0" expanded="true" />
-            <element signature="e#21401#21767#0" expanded="true" />
-            <element signature="e#21766#21767#0" expanded="true" />
-            <element signature="e#28014#28015#0" expanded="true" />
-            <element signature="e#28049#28050#0" expanded="true" />
-            <element signature="e#28140#28141#0" expanded="true" />
-            <element signature="e#28170#28171#0" expanded="true" />
-            <element signature="e#28268#28269#0" expanded="true" />
-            <element signature="e#28305#28306#0" expanded="true" />
-            <marker date="1488254438943" expanded="false" signature="24548:24598" ph="&quot;Unknown service&quot;" />
-            <marker date="1488254438943" expanded="false" signature="24638:24695" ph="&quot;Unknown characteristic&quot;" />
+            <element signature="e#4534#15476#0" expanded="true" />
+            <element signature="e#5953#9899#0" expanded="true" />
+            <element signature="e#9898#9899#0" expanded="true" />
+            <element signature="e#15475#15476#0" expanded="true" />
+            <element signature="e#20380#20613#0" expanded="true" />
+            <element signature="e#20612#20613#0" expanded="true" />
+            <element signature="e#21664#22030#0" expanded="true" />
+            <element signature="e#22029#22030#0" expanded="true" />
+            <element signature="e#28277#28278#0" expanded="true" />
+            <element signature="e#28312#28313#0" expanded="true" />
+            <element signature="e#28403#28404#0" expanded="true" />
+            <element signature="e#28433#28434#0" expanded="true" />
+            <element signature="e#28531#28532#0" expanded="true" />
+            <element signature="e#28568#28569#0" expanded="true" />
+            <marker date="1488254975423" expanded="false" signature="24811:24861" ph="&quot;Unknown service&quot;" />
+            <marker date="1488254975423" expanded="false" signature="24901:24958" ph="&quot;Unknown characteristic&quot;" />
           </folding>
         </state>
       </provider>
@@ -3394,24 +3394,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="215" column="95" selection-start-line="215" selection-start-column="95" selection-end-line="215" selection-end-column="95" />
+        <state relative-caret-position="167">
+          <caret line="387" column="8" selection-start-line="387" selection-start-column="8" selection-end-line="387" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4534#15393#0" expanded="true" />
-            <element signature="e#5915#9838#0" expanded="true" />
-            <element signature="e#9837#9838#0" expanded="true" />
-            <element signature="e#15392#15393#0" expanded="true" />
-            <element signature="e#21401#21767#0" expanded="true" />
-            <element signature="e#21766#21767#0" expanded="true" />
-            <element signature="e#28014#28015#0" expanded="true" />
-            <element signature="e#28049#28050#0" expanded="true" />
-            <element signature="e#28140#28141#0" expanded="true" />
-            <element signature="e#28170#28171#0" expanded="true" />
-            <element signature="e#28268#28269#0" expanded="true" />
-            <element signature="e#28305#28306#0" expanded="true" />
-            <marker date="1488254438943" expanded="false" signature="24548:24598" ph="&quot;Unknown service&quot;" />
-            <marker date="1488254438943" expanded="false" signature="24638:24695" ph="&quot;Unknown characteristic&quot;" />
+            <element signature="e#4534#15476#0" expanded="true" />
+            <element signature="e#5953#9899#0" expanded="true" />
+            <element signature="e#9898#9899#0" expanded="true" />
+            <element signature="e#15475#15476#0" expanded="true" />
+            <element signature="e#20380#20613#0" expanded="true" />
+            <element signature="e#20612#20613#0" expanded="true" />
+            <element signature="e#21664#22030#0" expanded="true" />
+            <element signature="e#22029#22030#0" expanded="true" />
+            <element signature="e#28277#28278#0" expanded="true" />
+            <element signature="e#28312#28313#0" expanded="true" />
+            <element signature="e#28403#28404#0" expanded="true" />
+            <element signature="e#28433#28434#0" expanded="true" />
+            <element signature="e#28531#28532#0" expanded="true" />
+            <element signature="e#28568#28569#0" expanded="true" />
+            <marker date="1488254975423" expanded="false" signature="24811:24861" ph="&quot;Unknown service&quot;" />
+            <marker date="1488254975423" expanded="false" signature="24901:24958" ph="&quot;Unknown characteristic&quot;" />
           </folding>
         </state>
       </provider>
