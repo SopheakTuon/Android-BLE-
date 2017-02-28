@@ -128,7 +128,8 @@ public class DeviceControlActivity extends Activity {
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             } else if (GlobalData.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
-
+                new Handler().postDelayed(new Bind(), 50);
+                new Handler().postDelayed(new SecondMatch(), 50);
             } else if (GlobalData.ACTION_MAIN_DATA_ECGALLDATA.equals(action)) {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -189,7 +190,7 @@ public class DeviceControlActivity extends Activity {
         }
     };
     private int time = 0;
-    public static final int TIME_DONE = 120;
+    public static final int TIME_DONE = 240;
 
     private void listToEcgAlg2() {
         int[] result = new int[5];
@@ -479,9 +480,7 @@ public class DeviceControlActivity extends Activity {
 //                secondMatch();
 //            }
 //        });
-        new Handler().postDelayed(new MatchInfo(), 500);
-        new Handler().postDelayed(new Bind(), 500);
-        new Handler().postDelayed(new SecondMatch(), 500);
+        new Handler().postDelayed(new MatchInfo(), 50);
     }
 
     class MatchInfo implements Runnable {
