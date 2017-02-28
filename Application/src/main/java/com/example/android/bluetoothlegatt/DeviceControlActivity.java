@@ -102,7 +102,9 @@ public class DeviceControlActivity extends Activity {
 
 
     List<Float> ecgdataallList = new ArrayList<>();
+    List<Float> pwdataAllList = new ArrayList<>();
     private List<String> ecgdataSaveStr = new ArrayList<>();
+    private List<String> pwDataSaveStr = new ArrayList<>();
     // Handles various events fired by the Service.
     // ACTION_GATT_CONNECTED: connected to a GATT server.
     // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
@@ -179,12 +181,79 @@ public class DeviceControlActivity extends Activity {
                                 Log.d("ECG", ecgString);
                                 displayData(ecgString);
                                 enableElements(true);
-                                stopMeasureECG();
+                                stopMeasure();
                             }
 
                         }
                     }
                 });
+
+            } else if (GlobalData.ACTION_MAIN_DATA_PW.equals(action)) {
+                String pw = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_PW);
+                if (pw != null) {
+                    time++;
+                    Log.d("sqs", "time ==== " + time);
+                    if (time < TIME_DONE && isMeasuring) {
+                        float pwNumber1;
+                        float pwNumber2;
+                        float pwNumber3;
+                        float pwNumber4;
+                        float pwNumber5;
+                        String pwNumber1Strs;
+                        String pwNumber2Strs;
+                        String pwNumber3Strs;
+                        String pwNumber4Strs;
+                        if (DeviceControlActivity.this.pwdataAllList == null) {
+                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(48))));
+                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(36, 47))));
+                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(24, 35))));
+                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(12, 23))));
+                            DeviceControlActivity.this.pwdataAllList.add(Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(0, 11))));
+                            pwNumber1 = ((Float) DeviceControlActivity.this.pwdataAllList.get(0)).floatValue();
+                            pwNumber2 = ((Float) DeviceControlActivity.this.pwdataAllList.get(1)).floatValue();
+                            pwNumber3 = ((Float) DeviceControlActivity.this.pwdataAllList.get(2)).floatValue();
+                            pwNumber4 = ((Float) DeviceControlActivity.this.pwdataAllList.get(3)).floatValue();
+                            pwNumber5 = ((Float) DeviceControlActivity.this.pwdataAllList.get(4)).floatValue();
+                            pwNumber1Strs = String.valueOf((int) pwNumber1);
+                            pwNumber2Strs = String.valueOf((int) pwNumber2);
+                            pwNumber3Strs = String.valueOf((int) pwNumber3);
+                            pwNumber4Strs = String.valueOf((int) pwNumber4);
+                            String pwNumber5Strs = String.valueOf((int) pwNumber5);
+                            DeviceControlActivity.this.pwDataSaveStr.add(0, new StringBuilder(String.valueOf(pwNumber1Strs)).append(",").append(pwNumber2Strs).append(",").append(pwNumber3Strs).append(",").append(pwNumber4Strs).append(",").append(pwNumber5Strs).append(",").toString());
+                        } else {
+                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(0, 11))));
+                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(12, 23))));
+                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(24, 35))));
+                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(36, 47))));
+                            DeviceControlActivity.this.pwdataAllList.add(0, Float.valueOf(DeviceControlActivity.this.parsePwdata(pw.substring(48))));
+                            pwNumber1 = ((Float) DeviceControlActivity.this.pwdataAllList.get(0)).floatValue();
+                            pwNumber2 = ((Float) DeviceControlActivity.this.pwdataAllList.get(1)).floatValue();
+                            pwNumber3 = ((Float) DeviceControlActivity.this.pwdataAllList.get(2)).floatValue();
+                            pwNumber4 = ((Float) DeviceControlActivity.this.pwdataAllList.get(3)).floatValue();
+                            pwNumber5 = ((Float) DeviceControlActivity.this.pwdataAllList.get(4)).floatValue();
+                            pwNumber1Strs = String.valueOf((int) pwNumber1);
+                            pwNumber2Strs = String.valueOf((int) pwNumber2);
+                            pwNumber3Strs = String.valueOf((int) pwNumber3);
+                            pwNumber4Strs = String.valueOf((int) pwNumber4);
+                            DeviceControlActivity.this.pwDataSaveStr.add(0, new StringBuilder(String.valueOf(String.valueOf((int) pwNumber5))).append(",").append(pwNumber4Strs).append(",").append(pwNumber3Strs).append(",").append(pwNumber2Strs).append(",").append(pwNumber1Strs).append(",").toString());
+                        }
+                        displayData(pw);
+                    } else if (time == TIME_DONE) {
+                        String pwString = "[";
+                        for (int i = 0; i < pwdataAllList.size(); i++) {
+                            if (i == pwdataAllList.size() - 1) {
+                                pwString += pwdataAllList.get(i) + "]";
+                            } else {
+                                pwString += pwdataAllList.get(i) + ", ";
+                            }
+                        }
+                        Log.d("ECG", pwString);
+                        displayData(pwString);
+                        enableElements(true);
+                        stopMeasure();
+                    }
+
+                }
 
             }
         }
@@ -317,7 +386,7 @@ public class DeviceControlActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (isMeasuring) {
-                    stopMeasureECG();
+                    stopMeasure();
                     enableElements(true);
                 } else {
                     isMeasuring = measureECG() == 1;
@@ -329,12 +398,19 @@ public class DeviceControlActivity extends Activity {
         buttonPW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                measurePW();
+                if (isMeasuring) {
+                    stopMeasure();
+                    enableElements(true);
+                } else {
+                    isMeasuring = measurePW() == 1;
+                    enableElements(false);
+                }
             }
         });
         buttonHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
     }
@@ -543,14 +619,15 @@ public class DeviceControlActivity extends Activity {
         return SingleByteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
     }
 
-    private int stopMeasureECG() {
+    private int stopMeasure() {
         time = 0;
         isMeasuring = false;
         return SingleByteCommand.stopMeasuring(mBluetoothLeService.getmBluetoothGatt());
     }
 
-    private void measurePW() {
-        SingleByteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
+    private int measurePW() {
+        time = 0;
+        return SingleByteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
     }
 
 
@@ -561,6 +638,7 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
+        intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_PW);
         intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK);
         intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
         return intentFilter;

@@ -241,13 +241,13 @@ public class SingleByteCommand {
      */
     public static int measurePW(BluetoothGatt bluetoothGatt) {
         Log.i(TAG, "PPG Measurement CMD");
-        byte[] bb, cc;
-        bb = new byte[10];
-        cc = new byte[10];
-        cc[0] = bb[0] = (byte) 0x12;
-        cc[1] = bb[1] = (byte) 0x34;
+        byte[] bb,cc;
+        bb= new byte[10];
+        cc= new byte[10];
+        cc[0]=bb[0] = (byte) 0x12;
+        cc[1]=bb[1] = (byte) 0x34;
 
-        cc[2] = bb[2] = (byte) 0x0A;
+        cc[2]=bb[2] = (byte) 0x0A;
 
         bb[3] = (byte) 0x61;
         bb[4] = (byte) 0x6b;
@@ -255,12 +255,12 @@ public class SingleByteCommand {
         cc[3] = (byte) 0x03;
         cc[4] = (byte) 0x0d;
 
-        cc[5] = bb[5] = (byte) 0x00;
-        cc[6] = bb[6] = (byte) 0x00;
-        cc[7] = bb[7] = (byte) 0x00;
+        cc[5]=bb[5] = (byte) 0x00;
+        cc[6]=bb[6] = (byte) 0x00;
+        cc[7]=bb[7] = (byte) 0x00;
 
-        cc[8] = bb[8] = (byte) 0x43;
-        cc[9] = bb[9] = (byte) 0x21;
+        cc[8]=bb[8] = (byte) 0x43;
+        cc[9]=bb[9] = (byte) 0x21;
         int count = 0;
         boolean writeStatus = false;
 
@@ -268,7 +268,7 @@ public class SingleByteCommand {
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
         while (!writeStatus) {
             bluetoothGattCharacteristic.setValue(bb);
-            bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+            writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
 //            if (GlobalData.status_Connected == false)
 //                return -1;
 //            if (count > 50000) {
@@ -280,7 +280,7 @@ public class SingleByteCommand {
             writeStatus = false;
             while (!writeStatus) {
                 bluetoothGattCharacteristic.setValue(cc);
-                bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+                writeStatus =  bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
 //                if (GlobalData.status_Connected == false)
 //                    return -1;
 //                if (count > 100000) {
@@ -289,6 +289,7 @@ public class SingleByteCommand {
             }
 
             if (writeStatus) {
+                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
                 BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0005-facebeadaaaa"));
                 bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic1, true);
                 BluetoothGattCharacteristic bluetoothGattCharacteristic2 = bluetoothGattService.getCharacteristic(UUID.fromString("ffacebead-ffff-eeee-0004-facebeadaaaa"));
