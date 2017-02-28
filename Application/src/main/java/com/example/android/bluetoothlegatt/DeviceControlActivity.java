@@ -111,7 +111,7 @@ public class DeviceControlActivity extends Activity {
     //                        or notification operations.
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, final Intent intent) {
             final String action = intent.getAction();
             if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
                 mConnected = true;
@@ -127,54 +127,64 @@ public class DeviceControlActivity extends Activity {
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
-            } else if (GlobalData.ACTION_MAIN_DATA_ECGALLDATA.equals(action)) {
-                String ecg = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
-                Log.d("ECG", ecg);
-                if (ecg != null) {
-                    if (time < TIME_DONE) {
-                        if (ecgdataallList.size() == 0) {
-                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(48))));
-                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(36, 47))));
-                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(24, 35))));
-                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(12, 23))));
-                            ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(0, 11))));
-                            listToEcgAlg2();
-                        } else {
-                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(0, 11))));
-                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(12, 23))));
-                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(24, 35))));
-                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(36, 47))));
-                            ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(48))));
-                            listToEcgAlg2();
-                            float ecgNumber1 = ((Float) ecgdataallList.get(0)).floatValue();
-                            float ecgNumber2 = ((Float) ecgdataallList.get(1)).floatValue();
-                            float ecgNumber3 = ((Float) ecgdataallList.get(2)).floatValue();
-                            float ecgNumber4 = ((Float) ecgdataallList.get(3)).floatValue();
-                            float ecgNumber5 = ((Float) ecgdataallList.get(4)).floatValue();
-                            String ecgNumber1Str = String.valueOf((int) ecgNumber1);
-                            String ecgNumber2Str = String.valueOf((int) ecgNumber2);
-                            String ecgNumber3Str = String.valueOf((int) ecgNumber3);
-                            String ecgNumber4Str = String.valueOf((int) ecgNumber4);
-                            String ecgNumber5Str = String.valueOf((int) ecgNumber5);
-                            ecgdataSaveStr.add(0, new StringBuilder(String.valueOf(ecgNumber5Str)).append(",").append(ecgNumber4Str).append(",").append(ecgNumber3Str).append(",").append(ecgNumber2Str).append(",").append(ecgNumber1Str).append(",").toString());
-                        }
-                        displayData(ecg);
-                    } else if (time == TIME_DONE && isMeasuring) {
-                        String ecgString = "[";
-                        for (int i = 0; i < ecgdataallList.size(); i++) {
-                            if (i == ecgdataallList.size() - 1) {
-                                ecgString += ecgdataallList.get(i) + "]";
-                            } else {
-                                ecgString += ecgdataallList.get(i) + ", ";
-                            }
-                        }
-                        stopMeasureECG();
-                        Log.d("ECG", ecgString);
-                        displayData(ecgString);
-                        enableElements(true);
-                    }
+            } else if (GlobalData.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
 
-                }
+            } else if (GlobalData.ACTION_MAIN_DATA_ECGALLDATA.equals(action)) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String ecg = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
+                        Log.d("ECG", ecg);
+                        if (ecg != null) {
+                            time++;
+                            Log.d("sqs", "time ==== " + time);
+                            if (time < TIME_DONE && isMeasuring) {
+                                if (ecgdataallList.size() == 0) {
+                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(48))));
+                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(36, 47))));
+                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(24, 35))));
+                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(12, 23))));
+                                    ecgdataallList.add(Float.valueOf(parseEcgdata(ecg.substring(0, 11))));
+                                    listToEcgAlg2();
+                                } else {
+                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(0, 11))));
+                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(12, 23))));
+                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(24, 35))));
+                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(36, 47))));
+                                    ecgdataallList.add(0, Float.valueOf(parseEcgdata(ecg.substring(48))));
+                                    listToEcgAlg2();
+                                    float ecgNumber1 = ((Float) ecgdataallList.get(0)).floatValue();
+                                    float ecgNumber2 = ((Float) ecgdataallList.get(1)).floatValue();
+                                    float ecgNumber3 = ((Float) ecgdataallList.get(2)).floatValue();
+                                    float ecgNumber4 = ((Float) ecgdataallList.get(3)).floatValue();
+                                    float ecgNumber5 = ((Float) ecgdataallList.get(4)).floatValue();
+                                    String ecgNumber1Str = String.valueOf((int) ecgNumber1);
+                                    String ecgNumber2Str = String.valueOf((int) ecgNumber2);
+                                    String ecgNumber3Str = String.valueOf((int) ecgNumber3);
+                                    String ecgNumber4Str = String.valueOf((int) ecgNumber4);
+                                    String ecgNumber5Str = String.valueOf((int) ecgNumber5);
+                                    ecgdataSaveStr.add(0, new StringBuilder(String.valueOf(ecgNumber5Str)).append(",").append(ecgNumber4Str).append(",").append(ecgNumber3Str).append(",").append(ecgNumber2Str).append(",").append(ecgNumber1Str).append(",").toString());
+                                }
+                                displayData(ecg);
+                            } else if (time == TIME_DONE) {
+                                String ecgString = "[";
+                                for (int i = 0; i < ecgdataallList.size(); i++) {
+                                    if (i == ecgdataallList.size() - 1) {
+                                        ecgString += ecgdataallList.get(i) + "]";
+                                    } else {
+                                        ecgString += ecgdataallList.get(i) + ", ";
+                                    }
+                                }
+                                Log.d("ECG", ecgString);
+                                displayData(ecgString);
+                                enableElements(true);
+                                stopMeasureECG();
+                            }
+
+                        }
+                    }
+                });
+
             }
         }
     };
@@ -184,8 +194,6 @@ public class DeviceControlActivity extends Activity {
     private void listToEcgAlg2() {
         int[] result = new int[5];
         if (this.ecgdataallList != null && this.ecgdataallList.size() != 0) {
-            time++;
-            Log.d("sqs", "time ==== " + time);
             for (int i = 0; i < 5; i++) {
                 result[i] = (int) ((Float) this.ecgdataallList.get(i)).floatValue();
             }
@@ -462,15 +470,42 @@ public class DeviceControlActivity extends Activity {
 
         Log.d("Mac", "" + WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                matchInfo();
-                bind();
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                matchInfo();
+//                bind();
 //                updateTime();
-                secondMatch();
-            }
-        });
+//                secondMatch();
+//            }
+//        });
+        new Handler().postDelayed(new MatchInfo(), 500);
+        new Handler().postDelayed(new Bind(), 500);
+        new Handler().postDelayed(new SecondMatch(), 500);
+    }
+
+    class MatchInfo implements Runnable {
+
+        @Override
+        public void run() {
+            matchInfo();
+        }
+    }
+
+    class Bind implements Runnable {
+
+        @Override
+        public void run() {
+            bind();
+        }
+    }
+
+    class SecondMatch implements Runnable {
+
+        @Override
+        public void run() {
+            secondMatch();
+        }
     }
 
     private void matchInfo() {
@@ -505,6 +540,7 @@ public class DeviceControlActivity extends Activity {
     }
 
     private int measureECG() {
+        time = 0;
         return SingleByteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
     }
 
@@ -526,6 +562,8 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
+        intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK);
+        intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
         return intentFilter;
     }
 

@@ -131,13 +131,20 @@ public class BluetoothLeService extends Service {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic) {
-
-
+            Log.d("onCharacteristicChanged", characteristic.getValue().toString());
+            byte[] data = characteristic.getValue();
+            StringBuilder stringBuilder = new StringBuilder(data.length);
+            int length = data.length;
+            for (int i = 0; i < length; i++) {
+                stringBuilder.append(String.format("%02X ", new Object[]{Byte.valueOf(data[i])}));
+            }
             String uuid = characteristic.getService().getUuid().toString();
             String charactUUID = characteristic.getUuid().toString();
             if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0004-facebeadaaaa")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECGALLDATA, characteristic);
-            } else {
+                BluetoothLeService.this.broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECGALLDATA, characteristic);
+            } else if (uuid.equals("1aabcdef-1111-2222-0000-facebeadaaaa")) {
+                BluetoothLeService.this.sendBindBroadcast(stringBuilder.toString());
+            }else {
                 broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
             }
         }
@@ -164,10 +171,33 @@ public class BluetoothLeService extends Service {
 
         @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-//            advance();
-//            enableNextSensor(gatt);
         }
     };
+
+    private void sendBindBroadcast(String data) {
+        Log.d(TAG, "71 \u6536\u5230\u7ed1\u5b9a\u7684\u76f8\u5173\u6570\u636e\u53d1\u5e7f\u64ad \u7c7b\u578b:");
+        String cmdType = data.substring(9, 11);
+        if (cmdType.equals("37")) {
+            Log.i(TAG, "74 \u5339\u914d\u54cd\u5e94");
+            GlobalData.isMatchInfo = true;
+            Log.d("sqs", "\u6536\u5230\u5339\u914d\u54cd\u5e94 IS_MATCH_INFO_FROM_DEVICE = true");
+            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16).longValue());
+        } else if (cmdType.equals("38")) {
+            String valuse = data.substring(15, 17);
+            Log.i(TAG, "80 \u89e3\u7ed1\u54cd\u5e94");
+            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16).longValue());
+        } else if (cmdType.equals("23")) {
+            Log.i(TAG, "84 \u8bbe\u5907\u8bf7\u6c42\u7ed1\u5b9a");
+            Log.d("sqs", "\u6536\u5230\u8bf7\u6c42\u7ed1\u5b9a IS_MATCH_INFO_FROM_DEVICE");
+            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
+        }
+    }
+
+    private void broadcastUpdate(String action, long dataf) {
+        Intent intent = new Intent(action);
+        intent.putExtra(action, dataf);
+        sendBroadcast(intent);
+    }
 
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
@@ -226,7 +256,7 @@ public class BluetoothLeService extends Service {
                 stringBuilder.append(String.format("%02X ", new Object[]{Byte.valueOf(data[i])}));
             }
 //            intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
-            intent.putExtra(EXTRA_DATA, stringBuilder.toString());
+            intent.putExtra(GlobalData.ACTION_MAIN_DATA_ECGALLDATA, stringBuilder.toString());
         } else {
             // For all other profiles, writes the data formatted in HEX.
             final byte[] data = characteristic.getValue();

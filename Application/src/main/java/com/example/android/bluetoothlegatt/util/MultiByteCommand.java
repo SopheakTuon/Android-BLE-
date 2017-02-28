@@ -151,7 +151,7 @@ public class MultiByteCommand {
         bytes[0] = (byte) 0x12;
         bytes[1] = (byte) 0x34;
         bytes[2] = (byte) 0x0b;// type
-        bytes[3] = (byte) 0x11;// cmd
+        bytes[3] = (byte) 0x1b;// cmd
         bytes[4] = (byte) 0x01;// length
         bytes[5] = (byte) cmd;
         int chk = cmd + 39;
