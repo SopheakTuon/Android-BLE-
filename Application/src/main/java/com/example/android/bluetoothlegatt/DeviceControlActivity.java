@@ -634,9 +634,9 @@ public class DeviceControlActivity extends Activity {
     }
 
     private int stopMeasure() {
-        enableElements(true);
         time = 0;
         isMeasuring = false;
+        enableElements(true);
         int result = WriteCommand.stopMeasuring(mBluetoothLeService.getmBluetoothGatt());
         BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
         mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic, false);
