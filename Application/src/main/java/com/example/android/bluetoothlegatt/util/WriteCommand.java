@@ -415,7 +415,6 @@ public class WriteCommand {
      */
     public static int stopMeasuring(BluetoothGatt bluetoothGatt) {
         int i = 1;
-        Log.i(TAG, "\u505c\u6b62\u5f53\u524d\u6d4b\u91cf\uff0c\u8ba9\u8bbe\u5907\u5173\u706f");
         byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 15, (byte) 25, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
@@ -432,7 +431,6 @@ public class WriteCommand {
                 return -1;
             }
         }
-        Log.i(TAG, "\u505c\u6b62\u5f53\u524d\u6d4b\u91cf \u53d1\u9001\u8bbe\u5907\u5173\u706f\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
         if (!writeStatus) {
             i = -1;
         }
@@ -467,7 +465,6 @@ public class WriteCommand {
 
     public static int measureBr(BluetoothGatt bluetoothGatt) {
         boolean z = true;
-        Log.i(TAG, "\u547c\u5438\u9891\u7387\u6d4b\u91cf\u6307\u4ee4");
         byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 11, (byte) 21, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
 //        int count = 0;
         boolean writeStatus = false;

@@ -260,13 +260,13 @@ public class DeviceControlActivity extends Activity {
                 time++;
                 String hr = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_HR);
                 displayData("Heart Rate : " + hr);
-                if (time == 20)
+                if (time == 5)
                     stopMeasure();
             } else if (GlobalData.ACTION_MAIN_DATA_BREATH.equals(action)) {
                 time++;
                 String br = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_BREATH);
                 displayData("Breath Rate : " + br);
-                if (time == 20)
+                if (time == 5)
                     stopMeasure();
             }
         }
