@@ -564,7 +564,7 @@ public class DeviceControlActivity extends Activity {
 //            @Override
 //            public void run() {
 //                matchInfo();
-//                bind();
+//                ackForBindRequest();
 //                updateTime();
 //                secondMatch();
 //            }
@@ -584,7 +584,7 @@ public class DeviceControlActivity extends Activity {
 
         @Override
         public void run() {
-            bind();
+            ackForBindRequest();
         }
     }
 
@@ -596,54 +596,78 @@ public class DeviceControlActivity extends Activity {
         }
     }
 
-    private void matchInfo() {
-        WriteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
+    /**
+     * Match Information
+     *
+     * @return return 1 : -1
+     */
+    private int matchInfo() {
+        return WriteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
     }
 
-    private void bind() {
-        WriteCommand.ackForBindRequest(mBluetoothLeService.getmBluetoothGatt(), 1);
+    //Request Bind
+
+    /**
+     * Request bind device
+     *
+     * @return return 1 : -1
+     */
+    private int ackForBindRequest() {
+        return WriteCommand.ackForBindRequest(mBluetoothLeService.getmBluetoothGatt(), 1);
     }
 
-    private void secondMatch() {
-        WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 1);
+    /**
+     * @return
+     */
+    private int secondMatch() {
+        return WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 1);
     }
 
-    private void updateTime() {
-        WriteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
+    /**
+     * @return return 1 : - 1
+     */
+    private int unBindDevice() {
+        return WriteCommand.unbindDevice(mBluetoothLeService.getmBluetoothGatt());
     }
 
-    private void unBindDevice() {
-        WriteCommand.unbindDevice(mBluetoothLeService.getmBluetoothGatt());
-    }
 
-
-    private void startPairDevice() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                matchInfo();
-
-            }
-        });
-    }
-
+    /**
+     * Get ECG DATA
+     *
+     * @return return 1 : - 1
+     */
     private int measureECG() {
         displayData("Collecting data...");
-        time = 0;
         return WriteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
     }
 
+    /**
+     * Stop measure
+     *
+     * @return
+     */
     private int stopMeasure() {
         time = 0;
         isMeasuring = false;
         enableElements(true);
         int result = WriteCommand.stopMeasuring(mBluetoothLeService.getmBluetoothGatt());
+        /**
+         * Turn off notification of PW
+         */
         BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
         mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic, false);
         return result;
     }
 
-    private int stopMeasurePW(){
+    /**
+     * Stop Measure PW
+     *
+     * @return return 1 : -1
+     */
+    private int stopMeasurePW() {
+        /**
+         * Turn off notification of PW
+         */
         BluetoothGattService bluetoothGattService = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
         BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0005-facebeadaaaa"));
         mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic1, false);
@@ -652,7 +676,12 @@ public class DeviceControlActivity extends Activity {
         return stopMeasure();
     }
 
-    private int stopMeasureECG(){
+    /**
+     * Stop Measure ECG
+     *
+     * @return
+     */
+    private int stopMeasureECG() {
         BluetoothGattService bluetoothGattService = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
         BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0004-facebeadaaaa"));
         mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic1, false);
@@ -660,6 +689,10 @@ public class DeviceControlActivity extends Activity {
     }
 
 
+    /**
+     * Measure PW
+     * @return return 1 : -1
+     */
     private int measurePW() {
         displayData("Collecting data...");
         time = 0;
