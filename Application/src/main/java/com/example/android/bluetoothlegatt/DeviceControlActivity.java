@@ -183,7 +183,7 @@ public class DeviceControlActivity extends Activity {
                                 }
 //                                Log.d("ECG", ecgString);
                                 displayData("ECG Data : " + "\n" + ecgString);
-                                stopMeasure();
+                                stopMeasureECG();
                             }
 
                         }
@@ -251,7 +251,7 @@ public class DeviceControlActivity extends Activity {
                         }
 //                        Log.d("ECG", pwString);
                         displayData("PW Data : " + "\n" + pwString);
-                        stopMeasure();
+                        stopMeasurePW();
                     }
 
                 }
@@ -259,7 +259,7 @@ public class DeviceControlActivity extends Activity {
             } else if (GlobalData.ACTION_MAIN_DATA_HR.equals(action)) {
                 time++;
                 String hr = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_HR);
-                displayData(hr);
+                displayData("Heart Rate : " + hr);
                 if (time == 10)
                     stopMeasure();
             }
@@ -628,6 +628,7 @@ public class DeviceControlActivity extends Activity {
     }
 
     private int measureECG() {
+        displayData("Collecting data...");
         time = 0;
         return WriteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
     }
@@ -642,13 +643,31 @@ public class DeviceControlActivity extends Activity {
         return result;
     }
 
+    private int stopMeasurePW(){
+        BluetoothGattService bluetoothGattService = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
+        BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0005-facebeadaaaa"));
+        mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic1, false);
+        BluetoothGattCharacteristic bluetoothGattCharacteristic2 = bluetoothGattService.getCharacteristic(UUID.fromString("ffacebead-ffff-eeee-0004-facebeadaaaa"));
+        mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic2, false);
+        return stopMeasure();
+    }
+
+    private int stopMeasureECG(){
+        BluetoothGattService bluetoothGattService = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
+        BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0004-facebeadaaaa"));
+        mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic1, false);
+        return stopMeasure();
+    }
+
 
     private int measurePW() {
+        displayData("Collecting data...");
         time = 0;
         return WriteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
     }
 
     private boolean startMeasureHr() {
+        displayData("Collecting data...");
         enableElements(false);
         int result = WriteCommand.measureHr(mBluetoothLeService.getmBluetoothGatt());
         isMeasuring = result == 1;
