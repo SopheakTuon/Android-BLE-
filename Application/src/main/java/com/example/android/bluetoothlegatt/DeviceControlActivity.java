@@ -100,7 +100,9 @@ public class DeviceControlActivity extends Activity {
                 @Override
                 public void run() {
                     displayTimer(timeMeasure + "\'");
-                    if (timeMeasure == 30) {
+                    if (timeMeasure == 29) {
+                        displayData("Calculating result....");
+                    } else if (timeMeasure == 30) {
                         showResultECG();
                     }
                 }
@@ -119,7 +121,9 @@ public class DeviceControlActivity extends Activity {
                 @Override
                 public void run() {
                     displayTimer(timeMeasure + "\'");
-                    if (timeMeasure == 30) {
+                    if (timeMeasure == 29) {
+                        displayData("Calculating result....");
+                    } else if (timeMeasure == 30) {
                         showResultPW();
                     }
                 }
@@ -194,7 +198,7 @@ public class DeviceControlActivity extends Activity {
                         String ecg = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
 //                        Log.d("ECG", ecg);
                         if (ecg != null) {
-                            if (timeMeasure < 30 && isMeasuring) {
+                            if (timeMeasure < 29 && isMeasuring) {
                                 if (ecgDataAllList.size() == 0) {
                                     ecgDataAllList.add(parseECGData(ecg.substring(48)));
                                     ecgDataAllList.add(parseECGData(ecg.substring(36, 47)));
@@ -244,7 +248,7 @@ public class DeviceControlActivity extends Activity {
             } else if (GlobalData.ACTION_MAIN_DATA_PW.equals(action)) {
                 String pw = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_PW);
                 if (pw != null) {
-                    if (timeMeasure < 30 && isMeasuring) {
+                    if (timeMeasure < 29 && isMeasuring) {
                         float pwNumber1;
                         float pwNumber2;
                         float pwNumber3;
@@ -308,7 +312,6 @@ public class DeviceControlActivity extends Activity {
 
 
     };
-
 
 
     private int time = 0;
@@ -800,7 +803,7 @@ public class DeviceControlActivity extends Activity {
             }
         }
 //                        Log.d("ECG", pwString);
-        displayData("PW Data : " + "\n" + pwString);
+        displayData("PW Data" + "\n" + pwString);
         stopMeasurePW();
     }
 
@@ -816,7 +819,7 @@ public class DeviceControlActivity extends Activity {
             }
         }
 //                                Log.d("ECG", ecgString);
-        displayData("ECG Data : " + "\n" + ecgString);
+        displayData("ECG Data" + "\n" + ecgString);
         stopMeasureECG();
     }
 
