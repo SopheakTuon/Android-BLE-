@@ -465,6 +465,29 @@ public class WriteCommand {
         return writeStatus ? 1 : -1;
     }
 
+    public static int measureBr(BluetoothGatt bluetoothGatt) {
+        boolean z = true;
+        Log.i(TAG, "\u547c\u5438\u9891\u7387\u6d4b\u91cf\u6307\u4ee4");
+        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 11, (byte) 21, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+//        int count = 0;
+        boolean writeStatus = false;
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
+        while (!writeStatus) {
+            bluetoothGattCharacteristic.setValue(bytes);
+            writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+//            if (GlobalData.status_Connected) {
+//                if (count > 5000) {
+//                    break;
+//                }
+//                count++;
+//            } else {
+//                return -1;
+//            }
+        }
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        return z ? 1 : -1;
+    }
+
     private static String getNowTime() {
         new Time().setToNow();
         long time = (System.currentTimeMillis() + ((long) Integer.parseInt(TimeUtils.offSetTimeZone()))) / 1000;

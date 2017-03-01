@@ -202,10 +202,73 @@ public class BluetoothLeService extends Service {
             String dataType = data.substring(9, 11);
             Log.v(TAG, "\u6570\u636e\u7c7b\u522b =========== " + dataType);
             if (dataType.equals("32")) {
-                Log.v(TAG, "\u5fc3\u7387 = " + parseSingeData(data));
                 broadcastUpdate(GlobalData.ACTION_MAIN_DATA_HR, parseSingeData(data));
                 return;
             }
+            if (dataType.equals("3B")) {
+//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_MOOD, parseMoodIntData(data));
+                return;
+            }
+//            if (dataType.equals("3C")) {
+//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_FATIGUE, parseMoodIntData(data));
+//                return;
+//            }
+            if (dataType.equals("3D")) {
+                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BREATH, parseBRData(data));
+                return;
+            }
+//            if (dataType.equals("34")) {
+//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_KLL, parseSingeData(data));
+//                return;
+//            }
+//            if (dataType.equals("35")) {
+//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_SLEEP, parseSleepData(data));
+//                return;
+//            }
+//            if (dataType.equals("41")) {
+//                Log.v(TAG, "bp = " + data);
+//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BP, parseBpData(data));
+//                return;
+//            }
+//            if (dataType.equals("42")) {
+//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECG, parseEcgData(data));
+//                return;
+//            }
+//            if (dataType.equals("43")) {
+//                int batteryData = pareseBatteryData(data);
+//                int i = 0;
+//                while (true) {
+//                    int length = GlobalData.low_batery.length;
+//                    if (i >= r0) {
+//                        GlobalData.POWER_BATTERY = batteryData;
+//                        long j = (long) batteryData;
+//                        broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BATTERY_POWER, j);
+//                        return;
+//                    }
+//                    if (batteryData == GlobalData.low_batery[i]) {
+//                        String replace = getResources().getString(C0328R.string.notification_lowbatery).replace("{0}", new StringBuilder(String.valueOf(batteryData)).toString());
+//                        MyApplication.Notification(getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.app_name), replace, GlobalData.notification_count_lowbetery, 6);
+//                    }
+//                    i++;
+//                }
+//            } else {
+//                if (dataType.equals("24")) {
+//                    GlobalData.notification_count_sos++;
+//                    MyApplication.Notification(getResources().getString(C0328R.string.new_message_coming), getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.helo_had_send_a_sos), GlobalData.notification_count_sos, 2);
+//                    broadcastUpdate(GlobalData.ACTION_GATT_SOS);
+//                    return;
+//                }
+//                if (dataType.equals("45")) {
+//                    Log.d("sqs", "\u8bbe\u5907\u53d1\u6765 LED  result = " + data);
+//                    if (data != null) {
+//                        String substring = data.substring(15, 17);
+//                        Log.d("sqs", "\u8bbe\u5907\u53d1\u6765 LED substring = " + substring);
+//                        if ("01".equals(substring)) {
+//                            broadcastUpdate(GlobalData.LEDCONTORLLSUCCESS);
+//                        }
+//                    }
+//                }
+//            }
         }
 
     }
@@ -213,6 +276,12 @@ public class BluetoothLeService extends Service {
     private String parseSingeData(String data) {
         String dataStr = data.substring(27, 38);
         return new StringBuilder(String.valueOf((long) Integer.parseInt(dataStr.substring(9, 11) + dataStr.substring(6, 8) + dataStr.substring(3, 5) + dataStr.substring(0, 2), 16))).toString();
+    }
+
+    private String parseBRData(String data) {
+        String dataStr = data.substring(27, 29);
+        Log.v(TAG, "BR DATA = " + dataStr);
+        return new StringBuilder(String.valueOf((long) Integer.parseInt(dataStr, 16))).toString();
     }
 
 

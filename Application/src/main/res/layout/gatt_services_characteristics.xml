@@ -129,7 +129,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Heart Rate"
+            android:text="HR"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/buttonBreathRate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="BR"
             android:visibility="visible" />
     </LinearLayout>
 </LinearLayout>

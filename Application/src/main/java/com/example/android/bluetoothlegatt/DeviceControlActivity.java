@@ -77,7 +77,7 @@ public class DeviceControlActivity extends Activity {
 //    private final String LIST_NAME = "NAME";
 //    private final String LIST_UUID = "UUID";
 
-    private Button buttonECG, buttonPW, buttonHeart;
+    private Button buttonECG, buttonPW, buttonHeart, buttonBreathRate;
 
     private boolean isMeasuring;
 
@@ -260,11 +260,18 @@ public class DeviceControlActivity extends Activity {
                 time++;
                 String hr = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_HR);
                 displayData("Heart Rate : " + hr);
-                if (time == 10)
+                if (time == 20)
+                    stopMeasure();
+            } else if (GlobalData.ACTION_MAIN_DATA_BREATH.equals(action)) {
+                time++;
+                String br = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_BREATH);
+                displayData("Breath Rate : " + br);
+                if (time == 20)
                     stopMeasure();
             }
         }
     };
+
     private int time = 0;
     public static final int TIME_DONE = 300;
 
@@ -369,6 +376,7 @@ public class DeviceControlActivity extends Activity {
                 buttonECG.setEnabled(enable);
                 buttonPW.setEnabled(enable);
                 buttonHeart.setEnabled(enable);
+                buttonBreathRate.setEnabled(enable);
             }
         });
     }
@@ -391,6 +399,7 @@ public class DeviceControlActivity extends Activity {
         buttonECG = (Button) findViewById(R.id.buttonPair);
         buttonPW = (Button) findViewById(R.id.buttonTurnOff);
         buttonHeart = (Button) findViewById(R.id.buttonHeart);
+        buttonBreathRate = (Button) findViewById(R.id.buttonBreathRate);
         enableElements(false);
     }
 
@@ -423,7 +432,25 @@ public class DeviceControlActivity extends Activity {
         buttonHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startMeasureHr();
+                if (isMeasuring) {
+                    stopMeasure();
+                    enableElements(true);
+                } else {
+                    isMeasuring = startMeasureHr() == 1;
+                    enableElements(false);
+                }
+            }
+        });
+        buttonBreathRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isMeasuring) {
+                    stopMeasure();
+                    enableElements(true);
+                } else {
+                    isMeasuring = startMeasureBR() == 1;
+                    enableElements(false);
+                }
             }
         });
     }
@@ -642,6 +669,16 @@ public class DeviceControlActivity extends Activity {
     }
 
     /**
+     * Get ECG Breath Rate
+     *
+     * @return return 1 : -1;
+     */
+    private int startMeasureBR() {
+        displayData("Collecting data...");
+        return WriteCommand.measureBr(mBluetoothLeService.getmBluetoothGatt());
+    }
+
+    /**
      * Stop measure
      *
      * @return
@@ -691,6 +728,7 @@ public class DeviceControlActivity extends Activity {
 
     /**
      * Measure PW
+     *
      * @return return 1 : -1
      */
     private int measurePW() {
@@ -699,12 +737,12 @@ public class DeviceControlActivity extends Activity {
         return WriteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
     }
 
-    private boolean startMeasureHr() {
+    private int startMeasureHr() {
         displayData("Collecting data...");
         enableElements(false);
         int result = WriteCommand.measureHr(mBluetoothLeService.getmBluetoothGatt());
         isMeasuring = result == 1;
-        return result == 1;
+        return result;
     }
 
 
@@ -719,6 +757,7 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK);
         intentFilter.addAction(ACTION_GATT_DEVICE_BIND_REQUEST);
         intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_HR);
+        intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_BREATH);
         return intentFilter;
     }
 
