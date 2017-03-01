@@ -207,6 +207,7 @@ public class BluetoothLeService extends Service {
                 return;
             }
         }
+
     }
 
     private String parseSingeData(String data) {
