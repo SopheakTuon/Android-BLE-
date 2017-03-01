@@ -197,10 +197,10 @@ public class BluetoothLeService extends Service {
     }
 
     private void sendDataBroadcast(String data) {
-        Log.v(TAG, "210 \u53d1\u9001\u5e7f\u64ad\u7684\u6570\u636e = " + data);
+        Log.v(TAG, "Send Data = " + data);
         if (!data.equals("CF")) {
             String dataType = data.substring(9, 11);
-            Log.v(TAG, "\u6570\u636e\u7c7b\u522b =========== " + dataType);
+            Log.v(TAG, "Data Type =========== " + dataType);
             if (dataType.equals("32")) {
                 broadcastUpdate(GlobalData.ACTION_MAIN_DATA_HR, parseSingeData(data));
                 return;

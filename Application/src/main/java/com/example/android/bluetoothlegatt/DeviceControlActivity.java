@@ -257,17 +257,13 @@ public class DeviceControlActivity extends Activity {
                 }
 
             } else if (GlobalData.ACTION_MAIN_DATA_HR.equals(action)) {
-                time++;
                 String hr = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_HR);
                 displayData("Heart Rate : " + hr);
-                if (time == 5)
-                    stopMeasure();
+                stopMeasure();
             } else if (GlobalData.ACTION_MAIN_DATA_BREATH.equals(action)) {
-                time++;
                 String br = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_BREATH);
                 displayData("Breath Rate : " + br);
-                if (time == 5)
-                    stopMeasure();
+                stopMeasure();
             }
         }
     };
