@@ -81,7 +81,7 @@ public class DeviceControlActivity extends Activity {
 
     private boolean isMeasuring;
 
-    private static int timeMeasure = 30;
+    private static int timeMeasure = 0;
 
     private Handler handler = new Handler();
     private Runnable runnableECG;
@@ -94,16 +94,14 @@ public class DeviceControlActivity extends Activity {
         @Override
         public void run() {
             handler.postDelayed(runnableECG, 1000);
-            timeMeasure--;
+            timeMeasure++;
             Log.d("Time", "==== Time ==== : " + timeMeasure);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     displayTimer(timeMeasure + "\'");
-                    if (timeMeasure == 0) {
+                    if (timeMeasure == 30) {
                         showResultECG();
-                    } else if (timeMeasure == 1) {
-                        displayData("Please, Waiting collect data...");
                     }
                 }
             });
@@ -115,16 +113,14 @@ public class DeviceControlActivity extends Activity {
         @Override
         public void run() {
             handler.postDelayed(runnablePW, 1000);
-            timeMeasure--;
+            timeMeasure++;
             Log.d("Time", "==== Time ==== : " + timeMeasure);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     displayTimer(timeMeasure + "\'");
-                    if (timeMeasure == 0) {
+                    if (timeMeasure == 30) {
                         showResultPW();
-                    } else if (timeMeasure == 1) {
-                        displayData("Please, Waiting collect data...");
                     }
                 }
             });
@@ -198,9 +194,7 @@ public class DeviceControlActivity extends Activity {
                         String ecg = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
 //                        Log.d("ECG", ecg);
                         if (ecg != null) {
-                            time++;
-//                            Log.d("sqs", "time ==== " + time);
-                            if (timeMeasure > 0 && isMeasuring) {
+                            if (timeMeasure < 30 && isMeasuring) {
                                 if (ecgDataAllList.size() == 0) {
                                     ecgDataAllList.add(parseECGData(ecg.substring(48)));
                                     ecgDataAllList.add(parseECGData(ecg.substring(36, 47)));
@@ -250,9 +244,7 @@ public class DeviceControlActivity extends Activity {
             } else if (GlobalData.ACTION_MAIN_DATA_PW.equals(action)) {
                 String pw = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_PW);
                 if (pw != null) {
-                    time++;
-//                    Log.d("sqs", "time ==== " + time);
-                    if (timeMeasure > 0 && isMeasuring) {
+                    if (timeMeasure < 30 && isMeasuring) {
                         float pwNumber1;
                         float pwNumber2;
                         float pwNumber3;
@@ -298,10 +290,6 @@ public class DeviceControlActivity extends Activity {
                         }
                         displayData(pw);
                     }
-//                    else if (time == TIME_DONE) {
-//                        showResultPW();
-//                    }
-
                 }
 
             } else if (GlobalData.ACTION_MAIN_DATA_HR.equals(action)) {
@@ -321,37 +309,7 @@ public class DeviceControlActivity extends Activity {
 
     };
 
-    private void showResultPW() {
-        if (handler != null && runnablePW != null)
-            handler.removeCallbacks(runnablePW);
-        String pwString = "[";
-        for (int i = 0; i < pwDataAllList.size(); i++) {
-            if (i == pwDataAllList.size() - 1) {
-                pwString += pwDataAllList.get(i) + "]";
-            } else {
-                pwString += pwDataAllList.get(i) + ", ";
-            }
-        }
-//                        Log.d("ECG", pwString);
-        displayData("PW Data : " + "\n" + pwString);
-        stopMeasurePW();
-    }
 
-    private void showResultECG() {
-        if (handler != null && runnableECG != null)
-            handler.removeCallbacks(runnableECG);
-        String ecgString = "[";
-        for (int i = 0; i < ecgDataAllList.size(); i++) {
-            if (i == ecgDataAllList.size() - 1) {
-                ecgString += ecgDataAllList.get(i) + "]";
-            } else {
-                ecgString += ecgDataAllList.get(i) + ", ";
-            }
-        }
-//                                Log.d("ECG", ecgString);
-        displayData("ECG Data : " + "\n" + ecgString);
-        stopMeasureECG();
-    }
 
     private int time = 0;
     public static final int TIME_DONE = 300;
@@ -460,19 +418,6 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
-    private String byeteToString(byte[] bytes) {
-        String s = "[";
-        for (int i = 0; i < bytes.length; i++) {
-            if (i == bytes.length - 1) {
-                s += bytes[i] + "]";
-            } else {
-                s += bytes[i] + ",";
-            }
-
-        }
-        return s;
-    }
-
 
     private void init() {
         buttonECG = (Button) findViewById(R.id.buttonPair);
@@ -490,7 +435,7 @@ public class DeviceControlActivity extends Activity {
                     stopMeasure();
                     enableElements(true);
                 } else {
-                    isMeasuring = measureECG() == 1;
+                    isMeasuring = startMeasureECG() == 1;
                     enableElements(false);
                 }
             }
@@ -503,7 +448,7 @@ public class DeviceControlActivity extends Activity {
                     stopMeasure();
                     enableElements(true);
                 } else {
-                    isMeasuring = measurePW() == 1;
+                    isMeasuring = startMeasurePW() == 1;
                     enableElements(false);
                 }
             }
@@ -753,9 +698,9 @@ public class DeviceControlActivity extends Activity {
      *
      * @return return 1 : - 1
      */
-    private int measureECG() {
+    private int startMeasureECG() {
         isHR = false;
-        displayData("Collecting data...");
+        displayData("Collecting ECG data...");
         runnableECG = new MeasureECGRunnable();
         handler.post(runnableECG);
         return WriteCommand.measureECG(mBluetoothLeService.getmBluetoothGatt());
@@ -768,8 +713,31 @@ public class DeviceControlActivity extends Activity {
      */
     private int startMeasureBR() {
         isHR = false;
-        displayData("Collecting data...");
+        displayData("Collecting BR data...");
         return WriteCommand.measureBr(mBluetoothLeService.getmBluetoothGatt());
+    }
+
+    /**
+     * Measure PW
+     *
+     * @return return 1 : -1
+     */
+    private int startMeasurePW() {
+        isHR = false;
+        displayData("Collecting PW data...");
+        runnablePW = new MeasurePWRunnable();
+        handler.post(runnablePW);
+        time = 0;
+        return WriteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
+    }
+
+    private int startMeasureHr() {
+        isHR = true;
+        displayData("Collecting data...");
+        enableElements(false);
+        int result = WriteCommand.measureHr(mBluetoothLeService.getmBluetoothGatt());
+        isMeasuring = result == 1;
+        return result;
     }
 
     /**
@@ -779,7 +747,7 @@ public class DeviceControlActivity extends Activity {
      */
     private int stopMeasure() {
         time = 0;
-        timeMeasure = 30;
+        timeMeasure = 0;
         isMeasuring = false;
         enableElements(true);
         int result = WriteCommand.stopMeasuring(mBluetoothLeService.getmBluetoothGatt());
@@ -820,30 +788,37 @@ public class DeviceControlActivity extends Activity {
         return stopMeasure();
     }
 
-
-    /**
-     * Measure PW
-     *
-     * @return return 1 : -1
-     */
-    private int measurePW() {
-        isHR = false;
-        displayData("Collecting data...");
-        runnablePW = new MeasurePWRunnable();
-        handler.post(runnablePW);
-        time = 0;
-        return WriteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
+    private void showResultPW() {
+        if (handler != null && runnablePW != null)
+            handler.removeCallbacks(runnablePW);
+        String pwString = "[";
+        for (int i = 0; i < pwDataAllList.size(); i++) {
+            if (i == pwDataAllList.size() - 1) {
+                pwString += pwDataAllList.get(i) + "]";
+            } else {
+                pwString += pwDataAllList.get(i) + ", ";
+            }
+        }
+//                        Log.d("ECG", pwString);
+        displayData("PW Data : " + "\n" + pwString);
+        stopMeasurePW();
     }
 
-    private int startMeasureHr() {
-        isHR = true;
-        displayData("Collecting data...");
-        enableElements(false);
-        int result = WriteCommand.measureHr(mBluetoothLeService.getmBluetoothGatt());
-        isMeasuring = result == 1;
-        return result;
+    private void showResultECG() {
+        if (handler != null && runnableECG != null)
+            handler.removeCallbacks(runnableECG);
+        String ecgString = "[";
+        for (int i = 0; i < ecgDataAllList.size(); i++) {
+            if (i == ecgDataAllList.size() - 1) {
+                ecgString += ecgDataAllList.get(i) + "]";
+            } else {
+                ecgString += ecgDataAllList.get(i) + ", ";
+            }
+        }
+//                                Log.d("ECG", ecgString);
+        displayData("ECG Data : " + "\n" + ecgString);
+        stopMeasureECG();
     }
-
 
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
