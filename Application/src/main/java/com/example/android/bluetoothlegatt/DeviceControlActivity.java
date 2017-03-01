@@ -132,9 +132,15 @@ public class DeviceControlActivity extends Activity {
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             } else if (GlobalData.ACTION_GATT_DEVICE_MATCH_ACK.equals(action) || GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
-                new Handler().postDelayed(new Bind(), 500);
-                new Handler().postDelayed(new SecondMatch(), 50);
-                enableElements(true);
+                new Handler().postDelayed(new Bind(), 200);
+                new Handler().postDelayed(new SecondMatch(), 300);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        enableElements(true);
+                    }
+                }, 500);
+
             } else if (GlobalData.ACTION_MAIN_DATA_ECGALLDATA.equals(action)) {
                 runOnUiThread(new Runnable() {
                     @Override

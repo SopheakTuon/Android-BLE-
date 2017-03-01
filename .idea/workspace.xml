@@ -17,8 +17,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/BluetoothLeService.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/BluetoothLeService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$10.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$10.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$2$1.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$2$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$2.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$3.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$3.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$4.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/DeviceControlActivity$4.class" />
@@ -36,7 +36,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/outputs/apk/Application-debug.apk" afterPath="$PROJECT_DIR$/Application/build/outputs/apk/Application-debug.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/incremental/packageDebug/dex-renamer-state.txt" afterPath="$PROJECT_DIR$/Application/build/intermediates/incremental/packageDebug/dex-renamer-state.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/BluetoothLeService.java" afterPath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/BluetoothLeService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java" afterPath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java" />
     </list>
     <ignored path="Android-BLE-.iws" />
@@ -83,16 +82,18 @@
       <file leaf-file-name="DeviceControlActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="265" column="30" selection-start-line="265" selection-start-column="30" selection-end-line="265" selection-end-column="30" />
+            <state relative-caret-position="387">
+              <caret line="141" column="24" selection-start-line="141" selection-start-column="24" selection-end-line="141" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4575#15371#0" expanded="true" />
-                <element signature="e#15370#15371#0" expanded="true" />
-                <element signature="e#22090#22461#0" expanded="true" />
-                <element signature="e#22460#22461#0" expanded="true" />
-                <element signature="e#22508#22879#0" expanded="true" />
-                <element signature="e#22878#22879#0" expanded="true" />
+                <element signature="e#4575#15557#0" expanded="true" />
+                <element signature="e#5990#6162#0" expanded="true" />
+                <element signature="e#6161#6162#0" expanded="true" />
+                <element signature="e#15556#15557#0" expanded="true" />
+                <element signature="e#22276#22647#0" expanded="true" />
+                <element signature="e#22646#22647#0" expanded="true" />
+                <element signature="e#22694#23065#0" expanded="true" />
+                <element signature="e#23064#23065#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2157,7 +2158,7 @@
     <property name="DEBUGGABLE_PROCESS" value="com.example.android.bluetoothlegatt" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="DEBUGGER_ID" value="Auto" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java&#10;Wr&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/WriteCommand.java&#10;Dev&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.DeviceControlActivity&#10;D&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java&#10;My&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/myapp/MyApplication.java&#10;Bl&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/BluetoothLeService.java&#10;Devi&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceScanActivity.java&#10;Mul&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/MultiByteCommand.java&#10;wr&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/ble/WriteToDevice.java&#10;Ble&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/ble/BleService.java&#10;BluetoothCh&#9;PSI&#9;JAVA://android.bluetooth.BluetoothGattCharacteristic" />
+    <property name="SearchEverywhereHistoryKey" value="D&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.DeviceControlActivity&#10;Wr&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/WriteCommand.java&#10;Dev&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.DeviceControlActivity&#10;My&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/myapp/MyApplication.java&#10;Bl&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/BluetoothLeService.java&#10;Devi&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceScanActivity.java&#10;Mul&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/MultiByteCommand.java&#10;wr&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/ble/WriteToDevice.java&#10;Ble&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/ble/BleService.java&#10;BluetoothCh&#9;PSI&#9;JAVA://android.bluetooth.BluetoothGattCharacteristic" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
   </component>
   <component name="RecentsManager">
@@ -2531,13 +2532,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java</url>
-          <line>672</line>
+          <line>678</line>
           <properties />
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java</url>
-          <line>673</line>
+          <line>679</line>
           <properties />
           <option name="timeStamp" value="75" />
         </line-breakpoint>
@@ -2556,12 +2557,14 @@
           <caret line="387" column="74" selection-start-line="387" selection-start-column="74" selection-end-line="387" selection-end-column="74" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4575#15371#0" expanded="true" />
-            <element signature="e#15370#15371#0" expanded="true" />
-            <element signature="e#22090#22461#0" expanded="true" />
-            <element signature="e#22460#22461#0" expanded="true" />
-            <element signature="e#22508#22879#0" expanded="true" />
-            <element signature="e#22878#22879#0" expanded="true" />
+            <element signature="e#4575#15557#0" expanded="true" />
+            <element signature="e#5990#6162#0" expanded="true" />
+            <element signature="e#6161#6162#0" expanded="true" />
+            <element signature="e#15556#15557#0" expanded="true" />
+            <element signature="e#22276#22647#0" expanded="true" />
+            <element signature="e#22646#22647#0" expanded="true" />
+            <element signature="e#22694#23065#0" expanded="true" />
+            <element signature="e#23064#23065#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2637,12 +2640,14 @@
           <caret line="148" column="98" selection-start-line="148" selection-start-column="94" selection-end-line="148" selection-end-column="98" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4575#15371#0" expanded="true" />
-            <element signature="e#15370#15371#0" expanded="true" />
-            <element signature="e#22090#22461#0" expanded="true" />
-            <element signature="e#22460#22461#0" expanded="true" />
-            <element signature="e#22508#22879#0" expanded="true" />
-            <element signature="e#22878#22879#0" expanded="true" />
+            <element signature="e#4575#15557#0" expanded="true" />
+            <element signature="e#5990#6162#0" expanded="true" />
+            <element signature="e#6161#6162#0" expanded="true" />
+            <element signature="e#15556#15557#0" expanded="true" />
+            <element signature="e#22276#22647#0" expanded="true" />
+            <element signature="e#22646#22647#0" expanded="true" />
+            <element signature="e#22694#23065#0" expanded="true" />
+            <element signature="e#23064#23065#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3174,16 +3179,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceControlActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="265" column="30" selection-start-line="265" selection-start-column="30" selection-end-line="265" selection-end-column="30" />
+        <state relative-caret-position="387">
+          <caret line="141" column="24" selection-start-line="141" selection-start-column="24" selection-end-line="141" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4575#15371#0" expanded="true" />
-            <element signature="e#15370#15371#0" expanded="true" />
-            <element signature="e#22090#22461#0" expanded="true" />
-            <element signature="e#22460#22461#0" expanded="true" />
-            <element signature="e#22508#22879#0" expanded="true" />
-            <element signature="e#22878#22879#0" expanded="true" />
+            <element signature="e#4575#15557#0" expanded="true" />
+            <element signature="e#5990#6162#0" expanded="true" />
+            <element signature="e#6161#6162#0" expanded="true" />
+            <element signature="e#15556#15557#0" expanded="true" />
+            <element signature="e#22276#22647#0" expanded="true" />
+            <element signature="e#22646#22647#0" expanded="true" />
+            <element signature="e#22694#23065#0" expanded="true" />
+            <element signature="e#23064#23065#0" expanded="true" />
           </folding>
         </state>
       </provider>
