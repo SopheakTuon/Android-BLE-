@@ -1,4 +1,4 @@
-#Wed Mar 01 11:54:01 ICT 2017
+#Wed Mar 01 15:39:18 ICT 2017
 base.0=D\:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
 file.0=D\:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
