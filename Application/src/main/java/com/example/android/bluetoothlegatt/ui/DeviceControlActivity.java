@@ -197,6 +197,7 @@ public class DeviceControlActivity extends Activity {
                 } else {
                     WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 0);
                 }
+                new Handler().postDelayed(new Bind(), 1500);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
