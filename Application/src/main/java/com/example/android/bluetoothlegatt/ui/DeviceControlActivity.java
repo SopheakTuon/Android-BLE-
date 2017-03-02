@@ -504,7 +504,11 @@ public class DeviceControlActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unBindDevice();
+        try {
+            unBindDevice();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         unbindService(mServiceConnection);
         mBluetoothLeService = null;
     }
@@ -695,7 +699,7 @@ public class DeviceControlActivity extends Activity {
     /**
      * @return return 1 : - 1
      */
-    private int unBindDevice() {
+    private int unBindDevice() throws Exception {
         return WriteCommand.unbindDevice(mBluetoothLeService.getmBluetoothGatt());
     }
 
@@ -729,12 +733,20 @@ public class DeviceControlActivity extends Activity {
      * @return return 1 : -1
      */
     private int startMeasurePW() {
-        isHR = false;
-        displayData("Collecting PW data...");
-        runnablePW = new MeasurePWRunnable();
-        handler.post(runnablePW);
-        time = 0;
-        return WriteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
+        int result = -1;
+        try {
+            result = WriteCommand.measurePW(mBluetoothLeService.getmBluetoothGatt());
+            isHR = false;
+            displayData("Collecting PW data...");
+            runnablePW = new MeasurePWRunnable();
+            handler.post(runnablePW);
+            time = 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            enableElements(true);
+            return -1;
+        }
+        return result;
     }
 
     private int startMeasureHr() {
@@ -760,8 +772,7 @@ public class DeviceControlActivity extends Activity {
         /**
          * Turn off notification of PW
          */
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
-        mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic, false);
+
         return result;
     }
 
@@ -774,6 +785,8 @@ public class DeviceControlActivity extends Activity {
         /**
          * Turn off notification of PW
          */
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
+        mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic, false);
         BluetoothGattService bluetoothGattService = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
         BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0005-facebeadaaaa"));
         mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic1, false);
@@ -788,13 +801,17 @@ public class DeviceControlActivity extends Activity {
      * @return
      */
     private int stopMeasureECG() {
+        int restult = stopMeasure();
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
+        mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic, false);
         BluetoothGattService bluetoothGattService = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa"));
         BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0004-facebeadaaaa"));
         mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic1, false);
-        return stopMeasure();
+        return restult;
     }
 
     private void showResultPW() {
+        stopMeasurePW();
         if (handler != null && runnablePW != null)
             handler.removeCallbacks(runnablePW);
         String pwString = "[";
@@ -807,10 +824,11 @@ public class DeviceControlActivity extends Activity {
         }
 //                        Log.d("ECG", pwString);
         displayData("PW Data" + "\n" + pwString);
-        stopMeasurePW();
+
     }
 
     private void showResultECG() {
+        stopMeasureECG();
         if (handler != null && runnableECG != null)
             handler.removeCallbacks(runnableECG);
         String ecgString = "[";
@@ -823,7 +841,7 @@ public class DeviceControlActivity extends Activity {
         }
 //                                Log.d("ECG", ecgString);
         displayData("ECG Data" + "\n" + ecgString);
-        stopMeasureECG();
+
     }
 
     private static IntentFilter makeGattUpdateIntentFilter() {
