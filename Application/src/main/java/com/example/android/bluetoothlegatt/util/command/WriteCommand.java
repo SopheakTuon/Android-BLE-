@@ -393,11 +393,11 @@ public class WriteCommand {
             }
 
             if (writeStatus) {
-                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
                 BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0005-facebeadaaaa"));
                 bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic1, true);
                 BluetoothGattCharacteristic bluetoothGattCharacteristic2 = bluetoothGattService.getCharacteristic(UUID.fromString("ffacebead-ffff-eeee-0004-facebeadaaaa"));
                 bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic2, true);
+                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
             }
             Log.i(TAG, "result of PPG Measurement CMD£ºwriteStatus = " + writeStatus);
             return writeStatus ? 1 : -1;
