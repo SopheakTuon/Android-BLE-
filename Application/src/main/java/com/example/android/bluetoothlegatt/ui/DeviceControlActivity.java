@@ -186,6 +186,9 @@ public class DeviceControlActivity extends Activity {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             } else if (Constants.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
 //                new Handler().postDelayed(new Bind(), 200);
+                /**
+                 * After Match
+                 */
                 long data = intent.getLongExtra(action, -1);
                 if (data == 1) {
                     new Handler().postDelayed(new UpdateNewDateTimeRunnable(), 500);
@@ -205,6 +208,9 @@ public class DeviceControlActivity extends Activity {
                     }
                 }, 2000);
             } else if (Constants.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
+                /**
+                 * Before Match
+                 */
                 WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 0);
                 new Handler().postDelayed(new Bind(), 1000);
                 int done = WriteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
