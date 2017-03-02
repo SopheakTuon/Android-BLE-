@@ -40,8 +40,6 @@ import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
 import com.example.android.bluetoothlegatt.R;
-import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
-import com.example.android.bluetoothlegatt.ble.WriteToDevice;
 import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.service.BluetoothLeService;
 import com.example.android.bluetoothlegatt.util.HexUtil;
@@ -722,7 +720,7 @@ public class DeviceControlActivity extends Activity {
      * @return return 1 : -1
      */
     private int matchInfo() {
-        return WriteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
+        return WriteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), WriteCommand.bytesToHexString(BluetoothLeService.getSelfBlueMac(DeviceControlActivity.this)));
     }
 
     private int initDeviceLoadCode() {
