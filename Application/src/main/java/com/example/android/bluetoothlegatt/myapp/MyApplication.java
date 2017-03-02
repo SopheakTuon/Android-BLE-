@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.android.bluetoothlegatt.BufferRecycler;
 import com.example.android.bluetoothlegatt.DeviceItem;
-import com.example.android.bluetoothlegatt.GlobalData;
+import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.PrefUtils;
 import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.LinkBleDevice;
@@ -73,22 +73,22 @@ public class MyApplication extends Application {
 
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
-                if (GlobalData.ACTION_SERVICE_GATT_CONNECTED.equals(action)) {
-                    BleServiceHelper.sendBroadcast(context, GlobalData.DEVICE_CONN);
-                } else if (GlobalData.ACTION_SERVICE_GATT_DISCONNECTED.equals(action)) {
+                if (Constants.ACTION_SERVICE_GATT_CONNECTED.equals(action)) {
+                    BleServiceHelper.sendBroadcast(context, Constants.DEVICE_CONN);
+                } else if (Constants.ACTION_SERVICE_GATT_DISCONNECTED.equals(action)) {
                     MyApplication.toCloseAndReSearch();
-                } else if (GlobalData.ACTION_SERVICE_GATT_DISCOVERED.equals(action)) {
+                } else if (Constants.ACTION_SERVICE_GATT_DISCOVERED.equals(action)) {
                     MyApplication.stopAck();
-                    GlobalData.status_Connected = true;
-                    BleServiceHelper.sendBroadcast(context, GlobalData.BLE_SERVICE);
-                } else if (GlobalData.ACTION_GATT_SOS.equals(action)) {
-                    BleServiceHelper.sendBroadcast(context, GlobalData.BLE_SOS);
-                } else if (GlobalData.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
-                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.CLOSE_SEARCH_DIALOG);
-                    BleServiceHelper.sendBroadcast(context, GlobalData.BLE_MATCH, intent.getLongExtra(action, -1));
-                } else if (GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
-                    BleServiceHelper.sendBroadcast(context, GlobalData.BLE_BOND_REQUEST);
-                } else if ((GlobalData.BLUETOOTH_STATE_CHANGED.equals(action) || GlobalData.BLUETOOTH_ACTION.equals(action)) && !GlobalData.isRequest) {
+                    Constants.status_Connected = true;
+                    BleServiceHelper.sendBroadcast(context, Constants.BLE_SERVICE);
+                } else if (Constants.ACTION_GATT_SOS.equals(action)) {
+                    BleServiceHelper.sendBroadcast(context, Constants.BLE_SOS);
+                } else if (Constants.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
+                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.CLOSE_SEARCH_DIALOG);
+                    BleServiceHelper.sendBroadcast(context, Constants.BLE_MATCH, intent.getLongExtra(action, -1));
+                } else if (Constants.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
+                    BleServiceHelper.sendBroadcast(context, Constants.BLE_BOND_REQUEST);
+                } else if ((Constants.BLUETOOTH_STATE_CHANGED.equals(action) || Constants.BLUETOOTH_ACTION.equals(action)) && !Constants.isRequest) {
                     MyApplication.switchServiceByBleStatus();
                 }
             }
@@ -100,37 +100,37 @@ public class MyApplication extends Application {
             }
 
             public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-                if (!GlobalData.status_Scanning) {
-                    Log.i(MyApplication.TAG, "506 GlobalData.isScanning = " + GlobalData.status_Scanning);
+                if (!Constants.status_Scanning) {
+                    Log.i(MyApplication.TAG, "506 Constants.isScanning = " + Constants.status_Scanning);
                 } else if (rssi < -100) {
                     Log.i(MyApplication.TAG, "510 \u5c11\u4e8e-100\u7684\u4fe1\u53f7\u5254\u9664 rssi = " + rssi);
                 } else if (device.getName() == null) {
                     Log.i(MyApplication.TAG, "514 device.getName() = " + device.getName());
                 } else {
                     Log.i(MyApplication.TAG, "522 \u641c\u7d22\u5230\u8bbe\u5907: MAC = " + device.getAddress() + " NAME = " + device.getName());
-                    String MAC_SP = PrefUtils.getString(MyApplication.mApplication, GlobalData.DEVICE_TARGET_MAC, "");
+                    String MAC_SP = PrefUtils.getString(MyApplication.mApplication, Constants.DEVICE_TARGET_MAC, "");
                     Log.i(MyApplication.TAG, "\u76ee\u6807\u8bbe\u5907MAC\uff1a = " + MAC_SP);
                     if (!MAC_SP.equals("")) {
                         Log.i(MyApplication.TAG, "551 \u7ed1\u5b9a\u8fc7\u8bbe\u5907 \u5f00\u59cb\u68c0\u67e5\u5f53\u524d\u641c\u7d22\u5230\u7684\u8bbe\u5907\u662f\u5426\u4e3a\u6307\u5b9a\u76ee\u6807");
                         if (!MAC_SP.equals(device.getAddress())) {
                             Log.i(MyApplication.TAG, "690 \u641c\u7d22\u5230\u8bbe\u5907\u4e0d\u662f\u7ed1\u5b9a\u7684\u76ee\u6807\u8bbe\u5907--\u7ee7\u7eed\u641c\u7d22");
-                        } else if (device.getName().equals(GlobalData.DEVICE_NAME) || device.getName().equals(GlobalData.DEVICE_SUBNAME1) || device.getName().equals(GlobalData.DEVICE_SUBNAME2)) {
+                        } else if (device.getName().equals(Constants.DEVICE_NAME) || device.getName().equals(Constants.DEVICE_SUB_NAME1) || device.getName().equals(Constants.DEVICE_SUB_NAME2)) {
                             Log.i(MyApplication.TAG, "679 \u5f53\u524d\u641c\u7d22\u5230\u7684\u8bbe\u5907\u4e3a\u76ee\u6807\u8bbe\u5907  \u5f00\u59cb\u8fde\u63a5\u5e76\u5173\u95ed\u641c\u7d22");
-                            GlobalData.TOP_MAC = device.getAddress();
-                            GlobalData.status_Connecting = true;
+                            Constants.TOP_MAC = device.getAddress();
+                            Constants.status_Connecting = true;
                             MyApplication.stopScanLeDevice();
-                            BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.BLE_CONNECTING);
+                            BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.BLE_CONNECTING);
                             MyApplication.mList_Devices.clear();
                         } else {
                             Log.i(MyApplication.TAG, "686 \u5f53\u524d\u641c\u7d22\u5230\u7684\u8bbe\u5907\u4e0d\u662f\u76ee\u6807\u8bbe\u5907--\u7ee7\u7eed\u641c\u7d22");
                         }
-                    } else if (device.getName().equals(GlobalData.DEVICE_NAME) || device.getName().equals(GlobalData.DEVICE_SUBNAME1) || device.getName().equals(GlobalData.DEVICE_SUBNAME2)) {
+                    } else if (device.getName().equals(Constants.DEVICE_NAME) || device.getName().equals(Constants.DEVICE_SUB_NAME1) || device.getName().equals(Constants.DEVICE_SUB_NAME2)) {
                         Log.i(MyApplication.TAG, "695 \u672a\u7ed1\u5b9a\u8bbe\u5907 \u641c\u7d22\u5230\u7684\u8bbe\u5907\u4e3a\u65b0\u7684\u8bbe\u5907 \u52a0\u5165\u641c\u7d22\u5230\u7684\u8bbe\u5907\u5217\u8868");
                         DeviceItem item = new DeviceItem();
                         item.setDeviceMac(device.getAddress());
                         item.setRssi(rssi);
                         MyApplication.mList_Devices.add(item);
-                        GlobalData.TOP_MAC = "";
+                        Constants.TOP_MAC = "";
                     }
                 }
             }
@@ -154,16 +154,16 @@ public class MyApplication extends Application {
 
             public void run() {
                 MyApplication.upDateTimeHandler.removeCallbacks(MyApplication.updateTime);
-                if (!GlobalData.status_Connected || !GlobalData.isFirmWorkVersionInfo) {
+                if (!Constants.status_Connected || !Constants.isFirmWorkVersionInfo) {
                     Log.i("sqs", "\u540c\u6b65\u65f6\u95f4\u5ef6\u65f6\u5e94\u7b54\u5230  \u8bbe\u5907\u5339\u914d\u5931\u8d25 \u65ad\u5f00\u91cd\u641c");
-                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.DEVICE_DISCONN);
+                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.DEVICE_DISCONNECT);
                     MyApplication.linkDevice.unBindBleService(MyApplication.mApplication);
                     boolean stopBleService = MyApplication.linkDevice.stopBleService(MyApplication.mApplication);
                     Log.i(MyApplication.TAG, "609 \u5173\u95ed\u84dd\u7259\u8fd4\u56de\u7ed3\u679c stopBleService = " + stopBleService);
                     if (stopBleService) {
-                        GlobalData.status_Connecting = false;
-                        GlobalData.status_Connected = false;
-                        BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.BLE_RESEARCH);
+                        Constants.status_Connecting = false;
+                        Constants.status_Connected = false;
+                        BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.BLE_RESEARCH);
                     }
                 }
             }
@@ -176,19 +176,19 @@ public class MyApplication extends Application {
 
             public void run() {
                 MyApplication.mMatchHandler.removeCallbacks(MyApplication.matchTime);
-                if (GlobalData.status_Connected && GlobalData.isMatchInfo) {
+                if (Constants.status_Connected && Constants.isMatchInfo) {
                     WriteToDevice.secondMach(MyApplication.mApplication, 0);
                     return;
                 }
                 Log.i("sqs", "605 \u8bbe\u5907\u5339\u914d\u5ef6\u65f6\u65f6\u95f4\u5230  \u8bbe\u5907\u5339\u914d\u5931\u8d25 \u65ad\u5f00\u91cd\u641c");
-                BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.CHANGE_BATTERY_STATUS);
+                BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.CHANGE_BATTERY_STATUS);
                 MyApplication.linkDevice.unBindBleService(MyApplication.mApplication);
                 boolean stopBleService = MyApplication.linkDevice.stopBleService(MyApplication.mApplication);
                 Log.i(MyApplication.TAG, "609 \u5173\u95ed\u84dd\u7259\u8fd4\u56de\u7ed3\u679c stopBleService = " + stopBleService);
                 if (stopBleService) {
-                    GlobalData.status_Connecting = false;
-                    GlobalData.status_Connected = false;
-                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.BLE_RESEARCH);
+                    Constants.status_Connecting = false;
+                    Constants.status_Connected = false;
+                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.BLE_RESEARCH);
                 }
             }
         }
@@ -200,14 +200,14 @@ public class MyApplication extends Application {
 
             public void run() {
                 Log.i(MyApplication.TAG, "\u84dd\u7259\u8fde\u63a5\u65f6\u95f4\u5230 ble connecting time out...");
-                BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.CHANGE_BATTERY_STATUS);
+                BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.CHANGE_BATTERY_STATUS);
                 MyApplication.linkDevice.unBindBleService(MyApplication.mApplication);
                 boolean stopBleService = MyApplication.linkDevice.stopBleService(MyApplication.mApplication);
                 Log.i(MyApplication.TAG, "586 \u5173\u95ed\u84dd\u7259\u8fd4\u56de\u7ed3\u679c stopBleService = " + stopBleService);
                 if (stopBleService) {
-                    GlobalData.status_Connecting = false;
-                    GlobalData.status_Connected = false;
-                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.BLE_RESEARCH);
+                    Constants.status_Connecting = false;
+                    Constants.status_Connected = false;
+                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.BLE_RESEARCH);
                 }
             }
         }
@@ -221,13 +221,13 @@ public class MyApplication extends Application {
                 MyApplication.count_TickTock = MyApplication.count_TickTock + 1;
                 Log.d(MyApplication.TAG, "\u56fa\u4ef6\u66f4\u65b0\u6b21\u6570\uff1a" + MyApplication.count_TickTock);
                 if (MyApplication.count_TickTock == 60) {
-                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.CLOSE_UPFIRMWARE_DIALOG);
-                    if (GlobalData.status_Connected) {
-                        BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.ACTION_GATT_SUCCESS_CONN, true);
+                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.CLOSE_UP_FIRMWARE_DIALOG);
+                    if (Constants.status_Connected) {
+                        BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.ACTION_GATT_SUCCESS_CONN, true);
                     }
                     MyApplication.stopTickTock();
                 } else if (MyApplication.count_TickTock < 60) {
-                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.FIRMWARE_UPING_PROGRESSBAR, MyApplication.count_TickTock);
+                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.FIRMWARE_UPING_PROGRESSBAR, MyApplication.count_TickTock);
                     MyApplication.stopTickTock();
                     MyApplication.startTickTock();
                 }
@@ -252,19 +252,19 @@ public class MyApplication extends Application {
 
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
-                if (GlobalData.ACTION_UP_FIRMWARE_COMPLETE.equals(action)) {
+                if (Constants.ACTION_UP_FIRMWARE_COMPLETE.equals(action)) {
                     Log.i(MyApplication.TAG, "738  \u56fa\u4ef6\u66f4\u65b0\u5b8c\u6210\u5e7f\u64ad");
-                    GlobalData.isOnFirmwareUpdating = true;
+                    Constants.isOnFirmwareUpdating = true;
                     MyApplication.showWaitDialog_UpFirmware();
-                } else if (GlobalData.ACTION_MAIN_DATA_FIRM_FAULT.equals(action)) {
-                    GlobalData.isOnFirmwareUpdating = false;
+                } else if (Constants.ACTION_MAIN_DATA_FIRM_FAULT.equals(action)) {
+                    Constants.isOnFirmwareUpdating = false;
                     Log.i(MyApplication.TAG, "\u56fa\u4ef6\u66f4\u65b0\u5931\u8d25");
-                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.FIRMWARE_UPDATE_FAILED);
+                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.FIRMWARE_UPDATE_FAILED);
                     new Handler().postDelayed(new C06551(), 3000);
-                } else if (GlobalData.ACTION_MAIN_DATA_FIRM_SUCCESS.equals(action)) {
-                    GlobalData.isOnFirmwareUpdating = false;
+                } else if (Constants.ACTION_MAIN_DATA_FIRM_SUCCESS.equals(action)) {
+                    Constants.isOnFirmwareUpdating = false;
                     PrefUtils.setString(MyApplication.mApplication, "version_firmware", "");
-                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, GlobalData.FIRMWARE_UPDATE_SUCESS);
+                    BleServiceHelper.sendBroadcast(MyApplication.mApplication, Constants.FIRMWARE_UPDATE_SUCESS);
                     Log.i(MyApplication.TAG, "\u56fa\u4ef6\u66f4\u65b0OK");
                 }
             }
@@ -423,8 +423,8 @@ public class MyApplication extends Application {
 //                            if (t.getInt(HttpNetworkAccess.RESPONSE_STATUS_CODE) == 1) {
 //                                String token = t.getJSONArray(HttpNetworkAccess.RESPONSE_DATA).getJSONObject(0).getString("decryptionToken");
 //                                if (token != null) {
-//                                    PrefUtils.setString(this.val$context, GlobalData.SHARED_PREFRENCE_DECRY_TOKEN, token);
-//                                    PrefUtils.setLong(this.val$context, GlobalData.SHARED_PREFRENCE_DECRY_TIME, this.val$currentTimeMillis);
+//                                    PrefUtils.setString(this.val$context, Constants.SHARED_PREFRENCE_DECRY_TOKEN, token);
+//                                    PrefUtils.setLong(this.val$context, Constants.SHARED_PREFRENCE_DECRY_TIME, this.val$currentTimeMillis);
 //                                    Log.d("sqs", "start sqfw \u5f53\u524d\u65f6\u95f4\u5b58\u5165sp :" + this.val$currentTimeMillis);
 //                                }
 //                            }
@@ -477,7 +477,7 @@ public class MyApplication extends Application {
 //                    }
 //                    Log.d("sqs", "start sqfw \u5f00\u59cb\u68c0\u67e5...");
 //                    long currentTimeMillis = System.currentTimeMillis();
-//                    if (currentTimeMillis - PrefUtils.getLong(context, GlobalData.SHARED_PREFRENCE_DECRY_TIME, 0) > 86400000) {
+//                    if (currentTimeMillis - PrefUtils.getLong(context, Constants.SHARED_PREFRENCE_DECRY_TIME, 0) > 86400000) {
 //                        Log.d("sqs", "start sqfw \u65f6\u95f4\u5dee\u5927\u4e8eoneDay...");
 //                        String macStr = BleServiceHelper.getMac();
 //                        NetWorkAccessTools.initNetWorkAccessTools(context).postRequest(HttpUtil.getURLWithActionName("/licenseproject/findlicenseprojectbycache.action"), NetWorkAccessTools.getParameterMap(new String[]{"mac"}, macStr), null, 1002, new C09716(context, currentTimeMillis));
@@ -553,8 +553,8 @@ public class MyApplication extends Application {
 //            }
 //            linkDevice = LinkBleDevice.getInstance(mApplication);
 //            registerReceiver();
-//            if (PrefUtils.getString(mApplication, GlobalData.DEVICE_TARGET_MAC, "").equals("")) {
-//                Log.i(TAG, "GlobalData.TARGET_MAC = NULL");
+//            if (PrefUtils.getString(mApplication, Constants.DEVICE_TARGET_MAC, "").equals("")) {
+//                Log.i(TAG, "Constants.TARGET_MAC = NULL");
 //                return;
 //            }
 //            Log.i(TAG, "\u540e\u53f0\u641c\u7d22\u84dd\u7259  initBleBack GO");
@@ -564,53 +564,53 @@ public class MyApplication extends Application {
         }
 
         public boolean openBle(Context context) {
-            if (GlobalData.status_Scanning) {
+            if (Constants.status_Scanning) {
                 Log.i(TAG, "722 \u626b\u63cf\u8bbe\u5907\u5df2\u7ecf\u5f00\u59cb \u5f00\u59cb\u626b\u63cf\u6307\u4ee4\u4e2d\u65ad the ble scan is already On");
                 return true;
-            } else if (GlobalData.status_Connecting || GlobalData.status_Connected) {
+            } else if (Constants.status_Connecting || Constants.status_Connected) {
                 return true;
             } else {
                 boolean isBleEnabled = isBleEnabled(context);
-                GlobalData.isEnabled = isBleEnabled;
+                Constants.isEnabled = isBleEnabled;
                 if (!isBleEnabled) {
                     return false;
                 }
                 if (mBluetoothAdapter.isEnabled()) {
                     return true;
                 }
-                GlobalData.isRequest = true;
+                Constants.isRequest = true;
                 BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                 if (bluetoothAdapter == null) {
                     return false;
                 }
                 if (bluetoothAdapter.enable()) {
-                    GlobalData.isEnabled = true;
-                    GlobalData.isRequest = false;
-                    GlobalData.status_Connected = false;
+                    Constants.isEnabled = true;
+                    Constants.isRequest = false;
+                    Constants.status_Connected = false;
                 }
                 return bluetoothAdapter.enable();
             }
         }
 
         public void registerReceiver() {
-            if (!GlobalData.INIT_AT_BOOT) {
+            if (!Constants.INIT_AT_BOOT) {
                 Log.i(TAG, "/** \u6ce8\u518c\u5e7f\u64ad\u63a5\u6536\u5668  _______________*/" + TAG);
                 Log.i(TAG, "/** \u6ce8\u518c\u5e7f\u64ad\u63a5\u6536\u5668  */");
                 Log.i(TAG, "/** \u6ce8\u518c\u5e7f\u64ad\u63a5\u6536\u5668  */");
                 Log.i(TAG, "/** \u6ce8\u518c\u5e7f\u64ad\u63a5\u6536\u5668  */");
-                GlobalData.INIT_AT_BOOT = true;
+                Constants.INIT_AT_BOOT = true;
                 IntentFilter filter = new IntentFilter();
-                filter.addAction(GlobalData.BLE_CONNECTING);
-                filter.addAction(GlobalData.BLE_HEART_PACKAGE);
-                filter.addAction(GlobalData.BLE_SERVICE);
-                filter.addAction(GlobalData.BLE_SOS);
-                filter.addAction(GlobalData.BLE_MATCH);
-                filter.addAction(GlobalData.BLE_BOND_REQUEST);
-                filter.addAction(GlobalData.BLE_OPEN);
-                filter.addAction(GlobalData.BLE_SCAN_STOP);
-                filter.addAction(GlobalData.BLE_RESEARCH);
-                filter.addAction(GlobalData.BLE_ON_RESTART);
-                filter.addAction(GlobalData.ACTION_DEVICE_FIRMVERSION);
+                filter.addAction(Constants.BLE_CONNECTING);
+                filter.addAction(Constants.BLE_HEART_PACKAGE);
+                filter.addAction(Constants.BLE_SERVICE);
+                filter.addAction(Constants.BLE_SOS);
+                filter.addAction(Constants.BLE_MATCH);
+                filter.addAction(Constants.BLE_BOND_REQUEST);
+                filter.addAction(Constants.BLE_OPEN);
+                filter.addAction(Constants.BLE_SCAN_STOP);
+                filter.addAction(Constants.BLE_RESEARCH);
+                filter.addAction(Constants.BLE_ON_RESTART);
+                filter.addAction(Constants.ACTION_DEVICE_FIRM_VERSION);
                 BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
                     /* renamed from: com.worldgn.helo.MyApplication.11.1 */
@@ -712,27 +712,27 @@ public class MyApplication extends Application {
                     }
 
                     public void onReceive(Context context, Intent intent) {
-                        if (intent.getAction().equals(GlobalData.BLE_OPEN)) {
+                        if (intent.getAction().equals(Constants.BLE_OPEN)) {
                             Log.i(MyApplication.TAG, "332 \u84dd\u7259\u6253\u5f00\u8bf7\u6c42\u8fd4\u56de\u6210\u529f request ble ok");
-                            GlobalData.isRequest = false;
-                            if (!GlobalData.status_Connected) {
-                                GlobalData.status_Scanning = false;
-                                GlobalData.status_Connecting = false;
-                                if (GlobalData.isOnPause) {
-                                    BleServiceHelper.sendBroadcast(context, GlobalData.BLE_RESEARCH);
+                            Constants.isRequest = false;
+                            if (!Constants.status_Connected) {
+                                Constants.status_Scanning = false;
+                                Constants.status_Connecting = false;
+                                if (Constants.isOnPause) {
+                                    BleServiceHelper.sendBroadcast(context, Constants.BLE_RESEARCH);
                                     return;
                                 }
-                                BleServiceHelper.sendBroadcast(context, GlobalData.BLE_SEARCH_PRE);
+                                BleServiceHelper.sendBroadcast(context, Constants.BLE_SEARCH_PRE);
                             }
-                        } else if (intent.getAction().equals(GlobalData.BLE_SCAN_STOP)) {
-                            Log.i(MyApplication.TAG, "************ \u626b\u63cf\u7ed3\u675f  \u6216\u4e2d\u65ad\u626b\u63cf\u7136\u540e\u8fdb\u884c\u91cd\u641c *****************\n207 isBleConnecting = " + GlobalData.status_Connecting);
-                            if (GlobalData.status_Connected) {
+                        } else if (intent.getAction().equals(Constants.BLE_SCAN_STOP)) {
+                            Log.i(MyApplication.TAG, "************ \u626b\u63cf\u7ed3\u675f  \u6216\u4e2d\u65ad\u626b\u63cf\u7136\u540e\u8fdb\u884c\u91cd\u641c *****************\n207 isBleConnecting = " + Constants.status_Connecting);
+                            if (Constants.status_Connected) {
                                 Log.i(MyApplication.TAG, "209 \u641c\u7d22\u7ed3\u675f \u4f46\u662f\u6b64\u65f6\u8fde\u63a5\u72b6\u6001\u4e3a \u5df2\u8fde\u63a5\u4e0a\u8bbe\u5907");
-                            } else if (GlobalData.status_Connecting) {
+                            } else if (Constants.status_Connecting) {
                                 Log.i(MyApplication.TAG, "214 \u6b63\u5728\u8fde\u63a5\u4e2d break\u9000\u51fa");
                             } else if (MyApplication.mList_Devices.isEmpty()) {
                                 Log.i(MyApplication.TAG, "\u641c\u7d22\u5230\u7684Ble\u8bbe\u5907\u5217\u8868\u4e3a\u7a7a \u5f00\u59cb\u91cd\u65b0\u641c\u7d22");
-                                BleServiceHelper.sendBroadcast(context, GlobalData.BLE_RESEARCH);
+                                BleServiceHelper.sendBroadcast(context, Constants.BLE_RESEARCH);
                             } else {
                                 Log.i(MyApplication.TAG, "\u641c\u7d22\u5230\u7684Ble\u8bbe\u5907\u5217\u8868 = \n" + MyApplication.mList_Devices.toString());
                                 int tempRiss = -100;
@@ -745,46 +745,46 @@ public class MyApplication extends Application {
                                 }
                                 if (tempMac.equals("")) {
                                     Log.i(MyApplication.TAG, "\u641c\u7d22\u5230\u7684\u4fe1\u53f7\u6700\u4f18\u7684Ble\u8bbe\u5907\u7684MAC\u4e3a\u7a7a \u8fdb\u5165\u91cd\u641c");
-                                    BleServiceHelper.sendBroadcast(context, GlobalData.BLE_RESEARCH);
+                                    BleServiceHelper.sendBroadcast(context, Constants.BLE_RESEARCH);
                                     return;
                                 }
                                 Log.i(MyApplication.TAG, "\u4f18\u9009\u4fe1\u53f7 = " + tempMac);
-                                GlobalData.TOP_MAC = tempMac;
-                                GlobalData.status_Connecting = true;
+                                Constants.TOP_MAC = tempMac;
+                                Constants.status_Connecting = true;
                                 MyApplication.stopScanLeDevice();
-                                BleServiceHelper.sendBroadcast(context, GlobalData.BLE_CONNECTING);
+                                BleServiceHelper.sendBroadcast(context, Constants.BLE_CONNECTING);
                                 MyApplication.mList_Devices.clear();
                             }
-                        } else if (intent.getAction().equals(GlobalData.BLE_RESEARCH)) {
+                        } else if (intent.getAction().equals(Constants.BLE_RESEARCH)) {
                             MyApplication.stopScanLeDevice();
-                            BleServiceHelper.sendBroadcast(context, GlobalData.BLE_SEARCH_BACK);
-                        } else if (intent.getAction().equals(GlobalData.BLE_ON_RESTART)) {
-                            GlobalData.status_Connected = false;
-                            GlobalData.status_Connecting = false;
-                            GlobalData.status_Scanning = false;
-                            if (PrefUtils.getString(context, GlobalData.DEVICE_TARGET_MAC, "") == "") {
-                                BleServiceHelper.sendBroadcast(context, GlobalData.BLE_SEARCH_PRE);
+                            BleServiceHelper.sendBroadcast(context, Constants.BLE_SEARCH_BACK);
+                        } else if (intent.getAction().equals(Constants.BLE_ON_RESTART)) {
+                            Constants.status_Connected = false;
+                            Constants.status_Connecting = false;
+                            Constants.status_Scanning = false;
+                            if (PrefUtils.getString(context, Constants.DEVICE_TARGET_MAC, "") == "") {
+                                BleServiceHelper.sendBroadcast(context, Constants.BLE_SEARCH_PRE);
                                 return;
                             }
-                            BleServiceHelper.sendBroadcast(context, GlobalData.BLE_RESEARCH);
-                        } else if (intent.getAction().equals(GlobalData.BLE_CONNECTING)) {
+                            BleServiceHelper.sendBroadcast(context, Constants.BLE_RESEARCH);
+                        } else if (intent.getAction().equals(Constants.BLE_CONNECTING)) {
                             Log.i(MyApplication.TAG, "\u84dd\u7259\u8fde\u63a5\u4e2d");
-                            BleServiceHelper.sendBroadcast(context, GlobalData.ACTION_GATT_CONNING, true);
+                            BleServiceHelper.sendBroadcast(context, Constants.ACTION_GATT_CONNING, true);
                             MyApplication.startAck();
                             boolean bindStatus = false;
-                            if (MyApplication.this.checkMAC(GlobalData.TOP_MAC)) {
-                                bindStatus = MyApplication.linkDevice.onBindBleService(context, GlobalData.TOP_MAC);
+                            if (MyApplication.this.checkMAC(Constants.TOP_MAC)) {
+                                bindStatus = MyApplication.linkDevice.onBindBleService(context, Constants.TOP_MAC);
                             }
                             Log.i(MyApplication.TAG, "\u84dd\u7259\u521d\u6b65\u8fde\u63a5\u7ed3\u679c Connecting ble device status = " + bindStatus);
                             if (bindStatus) {
-                                BleServiceHelper.sendBroadcast(context, GlobalData.ACTION_GATT_CONNING);
-                                BleServiceHelper.sendBroadcast(context, GlobalData.CHANGE_BATTERY_STATUS);
+                                BleServiceHelper.sendBroadcast(context, Constants.ACTION_GATT_CONNING);
+                                BleServiceHelper.sendBroadcast(context, Constants.CHANGE_BATTERY_STATUS);
                                 return;
                             }
                             MyApplication.stopAck();
-                            GlobalData.status_Connecting = false;
-                            BleServiceHelper.sendBroadcast(context, GlobalData.BLE_RESEARCH);
-                        } else if (intent.getAction().equals(GlobalData.BLE_SERVICE)) {
+                            Constants.status_Connecting = false;
+                            BleServiceHelper.sendBroadcast(context, Constants.BLE_RESEARCH);
+                        } else if (intent.getAction().equals(Constants.BLE_SERVICE)) {
                             Log.i("sqs", "\u68c0\u6d4b\u5230 BLE_SERVICE \u7136\u540e\u5c31\u5f00\u59cb\u76d1\u6d4b\u76f8\u5e94\u7684\u901a\u9053\u4e86");
                             MyApplication.linkDevice.setNotifCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", true);
                             MyApplication.linkDevice.setNotifCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa", true);
@@ -795,26 +795,26 @@ public class MyApplication extends Application {
                             byte[] mac = BleServiceHelper.getSelfBlueMac(context);
                             Log.i(MyApplication.TAG, "252 \u8981\u7ed1\u5b9a\u8bbe\u5907\u7684MAC\u5730\u5740\uff1a" + WriteToDevice.bytesToHexString(mac));
                             if (mac == null) {
-                                GlobalData.DELAY_TIME_MATCHING_BLE = BufferRecycler.DEFAULT_WRITE_CONCAT_BUFFER_LEN;
+                                Constants.DELAY_TIME_MATCHING_BLE = BufferRecycler.DEFAULT_WRITE_CONCAT_BUFFER_LEN;
                             } else {
-                                GlobalData.DELAY_TIME_MATCHING_BLE = 8000;
+                                Constants.DELAY_TIME_MATCHING_BLE = 8000;
                             }
                             MyApplication.startMatch();
-                            GlobalData.isMatchInfo = false;
+                            Constants.isMatchInfo = false;
                             WriteToDevice.APPVersion(MyApplication.mApplication, MyApplication.this.getAppVersion());
                             new Handler().postDelayed(new C06411(context, mac), 500);
                             if (WriteToDevice.initDeviceLoadCode(context) != 1) {
                                 new Handler().postDelayed(new C06422(context), 2000);
                             }
-                        } else if (intent.getAction().equals(GlobalData.BLE_MATCH)) {
+                        } else if (intent.getAction().equals(Constants.BLE_MATCH)) {
                             MyApplication.stopMatch();
                             long data = intent.getLongExtra(intent.getAction(), 0);
                             Log.e(MyApplication.TAG, "291 \u8bbe\u5907\u53d1\u8fc7\u6765\u5339\u914d=1\u54cd\u5e94\u4fe1\u606f: match = " + data);
                             if (data == 1) {
-                                BleServiceHelper.sendBroadcast(context, GlobalData.ACTION_GATT_SUCCESS_CONN, true);
-                                PrefUtils.setString(context, GlobalData.DEVICE_TARGET_MAC, GlobalData.TOP_MAC);
+                                BleServiceHelper.sendBroadcast(context, Constants.ACTION_GATT_SUCCESS_CONN, true);
+                                PrefUtils.setString(context, Constants.DEVICE_TARGET_MAC, Constants.TOP_MAC);
                                 String token = "";
-                                token = PrefUtils.getString(MyApplication.mApplication, GlobalData.SHARED_PREFRENCE_DECRY_TOKEN, "");
+                                token = PrefUtils.getString(MyApplication.mApplication, Constants.SHARED_PREFRENCE_DECRY_TOKEN, "");
                                 if (!"".equals(token)) {
                                     byte[] decode = Base64.decode(token.getBytes(), 1);
                                     int startSendDecryToken = WriteToDevice.startSendDecryToken(MyApplication.mApplication, decode.length);
@@ -832,17 +832,17 @@ public class MyApplication extends Application {
                                 return;
                             }
                             Log.i(MyApplication.TAG, "\u8bbe\u5907\u5df2\u7ecf\u88ab\u7ed1\u5b9a \u65ad\u5f00\u84dd\u7259\u8fde\u63a5 \u5e76\u91cd\u65b0\u641c\u7d22");
-//                            if (!(GlobalData.isOnPause || MainActivity.mActivity == null)) {
+//                            if (!(Constants.isOnPause || MainActivity.mActivity == null)) {
 //                                LongShowToast.makeText(MainActivity.mActivity, context.getString(C0328R.string.blelink_is_bonded), MyApplication.timeout).show();
 //                            }
                             WriteToDevice.secondMach(context, 0);
                             MyApplication.toCloseAndReSearch();
-                        } else if (intent.getAction().equals(GlobalData.BLE_BOND_REQUEST)) {
+                        } else if (intent.getAction().equals(Constants.BLE_BOND_REQUEST)) {
                             MyApplication.stopMatch();
                             Log.i(MyApplication.TAG, "\u6536\u5230\u8bbe\u5907\u53d1\u6765\u8bf7\u6c42\u7ed1\u5b9a\u8bf7\u6c42");
-                            if (GlobalData.isOnPause) {
-                                if (PrefUtils.getString(MyApplication.mApplication, GlobalData.DEVICE_TARGET_MAC, "") == "") {
-                                    GlobalData.isOnBondRequest_OnPause = true;
+                            if (Constants.isOnPause) {
+                                if (PrefUtils.getString(MyApplication.mApplication, Constants.DEVICE_TARGET_MAC, "") == "") {
+                                    Constants.isOnBondRequest_OnPause = true;
                                     return;
                                 } else {
                                     Log.i(MyApplication.TAG, "377 \u7ed1\u5b9a\u8fc7\u8bbe\u5907\u53c8\u5728\u8bf7\u6c42\u7ed1\u5b9a \u540e\u53f0\u5f00\u59cb\u8fdb\u884c\u81ea\u52a8\u7ed1\u5b9a");
@@ -850,25 +850,25 @@ public class MyApplication extends Application {
                                 }
                             }
                             WriteToDevice.secondMach(context, 0);
-                            BleServiceHelper.sendBroadcast(context, GlobalData.SHOW_BIND_DIALOG);
-                        } else if (intent.getAction().equals(GlobalData.BLE_HEART_PACKAGE)) {
-                            if (!GlobalData.status_Connected) {
+                            BleServiceHelper.sendBroadcast(context, Constants.SHOW_BIND_DIALOG);
+                        } else if (intent.getAction().equals(Constants.BLE_HEART_PACKAGE)) {
+                            if (!Constants.status_Connected) {
                                 return;
                             }
                             if (WriteToDevice.heartRate(context) == 1) {
                                 Log.w(MyApplication.TAG, "\u5fc3\u8df3\u5305\u53d1\u9001\u6210\u529f");
-                                GlobalData.heartFail = 0;
-                                new Handler().postDelayed(new C06466(context), GlobalData.PERIOD_HEART_PACKAGE_SUCCESS);
+                                Constants.heartFail = 0;
+                                new Handler().postDelayed(new C06466(context), Constants.PERIOD_HEART_PACKAGE_SUCCESS);
                                 return;
                             }
                             Log.i(MyApplication.TAG, "\u5fc3\u8df3\u5305\u53d1\u9001\u5931\u8d25");
-                            GlobalData.heartFail++;
-                            if (GlobalData.heartFail < 6) {
+                            Constants.heartFail++;
+                            if (Constants.heartFail < 6) {
                                 new Handler().postDelayed(new C06477(context), 100);
                             }
-                        } else if (intent.getAction().equals(GlobalData.BLE_SOS)) {
+                        } else if (intent.getAction().equals(Constants.BLE_SOS)) {
 //                            ContentMainHelper.sendSosRequest(context);
-                        } else if (intent.getAction().equals(GlobalData.ACTION_DEVICE_FIRMVERSION)) {
+                        } else if (intent.getAction().equals(Constants.ACTION_DEVICE_FIRM_VERSION)) {
                             MyApplication.stopUpDateTime();
                             Log.d("sqs", "MyApplication \u6210\u529f\u83b7\u53d6\u56fa\u4ef6\u7248\u672c\u53f7 \u5df2\u505c\u6b62\u540c\u6b65\u65f6\u95f4\u5ef6\u8fdf\u8ba1\u65f6\u5668");
                         }
@@ -883,10 +883,10 @@ public class MyApplication extends Application {
                 timeTickIntentFilter.addAction("android.intent.action.TIME_TICK");
 //                registerReceiver(timeTickReceiver, timeTickIntentFilter);
                 IntentFilter intentFilter = new IntentFilter();
-                intentFilter.addAction(GlobalData.ACTION_DEVICE_FIRMVERSION);
-                intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_FIRM_FAULT);
-                intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_FIRM_SUCCESS);
-                intentFilter.addAction(GlobalData.ACTION_UP_FIRMWARE_COMPLETE);
+                intentFilter.addAction(Constants.ACTION_DEVICE_FIRM_VERSION);
+                intentFilter.addAction(Constants.ACTION_MAIN_DATA_FIRM_FAULT);
+                intentFilter.addAction(Constants.ACTION_MAIN_DATA_FIRM_SUCCESS);
+                intentFilter.addAction(Constants.ACTION_UP_FIRMWARE_COMPLETE);
                 registerReceiver(upFirmReceiver, intentFilter);
             }
         }
@@ -905,16 +905,16 @@ public class MyApplication extends Application {
 
         private static IntentFilter makeGattUpdateIntentFilter() {
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(GlobalData.ACTION_SERVICE_GATT_CONNECTED);
-            intentFilter.addAction(GlobalData.ACTION_SERVICE_GATT_DISCONNECTED);
-            intentFilter.addAction(GlobalData.ACTION_SERVICE_GATT_DISCOVERED);
-            intentFilter.addAction(GlobalData.ACTION_GATT_SOS);
-            intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK);
-            intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
-            intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_UNBIND_ACK);
-            intentFilter.addAction(GlobalData.ACTION_SERVICE_GATT_DISCOVERED);
-            intentFilter.addAction(GlobalData.BLUETOOTH_STATE_CHANGED);
-            intentFilter.addAction(GlobalData.BLUETOOTH_ACTION);
+            intentFilter.addAction(Constants.ACTION_SERVICE_GATT_CONNECTED);
+            intentFilter.addAction(Constants.ACTION_SERVICE_GATT_DISCONNECTED);
+            intentFilter.addAction(Constants.ACTION_SERVICE_GATT_DISCOVERED);
+            intentFilter.addAction(Constants.ACTION_GATT_SOS);
+            intentFilter.addAction(Constants.ACTION_GATT_DEVICE_MATCH_ACK);
+            intentFilter.addAction(Constants.ACTION_GATT_DEVICE_BIND_REQUEST);
+            intentFilter.addAction(Constants.ACTION_GATT_DEVICE_UNBIND_ACK);
+            intentFilter.addAction(Constants.ACTION_SERVICE_GATT_DISCOVERED);
+            intentFilter.addAction(Constants.BLUETOOTH_STATE_CHANGED);
+            intentFilter.addAction(Constants.BLUETOOTH_ACTION);
             return intentFilter;
         }
 
@@ -922,13 +922,13 @@ public class MyApplication extends Application {
             if (mBluetoothAdapter != null) {
                 switch (mBluetoothAdapter.getState()) {
                     case 10: /*10*/
-                        GlobalData.status_Connecting = false;
-                        GlobalData.status_Connected = false;
+                        Constants.status_Connecting = false;
+                        Constants.status_Connected = false;
                         linkDevice.unBindBleService(mApplication);
                         linkDevice.stopBleService(mApplication);
                         return;
                     case 12: /*12*/
-                        BleServiceHelper.sendBroadcast(mApplication, GlobalData.BLE_OPEN);
+                        BleServiceHelper.sendBroadcast(mApplication, Constants.BLE_OPEN);
                         return;
                     default:
                         return;
@@ -938,9 +938,9 @@ public class MyApplication extends Application {
         }
 
         private static void startMatch() {
-            Log.i(TAG, "592 \u5f00\u59cb\u8bbe\u5907\u5339\u914d\u8fc7\u7a0b\u4e2d\u8ba1\u65f6\uff1a DELAY_TIME = " + GlobalData.DELAY_TIME_MATCHING_BLE + " ms");
+            Log.i(TAG, "592 \u5f00\u59cb\u8bbe\u5907\u5339\u914d\u8fc7\u7a0b\u4e2d\u8ba1\u65f6\uff1a DELAY_TIME = " + Constants.DELAY_TIME_MATCHING_BLE + " ms");
             mMatchHandler.removeCallbacks(matchTime);
-            mMatchHandler.postDelayed(matchTime, (long) GlobalData.DELAY_TIME_MATCHING_BLE);
+            mMatchHandler.postDelayed(matchTime, (long) Constants.DELAY_TIME_MATCHING_BLE);
         }
 
         private static void stopMatch() {
@@ -972,33 +972,33 @@ public class MyApplication extends Application {
 
         public static void stopScanLeDevice() {
             Log.d(TAG, "640 \u4e2d\u65ad\u626b\u63cf stopScanLeDevice....");
-            BleServiceHelper.sendBroadcast(mApplication, GlobalData.CLOSE_SEARCH_DIALOG);
+            BleServiceHelper.sendBroadcast(mApplication, Constants.CLOSE_SEARCH_DIALOG);
             scanLeDevice(mApplication, false);
         }
 
         public static void scanLeDevice(Context context, boolean search) {
             if (search) {
-                if (GlobalData.status_Connected) {
-                    Log.i(TAG, "609 GlobalData.isConnected = " + GlobalData.status_Connected);
-                } else if (GlobalData.status_Connecting) {
-                    Log.i(TAG, "607 GlobalData.isConnecting = " + GlobalData.status_Connecting);
-                } else if (GlobalData.status_Scanning) {
-                    Log.i(TAG, "603 GlobalData.isScanning = " + GlobalData.status_Scanning);
+                if (Constants.status_Connected) {
+                    Log.i(TAG, "609 Constants.isConnected = " + Constants.status_Connected);
+                } else if (Constants.status_Connecting) {
+                    Log.i(TAG, "607 Constants.isConnecting = " + Constants.status_Connecting);
+                } else if (Constants.status_Scanning) {
+                    Log.i(TAG, "603 Constants.isScanning = " + Constants.status_Scanning);
                 } else {
-                    BleServiceHelper.sendBroadcast(context, GlobalData.ACTION_GATT_SEARCH);
-                    GlobalData.status_Scanning = true;
-                    mScanHandler.postDelayed(mStopLeScan, GlobalData.PERIOD_SCAN);
+                    BleServiceHelper.sendBroadcast(context, Constants.ACTION_GATT_SEARCH);
+                    Constants.status_Scanning = true;
+                    mScanHandler.postDelayed(mStopLeScan, Constants.PERIOD_SCAN);
                     Log.i(TAG, "startLeScan(mLeScanCallback);");
                     mBluetoothAdapter.startLeScan(mLeScanCallback);
                     Log.i(TAG, "726 \u5f00\u59cb\u626b\u63cf\u8bbe\u5907 PERIOD TIME = 8000 ms");
                 }
-            } else if (GlobalData.status_Scanning) {
-                GlobalData.status_Scanning = false;
+            } else if (Constants.status_Scanning) {
+                Constants.status_Scanning = false;
                 mScanHandler.removeCallbacks(mStopLeScan);
                 if (mLeScanCallback != null) {
                     mBluetoothAdapter.stopLeScan(mLeScanCallback);
                 }
-                BleServiceHelper.sendBroadcast(context, GlobalData.BLE_SCAN_STOP);
+                BleServiceHelper.sendBroadcast(context, Constants.BLE_SCAN_STOP);
                 Log.i(TAG, "656 \u7ed3\u675f\u626b\u63cf\u8bbe\u5907\u6210\u529f\u5b8c\u6210");
             } else {
                 Log.i(TAG, "730 \u626b\u63cf\u8bbe\u5907\u4e4b\u524d\u5df2\u7ecf\u7ed3\u675f\u8fc7\u4e86 \u7ed3\u675f\u626b\u63cf\u6307\u4ee4\u4e2d\u6b62\u261e the ble scan is already off");
@@ -1006,7 +1006,7 @@ public class MyApplication extends Application {
         }
 
         public static boolean isBleEnabled(Context context) {
-            if (GlobalData.isBLeEnabled) {
+            if (Constants.isBLeEnabled) {
                 return true;
             }
             if (context.getPackageManager().hasSystemFeature("android.hardware.bluetooth_le")) {
@@ -1015,7 +1015,7 @@ public class MyApplication extends Application {
                     Toast.makeText(context, "Phone not support the ble Buletooth", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                GlobalData.isBLeEnabled = true;
+                Constants.isBLeEnabled = true;
                 return true;
             }
             Toast.makeText(context, "Phone not support the ble Buletooth", Toast.LENGTH_SHORT).show();
@@ -1023,13 +1023,13 @@ public class MyApplication extends Application {
         }
 
         private static void showWaitDialog_UpFirmware() {
-            BleServiceHelper.sendBroadcast(mApplication, GlobalData.FIRMWARE_UPING_DIALOG);
+            BleServiceHelper.sendBroadcast(mApplication, Constants.FIRMWARE_UPING_DIALOG);
             count_TickTock = 0;
             startTickTock();
         }
 
         private static void stopWaitDialog_UpFirmware() {
-            BleServiceHelper.sendBroadcast(mApplication, GlobalData.CLOSE_FIRMWARE_UPING_DIALOG);
+            BleServiceHelper.sendBroadcast(mApplication, Constants.CLOSE_FIRMWARE_UPING_DIALOG);
             stopTickTock();
         }
 
@@ -1045,12 +1045,12 @@ public class MyApplication extends Application {
         }
 
         private static void toCloseAndReSearch() {
-            GlobalData.status_Connected = false;
-            GlobalData.status_Connecting = false;
-            BleServiceHelper.sendBroadcast(mApplication, GlobalData.DEVICE_DISCONN);
+            Constants.status_Connected = false;
+            Constants.status_Connecting = false;
+            BleServiceHelper.sendBroadcast(mApplication, Constants.DEVICE_DISCONNECT);
             linkDevice.unBindBleService(mApplication);
             if (linkDevice.stopBleService(mApplication)) {
-                BleServiceHelper.sendBroadcast(mApplication, GlobalData.BLE_RESEARCH);
+                BleServiceHelper.sendBroadcast(mApplication, Constants.BLE_RESEARCH);
             }
         }
 
@@ -1069,7 +1069,7 @@ public class MyApplication extends Application {
 
 //        public static void Notification(String Ticker, String Title, String message, int count, int id) {
 //            Log.i(TAG, "Received a Notification  Received a Notification   Received a Notification   Received a Notification");
-//            if (MainActivity.mActivity != null && GlobalData.isOnPause) {
+//            if (MainActivity.mActivity != null && Constants.isOnPause) {
 //                NotificationManager manager = (NotificationManager) mApplication.getSystemService("notification");
 //                PendingIntent pendingIntent = PendingIntent.getActivity(mApplication, 0, new Intent(mApplication, MainActivity.class), 268435456);
 //                Builder builder = new Builder(mApplication);

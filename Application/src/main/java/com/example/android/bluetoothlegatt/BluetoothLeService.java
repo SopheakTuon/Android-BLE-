@@ -34,6 +34,8 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.android.bluetoothlegatt.constant.Constants;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -147,9 +149,9 @@ public class BluetoothLeService extends Service {
             String charactUUID = characteristic.getUuid().toString();
             Log.d("onCharacteristicChanged", stringBuilder.toString());
             if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0004-facebeadaaaa")) {
-                BluetoothLeService.this.broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECGALLDATA, stringBuilder.toString());
+                BluetoothLeService.this.broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG_ALL_DATA, stringBuilder.toString());
             }else if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0005-facebeadaaaa")) {
-                BluetoothLeService.this.broadcastUpdate(GlobalData.ACTION_MAIN_DATA_PW, stringBuilder.toString());
+                BluetoothLeService.this.broadcastUpdate(Constants.ACTION_MAIN_DATA_PW, stringBuilder.toString());
             } else if (uuid.equals("1aabcdef-1111-2222-0000-facebeadaaaa")) {
                 BluetoothLeService.this.sendBindBroadcast(stringBuilder.toString());
             }else {
@@ -186,13 +188,13 @@ public class BluetoothLeService extends Service {
     private void sendBindBroadcast(String data) {
         String cmdType = data.substring(9, 11);
         if (cmdType.equals("37")) {
-            GlobalData.isMatchInfo = true;
-            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16));
+            Constants.isMatchInfo = true;
+            broadcastUpdate(Constants.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16));
         } else if (cmdType.equals("38")) {
             String valuse = data.substring(15, 17);
-            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16));
+            broadcastUpdate(Constants.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16));
         } else if (cmdType.equals("23")) {
-            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
+            broadcastUpdate(Constants.ACTION_GATT_DEVICE_BIND_REQUEST);
         }
     }
 
@@ -201,61 +203,61 @@ public class BluetoothLeService extends Service {
         if (!data.equals("CF")) {
             String dataType = data.substring(9, 11);
             Log.v(TAG, "Data Type =========== " + dataType);
-            if (dataType.equals("32")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_HR, parseSingeData(data));
+            if (Constants.DataType.DATA_HEART_RATE.equals(dataType)) {
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_HR, parseSingeData(data));
                 return;
             }
-            if (dataType.equals("3B")) {
-//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_MOOD, parseMoodIntData(data));
+            if (Constants.DataType.DATA_MOOD.equals(dataType)) {
+//                broadcastUpdate(Constants.DATA_MOOD, parseMoodIntData(data));
                 return;
             }
 //            if (dataType.equals("3C")) {
-//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_FATIGUE, parseMoodIntData(data));
+//                broadcastUpdate(Constants.DATA_FATIGUE, parseMoodIntData(data));
 //                return;
 //            }
-            if (dataType.equals("3D")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BREATH, parseBRData(data));
+            if (Constants.DataType.DATA_BREATH_RATE.equals(dataType)) {
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_BREATH, parseBRData(data));
                 return;
             }
 //            if (dataType.equals("34")) {
-//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_KLL, parseSingeData(data));
+//                broadcastUpdate(Constants.DATA_KLL, parseSingeData(data));
 //                return;
 //            }
 //            if (dataType.equals("35")) {
-//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_SLEEP, parseSleepData(data));
+//                broadcastUpdate(Constants.DATA_SLEEP, parseSleepData(data));
 //                return;
 //            }
 //            if (dataType.equals("41")) {
 //                Log.v(TAG, "bp = " + data);
-//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BP, parseBpData(data));
+//                broadcastUpdate(Constants.DATA_BP, parseBpData(data));
 //                return;
 //            }
 //            if (dataType.equals("42")) {
-//                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECG, parseEcgData(data));
+//                broadcastUpdate(Constants.DATA_ECG, parseEcgData(data));
 //                return;
 //            }
 //            if (dataType.equals("43")) {
 //                int batteryData = pareseBatteryData(data);
 //                int i = 0;
 //                while (true) {
-//                    int length = GlobalData.low_batery.length;
+//                    int length = Constants.low_batery.length;
 //                    if (i >= r0) {
-//                        GlobalData.POWER_BATTERY = batteryData;
+//                        Constants.POWER_BATTERY = batteryData;
 //                        long j = (long) batteryData;
-//                        broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BATTERY_POWER, j);
+//                        broadcastUpdate(Constants.DATA_BATTERY_POWER, j);
 //                        return;
 //                    }
-//                    if (batteryData == GlobalData.low_batery[i]) {
+//                    if (batteryData == Constants.low_batery[i]) {
 //                        String replace = getResources().getString(C0328R.string.notification_lowbatery).replace("{0}", new StringBuilder(String.valueOf(batteryData)).toString());
-//                        MyApplication.Notification(getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.app_name), replace, GlobalData.notification_count_lowbetery, 6);
+//                        MyApplication.Notification(getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.app_name), replace, Constants.notification_count_lowbetery, 6);
 //                    }
 //                    i++;
 //                }
 //            } else {
 //                if (dataType.equals("24")) {
-//                    GlobalData.notification_count_sos++;
-//                    MyApplication.Notification(getResources().getString(C0328R.string.new_message_coming), getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.helo_had_send_a_sos), GlobalData.notification_count_sos, 2);
-//                    broadcastUpdate(GlobalData.ACTION_GATT_SOS);
+//                    Constants.notification_count_sos++;
+//                    MyApplication.Notification(getResources().getString(C0328R.string.new_message_coming), getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.helo_had_send_a_sos), Constants.notification_count_sos, 2);
+//                    broadcastUpdate(Constants.GATT_SOS);
 //                    return;
 //                }
 //                if (dataType.equals("45")) {
@@ -264,7 +266,7 @@ public class BluetoothLeService extends Service {
 //                        String substring = data.substring(15, 17);
 //                        Log.d("sqs", "\u8bbe\u5907\u53d1\u6765 LED substring = " + substring);
 //                        if ("01".equals(substring)) {
-//                            broadcastUpdate(GlobalData.LEDCONTORLLSUCCESS);
+//                            broadcastUpdate(Constants.LEDCONTORLLSUCCESS);
 //                        }
 //                    }
 //                }

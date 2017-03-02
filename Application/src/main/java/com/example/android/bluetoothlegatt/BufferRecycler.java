@@ -1,5 +1,7 @@
 package com.example.android.bluetoothlegatt;
 
+import com.example.android.bluetoothlegatt.constant.Constants;
+
 public class BufferRecycler {
     public static final int DEFAULT_WRITE_CONCAT_BUFFER_LEN = 2000;
     protected final byte[][] _byteBuffers;
@@ -20,8 +22,8 @@ public class BufferRecycler {
     public enum CharBufferType {
         TOKEN_BUFFER(BufferRecycler.DEFAULT_WRITE_CONCAT_BUFFER_LEN),
         CONCAT_BUFFER(BufferRecycler.DEFAULT_WRITE_CONCAT_BUFFER_LEN),
-        TEXT_BUFFER(GlobalData.DELAYMILLIS_UPDATE_DEVICE_TIME),
-        NAME_COPY_BUFFER(GlobalData.DELAYMILLIS_UPDATE_DEVICE_TIME);
+        TEXT_BUFFER(Constants.DELAY_MILLIS_UPDATE_DEVICE_TIME),
+        NAME_COPY_BUFFER(Constants.DELAY_MILLIS_UPDATE_DEVICE_TIME);
         
         private final int size;
 

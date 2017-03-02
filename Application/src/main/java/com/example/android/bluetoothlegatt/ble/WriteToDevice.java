@@ -5,7 +5,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.example.android.bluetoothlegatt.GlobalData;
+import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.SmileConstants;
 import com.example.android.bluetoothlegatt.TimeUtils;
 
@@ -31,7 +31,7 @@ public class WriteToDevice {
         byte[] data = new byte[]{(byte) -86};
         while (!result) {
             result = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", data);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 100) {
                     break;
                 }
@@ -92,7 +92,7 @@ public class WriteToDevice {
         int count = 0;
         while (!result && count < 100000) {
             result = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0020-facebeadaaaa", bytes);
-            if (!GlobalData.status_Connected) {
+            if (!Constants.status_Connected) {
                 return -1;
             }
             count++;
@@ -126,7 +126,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -162,7 +162,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -202,7 +202,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa", byte_info);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 50000) {
                     break;
                 }
@@ -235,7 +235,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -271,7 +271,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -295,7 +295,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0001-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -319,7 +319,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0001-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -344,7 +344,7 @@ public class WriteToDevice {
         while (!writeStatus) {
             count++;
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -371,8 +371,8 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
-                if (count > GlobalData.DELAY_TIME_LINKING_BLE) {
+            if (Constants.status_Connected) {
+                if (count > Constants.DELAY_TIME_LINKING_BLE) {
                     break;
                 }
                 count++;
@@ -399,7 +399,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -427,7 +427,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -454,7 +454,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0003-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -492,7 +492,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", bb);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 50000) {
                     break;
                 }
@@ -506,7 +506,7 @@ public class WriteToDevice {
             writeStatus = false;
             while (!writeStatus) {
                 writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", cc);
-                if (GlobalData.status_Connected) {
+                if (Constants.status_Connected) {
                     if (count > 100000) {
                         break;
                     }
@@ -547,8 +547,8 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
-                if (count > GlobalData.DELAY_TIME_LINKING_BLE) {
+            if (Constants.status_Connected) {
+                if (count > Constants.DELAY_TIME_LINKING_BLE) {
                     break;
                 }
                 count++;
@@ -583,7 +583,7 @@ public class WriteToDevice {
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 20000) {
                     break;
                 }
@@ -620,7 +620,7 @@ public class WriteToDevice {
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", bytes);
-            if (GlobalData.status_Connecting) {
+            if (Constants.status_Connecting) {
                 if (count > 50000) {
                     break;
                 }
@@ -645,7 +645,7 @@ public class WriteToDevice {
         while (!writeStatus) {
             count++;
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0001-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -675,7 +675,7 @@ public class WriteToDevice {
         while (!writeStatus) {
             count++;
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", bytes);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 5000) {
                     break;
                 }
@@ -709,7 +709,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa", bb);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 50000) {
                     break;
                 }
@@ -759,7 +759,7 @@ public class WriteToDevice {
         boolean writeStatus = false;
         while (!writeStatus) {
             writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa", bb);
-            if (GlobalData.status_Connected) {
+            if (Constants.status_Connected) {
                 if (count > 50000) {
                     break;
                 }
@@ -784,7 +784,7 @@ public class WriteToDevice {
 //        while (!writeStatus) {
 //            count++;
 //            writeStatus = LinkBleDevice.getInstance(context).setDataWriteRXCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0020-facebeadaaaa", bb);
-//            if (GlobalData.status_Connected) {
+//            if (Constants.status_Connected) {
 //                if (count > 20000) {
 //                    break;
 //                }

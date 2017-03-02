@@ -7,7 +7,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.example.android.bluetoothlegatt.GlobalData;
+import com.example.android.bluetoothlegatt.constant.Constants;
 
 public class LinkBleDevice {
     private static final String TAG;
@@ -89,7 +89,7 @@ public class LinkBleDevice {
         this.mGattServiceIntent = new Intent(context, BleService.class);
         boolean stopStatus = context.stopService(this.mGattServiceIntent);
         if (stopStatus) {
-            GlobalData.status_Scanning = false;
+            Constants.status_Scanning = false;
         }
         return stopStatus;
     }

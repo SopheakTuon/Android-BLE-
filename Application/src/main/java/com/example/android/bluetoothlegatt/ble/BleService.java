@@ -20,7 +20,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 
-import com.example.android.bluetoothlegatt.GlobalData;
+import com.example.android.bluetoothlegatt.constant.Constants;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -80,15 +80,15 @@ public class BleService extends Service {
                 Log.i(BleService.TAG, "373 \u6210\u529f\u8fde\u63a5\u5230GATT\u670d\u52a1 Connected to GATT server.");
                 BleService.this.mConnectionState = 2;
                 BleService.this.mBluetoothGatt.discoverServices();
-                GlobalData.status_ConnInit = true;
-                BleService.this.sendBroadcast(GlobalData.ACTION_SERVICE_GATT_CONNECTED, true);
+                Constants.status_ConnInit = true;
+                BleService.this.sendBroadcast(Constants.ACTION_SERVICE_GATT_CONNECTED, true);
             } else if (newState == 0) {
                 BleService.this.mConnectionState = 0;
                 BleService.this.refreshDeviceCache();
                 BleService.this.mBluetoothGatt.close();
                 BleService.this.mBluetoothGatt = null;
-                GlobalData.status_ConnInit = false;
-                BleService.this.sendBroadcast(GlobalData.ACTION_SERVICE_GATT_DISCONNECTED, false);
+                Constants.status_ConnInit = false;
+                BleService.this.sendBroadcast(Constants.ACTION_SERVICE_GATT_DISCONNECTED, false);
             }
         }
 
@@ -118,7 +118,7 @@ public class BleService extends Service {
                     BleService.this.disconnect();
                     return;
                 } else {
-                    BleService.this.broadcastUpdate(GlobalData.ACTION_SERVICE_GATT_DISCOVERED);
+                    BleService.this.broadcastUpdate(Constants.ACTION_SERVICE_GATT_DISCOVERED);
                     return;
                 }
             }
@@ -175,7 +175,7 @@ public class BleService extends Service {
         }
 
         public void onReceive(Context context, Intent intent) {
-            if (GlobalData.ACTION_MATCH_INFO_TO_DEVICE.equals(intent.getAction())) {
+            if (Constants.ACTION_MATCH_INFO_TO_DEVICE.equals(intent.getAction())) {
                 BleService.handler.postDelayed(BleService.guardian_timetask, 1000);
             }
         }
@@ -208,17 +208,17 @@ public class BleService extends Service {
         String cmdType = data.substring(9, 11);
         if (cmdType.equals("37")) {
             Log.i(TAG, "74 \u5339\u914d\u54cd\u5e94");
-            GlobalData.isMatchInfo = true;
+            Constants.isMatchInfo = true;
             Log.d("sqs", "\u6536\u5230\u5339\u914d\u54cd\u5e94 IS_MATCH_INFO_FROM_DEVICE = true");
-            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16).longValue());
+            broadcastUpdate(Constants.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16).longValue());
         } else if (cmdType.equals("38")) {
             String valuse = data.substring(15, 17);
             Log.i(TAG, "80 \u89e3\u7ed1\u54cd\u5e94");
-            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16).longValue());
+            broadcastUpdate(Constants.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16).longValue());
         } else if (cmdType.equals("23")) {
             Log.i(TAG, "84 \u8bbe\u5907\u8bf7\u6c42\u7ed1\u5b9a");
             Log.d("sqs", "\u6536\u5230\u8bf7\u6c42\u7ed1\u5b9a IS_MATCH_INFO_FROM_DEVICE");
-            broadcastUpdate(GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST);
+            broadcastUpdate(Constants.ACTION_GATT_DEVICE_BIND_REQUEST);
         }
     }
 
@@ -250,14 +250,14 @@ public class BleService extends Service {
     private void sendPwDataAll(String string) {
         Log.d(TAG, "~~~~~~\u8109\u640f\u6ce2~~~~~~~~~~~~~ = " + string);
         if (string.length() != 0) {
-            broadcastUpdate(GlobalData.ACTION_MAIN_DATA_PW, string);
+            broadcastUpdate(Constants.ACTION_MAIN_DATA_PW, string);
         }
     }
 
     private void sendEcgDataAll(String string) {
         Log.d(TAG, "~~~~~~ecgAllData~~~~~~~~~~~~~:" + string);
         if (string.length() != 0) {
-            broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECGALLDATA, string);
+            broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG_ALL_DATA, string);
         }
     }
 
@@ -269,11 +269,11 @@ public class BleService extends Service {
             Log.i(TAG, "dataType.equals('3A')");
             if (dataType.equals("01")) {
                 Log.i(TAG, "145 \u53d1\u9001\u8bbe\u5907\u7aef\u4f20\u8fc7\u6765\u7684\u56fa\u4ef6\u4fe1\u606f\u5e7f\u64ad ACTION_MAIN_DATA_FIR_SUCCESS");
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_FIRM_SUCCESS);
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_FIRM_SUCCESS);
                 return;
             }
             Log.i(TAG, "148 \u53d1\u9001\u8bbe\u5907\u7aef\u4f20\u8fc7\u6765\u7684\u56fa\u4ef6\u4fe1\u606f\u5e7f\u64ad ACTION_MAIN_DATA_FIR_FAULT");
-            broadcastUpdate(GlobalData.ACTION_MAIN_DATA_FIRM_FAULT);
+            broadcastUpdate(Constants.ACTION_MAIN_DATA_FIRM_FAULT);
         } else if (cmdType.equals("39")) {
             int version;
             String[] str = new String[]{data.substring(15, 17), data.substring(18, 20), data.substring(21, 23), data.substring(24, 26)};
@@ -286,19 +286,19 @@ public class BleService extends Service {
             } else {
                 version = Integer.valueOf(tem, 16).intValue();
             }
-            GlobalData.VERSION_FIRM = version;
+            Constants.VERSION_FIRM = version;
 //            PrefUtils.setString(getApplicationContext(), "version_firmware", new StringBuilder(String.valueOf(version)).toString());
-            Log.d("sqs", "166 \u56fa\u4ef6\u7248\u672c\u53f7\u83b7\u53d6\u6210\u529f \u5e7f\u64ad\u53d1\u51fa\u53bb ACTION_DEVICE_FIRMVERSION");
-            Log.i(TAG, "167 ACTION_DEVICE_FIRMVERSION = " + version);
-            broadcastUpdate(GlobalData.ACTION_DEVICE_FIRMVERSION, new StringBuilder(String.valueOf(version)).toString());
+            Log.d("sqs", "166 \u56fa\u4ef6\u7248\u672c\u53f7\u83b7\u53d6\u6210\u529f \u5e7f\u64ad\u53d1\u51fa\u53bb ACTION_DEVICE_FIRM_VERSION");
+            Log.i(TAG, "167 ACTION_DEVICE_FIRM_VERSION = " + version);
+            broadcastUpdate(Constants.ACTION_DEVICE_FIRM_VERSION, new StringBuilder(String.valueOf(version)).toString());
         } else if (cmdType.equals("3E")) {
             Log.v(TAG, "load data----------------" + data);
-            broadcastUpdate(GlobalData.ACTION_GATT_LOAD_DATA, data);
+            broadcastUpdate(Constants.ACTION_GATT_LOAD_DATA, data);
         } else if (cmdType.equals("44")) {
-            broadcastUpdate(GlobalData.ACTION_GATT_LOAD_DATA_SLEEP, data);
+            broadcastUpdate(Constants.ACTION_GATT_LOAD_DATA_SLEEP, data);
         } else if (cmdType.equals("4F")) {
             Log.d("sqs", "\u63a5\u6536\u5230\u8bbe\u5907\u7aef\u4f20\u6765\u566a\u97f34F\u6570\u636e..." + data);
-            broadcastUpdate(GlobalData.ACTION_GATT_BLOOD_PRESSURE_NOISE, data);
+            broadcastUpdate(Constants.ACTION_GATT_BLOOD_PRESSURE_NOISE, data);
         }
     }
 
@@ -312,16 +312,16 @@ public class BleService extends Service {
                     String steps = parseSingeData(data);
                     Log.i(TAG, "parseSingeData(data) = " + steps);
                     int parseInt = Integer.parseInt(steps);
-                    if (parseInt >= 5000 && GlobalData.isOnPause) {
+                    if (parseInt >= 5000 && Constants.isOnPause) {
                         String date_now = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-//                        String date_sp = PrefUtils.getString(MyApplication.mApplication, GlobalData.Today, "");
+//                        String date_sp = PrefUtils.getString(MyApplication.mApplication, Constants.Today, "");
 //                        int step = parseInt / 5000;
-//                        int count = PrefUtils.getInt(MyApplication.mApplication, GlobalData.StepCount, 0);
+//                        int count = PrefUtils.getInt(MyApplication.mApplication, Constants.StepCount, 0);
 //                        if (date_sp.equals("") || !date_now.equals(date_sp) || step != count) {
-//                            PrefUtils.setInt(MyApplication.mApplication, GlobalData.StepCount, step);
-//                            PrefUtils.setString(MyApplication.mApplication, GlobalData.Today, date_now);
-//                            GlobalData.notification_count_steps++;
-//                            MyApplication.Notification(getResources().getString(C0328R.string.new_message_coming), getApplicationContext().getString(C0328R.string.app_name), getApplicationContext().getString(C0328R.string.notification_steps), GlobalData.notification_count_steps, 1);
+//                            PrefUtils.setInt(MyApplication.mApplication, Constants.StepCount, step);
+//                            PrefUtils.setString(MyApplication.mApplication, Constants.Today, date_now);
+//                            Constants.notification_count_steps++;
+//                            MyApplication.Notification(getResources().getString(C0328R.string.new_message_coming), getApplicationContext().getString(C0328R.string.app_name), getApplicationContext().getString(C0328R.string.notification_steps), Constants.notification_count_steps, 1);
 //                        } else {
 //                            return;
 //                        }
@@ -329,66 +329,66 @@ public class BleService extends Service {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_STEPS, parseSingeData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_STEPS, parseSingeData(data));
                 return;
             }
             if (dataType.equals("32")) {
                 Log.v(TAG, "\u5fc3\u7387 = " + parseSingeData(data));
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_HR, parseSingeData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_HR, parseSingeData(data));
                 return;
             }
             if (dataType.equals("3B")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_MOOD, parseMoodIntData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_MOOD, parseMoodIntData(data));
                 return;
             }
             if (dataType.equals("3C")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_FATIGUE, parseMoodIntData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_FATIGUE, parseMoodIntData(data));
                 return;
             }
             if (dataType.equals("3D")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BREATH, parseBRData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_BREATH, parseBRData(data));
                 return;
             }
             if (dataType.equals("34")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_KLL, parseSingeData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_KLL, parseSingeData(data));
                 return;
             }
             if (dataType.equals("35")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_SLEEP, parseSleepData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_SLEEP, parseSleepData(data));
                 return;
             }
             if (dataType.equals("41")) {
                 Log.v(TAG, "bp = " + data);
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BP, parseBpData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_BP, parseBpData(data));
                 return;
             }
             if (dataType.equals("42")) {
-                broadcastUpdate(GlobalData.ACTION_MAIN_DATA_ECG, parseEcgData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG, parseEcgData(data));
                 return;
             }
             if (dataType.equals("43")) {
                 int batteryData = pareseBatteryData(data);
                 int i = 0;
                 while (true) {
-                    int length = GlobalData.low_batery.length;
+                    int length = Constants.low_batery.length;
                     int r0 = 0;
                     if (i >= r0) {
-                        GlobalData.POWER_BATTERY = batteryData;
+                        Constants.POWER_BATTERY = batteryData;
                         long j = (long) batteryData;
-                        broadcastUpdate(GlobalData.ACTION_MAIN_DATA_BATTERY_POWER, j);
+                        broadcastUpdate(Constants.ACTION_MAIN_DATA_BATTERY_POWER, j);
                         return;
                     }
-                    if (batteryData == GlobalData.low_batery[i]) {
+                    if (batteryData == Constants.low_batery[i]) {
 //                        String replace = getResources().getString(C0328R.string.notification_lowbatery).replace("{0}", new StringBuilder(String.valueOf(batteryData)).toString());
-//                        MyApplication.Notification(getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.app_name), replace, GlobalData.notification_count_lowbetery, 6);
+//                        MyApplication.Notification(getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.app_name), replace, Constants.notification_count_lowbetery, 6);
                     }
                     i++;
                 }
             } else {
                 if (dataType.equals("24")) {
-                    GlobalData.notification_count_sos++;
-//                    MyApplication.Notification(getResources().getString(C0328R.string.new_message_coming), getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.helo_had_send_a_sos), GlobalData.notification_count_sos, 2);
-                    broadcastUpdate(GlobalData.ACTION_GATT_SOS);
+                    Constants.notification_count_sos++;
+//                    MyApplication.Notification(getResources().getString(C0328R.string.new_message_coming), getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.helo_had_send_a_sos), Constants.notification_count_sos, 2);
+                    broadcastUpdate(Constants.ACTION_GATT_SOS);
                     return;
                 }
                 if (dataType.equals("45")) {
@@ -397,7 +397,7 @@ public class BleService extends Service {
                         String substring = data.substring(15, 17);
                         Log.d("sqs", "\u8bbe\u5907\u53d1\u6765 LED substring = " + substring);
                         if ("01".equals(substring)) {
-                            broadcastUpdate(GlobalData.LEDCONTORLLSUCCESS);
+                            broadcastUpdate(Constants.LEDCONTORLLSUCCESS);
                         }
                     }
                 }
@@ -499,7 +499,7 @@ public class BleService extends Service {
         Log.d("sqs", "\u65b0\u7761\u7720 data1 = " + data);
         if ("44".equals(data.substring(3, 5))) {
             Log.d("sqs", "\u65b0\u7761\u7720 data2 = " + data);
-            broadcastUpdate(GlobalData.ACTION_GATT_SLEEP_NEW, data);
+            broadcastUpdate(Constants.ACTION_GATT_SLEEP_NEW, data);
         }
         return false;
     }
@@ -650,7 +650,7 @@ public class BleService extends Service {
     }
 
     private void registerBroadcast() {
-        new IntentFilter().addAction(GlobalData.ACTION_MATCH_INFO_TO_DEVICE);
+        new IntentFilter().addAction(Constants.ACTION_MATCH_INFO_TO_DEVICE);
         this.receiver = new C06644();
     }
 }

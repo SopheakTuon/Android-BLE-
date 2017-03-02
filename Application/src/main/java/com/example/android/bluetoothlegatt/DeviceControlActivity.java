@@ -41,15 +41,16 @@ import android.widget.TextView;
 
 import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.WriteToDevice;
+import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.util.HexUtil;
-import com.example.android.bluetoothlegatt.util.WriteCommand;
+import com.example.android.bluetoothlegatt.util.command.WriteCommand;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.example.android.bluetoothlegatt.GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST;
+import static com.example.android.bluetoothlegatt.constant.Constants.ACTION_GATT_DEVICE_BIND_REQUEST;
 
 /**
  * For a given BLE device, this Activity provides the user interface to connect, display data,
@@ -181,7 +182,7 @@ public class DeviceControlActivity extends Activity {
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
-            } else if (GlobalData.ACTION_GATT_DEVICE_MATCH_ACK.equals(action) || GlobalData.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
+            } else if (Constants.ACTION_GATT_DEVICE_MATCH_ACK.equals(action) || Constants.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
                 new Handler().postDelayed(new Bind(), 200);
                 new Handler().postDelayed(new SecondMatch(), 300);
                 new Handler().postDelayed(new Runnable() {
@@ -191,11 +192,11 @@ public class DeviceControlActivity extends Activity {
                     }
                 }, 500);
 
-            } else if (GlobalData.ACTION_MAIN_DATA_ECGALLDATA.equals(action)) {
+            } else if (Constants.ACTION_MAIN_DATA_ECG_ALL_DATA.equals(action)) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String ecg = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
+                        String ecg = intent.getStringExtra(Constants.ACTION_MAIN_DATA_ECG_ALL_DATA);
 //                        Log.d("ECG", ecg);
                         if (ecg != null) {
                             if (timeMeasure < 29 && isMeasuring) {
@@ -245,8 +246,8 @@ public class DeviceControlActivity extends Activity {
                     }
                 });
 
-            } else if (GlobalData.ACTION_MAIN_DATA_PW.equals(action)) {
-                String pw = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_PW);
+            } else if (Constants.ACTION_MAIN_DATA_PW.equals(action)) {
+                String pw = intent.getStringExtra(Constants.ACTION_MAIN_DATA_PW);
                 if (pw != null) {
                     if (timeMeasure < 29 && isMeasuring) {
                         float pwNumber1;
@@ -296,15 +297,15 @@ public class DeviceControlActivity extends Activity {
                     }
                 }
 
-            } else if (GlobalData.ACTION_MAIN_DATA_HR.equals(action)) {
+            } else if (Constants.ACTION_MAIN_DATA_HR.equals(action)) {
                 if (isHR) {
-                    String hr = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_HR);
+                    String hr = intent.getStringExtra(Constants.ACTION_MAIN_DATA_HR);
                     displayData("Heart Rate : " + hr);
                     stopMeasure();
                 }
                 isHR = false;
-            } else if (GlobalData.ACTION_MAIN_DATA_BREATH.equals(action)) {
-                String br = intent.getStringExtra(GlobalData.ACTION_MAIN_DATA_BREATH);
+            } else if (Constants.ACTION_MAIN_DATA_BREATH.equals(action)) {
+                String br = intent.getStringExtra(Constants.ACTION_MAIN_DATA_BREATH);
                 displayData("Breath Rate : " + br);
                 stopMeasure();
             }
@@ -829,12 +830,12 @@ public class DeviceControlActivity extends Activity {
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
-        intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_ECGALLDATA);
-        intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_PW);
-        intentFilter.addAction(GlobalData.ACTION_GATT_DEVICE_MATCH_ACK);
+        intentFilter.addAction(Constants.ACTION_MAIN_DATA_ECG_ALL_DATA);
+        intentFilter.addAction(Constants.ACTION_MAIN_DATA_PW);
+        intentFilter.addAction(Constants.ACTION_GATT_DEVICE_MATCH_ACK);
         intentFilter.addAction(ACTION_GATT_DEVICE_BIND_REQUEST);
-        intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_HR);
-        intentFilter.addAction(GlobalData.ACTION_MAIN_DATA_BREATH);
+        intentFilter.addAction(Constants.ACTION_MAIN_DATA_HR);
+        intentFilter.addAction(Constants.ACTION_MAIN_DATA_BREATH);
         return intentFilter;
     }
 

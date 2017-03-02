@@ -8,7 +8,7 @@ import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
-import com.example.android.bluetoothlegatt.GlobalData;
+import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.PrefUtils;
 
 import java.io.InputStreamReader;
@@ -26,13 +26,13 @@ public class BleServiceHelper {
     }
 
     public static boolean openBle(Activity activity, boolean isBleEnabled, BluetoothAdapter mBluetoothAdapter) {
-        Log.i(TAG, "GlobalData.isEnabled = " + GlobalData.isEnabled + " isBleEnabled = " + isBleEnabled + " mBluetoothAdapter.isEnabled() = " + mBluetoothAdapter.isEnabled());
-        GlobalData.isEnabled = isBleEnabled;
+        Log.i(TAG, "Constants.isEnabled = " + Constants.isEnabled + " isBleEnabled = " + isBleEnabled + " mBluetoothAdapter.isEnabled() = " + mBluetoothAdapter.isEnabled());
+        Constants.isEnabled = isBleEnabled;
         if (!isBleEnabled || mBluetoothAdapter.isEnabled()) {
             return true;
         }
         activity.startActivityForResult(new Intent("android.bluetooth.adapter.action.REQUEST_ENABLE"), 1);
-        GlobalData.isRequest = true;
+        Constants.isRequest = true;
         return false;
     }
 
@@ -51,7 +51,7 @@ public class BleServiceHelper {
 //            int flag = verisonInfo.getUpdateFlag().intValue();
 //            Log.d(TAG, "versionUrl = " + versionUrl + " versionname = " + String.valueOf(versionName));
 //            UpdataFirmware upfirmwareManager = new UpdataFirmware(context);
-//            if (GlobalData.POWER_BATTERY < 30) {
+//            if (Constants.POWER_BATTERY < 30) {
 //                return -1;
 //            }
 //            if (flag == 1) {
@@ -135,8 +135,8 @@ public class BleServiceHelper {
     }
 
     public static void heartPackage(Context context) {
-        if (GlobalData.status_Connected) {
-            sendBroadcast(context, GlobalData.BLE_HEART_PACKAGE);
+        if (Constants.status_Connected) {
+            sendBroadcast(context, Constants.BLE_HEART_PACKAGE);
         } else if (context != null) {
 //            UIToastUtil.setToast(context, context.getResources().getString(C0328R.string.ble_connect_status_ble_nolinkble));
         }
