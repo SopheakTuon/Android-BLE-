@@ -195,18 +195,24 @@ public class DeviceControlActivity extends Activity {
                         new Handler().postDelayed(new SecondMatch(), 1000);
                         return;
                     }
-                    return;
+                } else {
+                    WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 0);
                 }
-                WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 0);
-            } else if (Constants.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
-                new Handler().postDelayed(new SecondMatch(), 300);
-                new Handler().postDelayed(new Bind(), 500);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         enableElements(true);
                     }
-                }, 1000);
+                }, 2000);
+            } else if (Constants.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
+                WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 0);
+                new Handler().postDelayed(new Bind(), 1000);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        enableElements(true);
+                    }
+                }, 2000);
             } else if (Constants.ACTION_MAIN_DATA_ECG_ALL_DATA.equals(action)) {
                 runOnUiThread(new Runnable() {
                     @Override
