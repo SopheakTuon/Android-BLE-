@@ -207,6 +207,11 @@ public class DeviceControlActivity extends Activity {
             } else if (Constants.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
                 WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 0);
                 new Handler().postDelayed(new Bind(), 1000);
+                int done = WriteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
+                Handler handler = new Handler();
+                if (done == -1) {
+                    handler.postDelayed(new UpdateNewDateTimeRunnable(), 1500);
+                }
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -700,9 +705,10 @@ public class DeviceControlActivity extends Activity {
 
         @Override
         public void run() {
-            secondMatch();
+            WriteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
         }
     }
+
 
     /**
      * Match Information
