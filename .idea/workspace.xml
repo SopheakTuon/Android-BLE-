@@ -21,6 +21,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$11.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$11.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$2$1.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$2$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$2$2.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$2$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$2$3.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$2$3.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$2.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$3.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$3.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$4.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity$4.class" />
@@ -77,8 +78,8 @@
       <file leaf-file-name="BluetoothLeService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/service/BluetoothLeService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1245">
-              <caret line="145" column="46" selection-start-line="145" selection-start-column="46" selection-end-line="145" selection-end-column="46" />
+            <state relative-caret-position="242">
+              <caret line="206" column="37" selection-start-line="206" selection-start-column="37" selection-end-line="206" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -97,19 +98,19 @@
       <file leaf-file-name="DeviceControlActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
+            <state relative-caret-position="132">
+              <caret line="195" column="21" selection-start-line="195" selection-start-column="21" selection-end-line="195" selection-end-column="21" />
               <folding>
-                <element signature="e#0#39422#0" expanded="true" />
+                <element signature="e#0#39390#0" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <element signature="e#6329#17887#0" expanded="true" />
-                <element signature="e#17886#17887#0" expanded="true" />
-                <element signature="e#31651#31652#0" expanded="true" />
-                <element signature="e#31695#31696#0" expanded="true" />
-                <element signature="e#31807#31808#0" expanded="true" />
-                <element signature="e#31847#31848#0" expanded="true" />
-                <element signature="e#32079#32080#0" expanded="true" />
-                <element signature="e#32116#32117#0" expanded="true" />
+                <element signature="e#6329#17855#0" expanded="true" />
+                <element signature="e#17854#17855#0" expanded="true" />
+                <element signature="e#31619#31620#0" expanded="true" />
+                <element signature="e#31663#31664#0" expanded="true" />
+                <element signature="e#31775#31776#0" expanded="true" />
+                <element signature="e#31815#31816#0" expanded="true" />
+                <element signature="e#32047#32048#0" expanded="true" />
+                <element signature="e#32084#32085#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -140,11 +141,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WriteCommand.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WriteCommand.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="441" column="87" selection-start-line="441" selection-start-column="87" selection-end-line="441" selection-end-column="87" />
+            <state relative-caret-position="-735">
+              <caret line="345" column="22" selection-start-line="345" selection-start-column="22" selection-end-line="345" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -181,11 +182,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="197" column="45" selection-start-line="197" selection-start-column="45" selection-end-line="197" selection-end-column="45" />
+            <state relative-caret-position="167">
+              <caret line="197" column="35" selection-start-line="197" selection-start-column="35" selection-end-line="197" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -2743,33 +2744,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java</url>
-          <line>888</line>
+          <line>887</line>
           <properties />
           <option name="timeStamp" value="110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java</url>
-          <line>880</line>
+          <line>879</line>
           <properties />
           <option name="timeStamp" value="111" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java</url>
-          <line>395</line>
-          <properties />
-          <option name="timeStamp" value="112" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java</url>
-          <line>397</line>
-          <properties />
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java</url>
-          <line>402</line>
-          <properties />
-          <option name="timeStamp" value="114" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java</url>
@@ -2785,13 +2768,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java</url>
-          <line>206</line>
+          <line>205</line>
           <properties />
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java</url>
-          <line>207</line>
+          <line>206</line>
           <properties />
           <option name="timeStamp" value="121" />
         </line-breakpoint>
@@ -2821,13 +2804,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java</url>
-          <line>198</line>
+          <line>197</line>
           <properties />
           <option name="timeStamp" value="127" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java</url>
-          <line>208</line>
+          <line>207</line>
           <properties />
           <option name="timeStamp" value="128" />
         </line-breakpoint>
@@ -2865,16 +2848,16 @@
         <state relative-caret-position="1802">
           <caret line="148" column="98" selection-start-line="148" selection-start-column="94" selection-end-line="148" selection-end-column="98" />
           <folding>
-            <element signature="e#0#39422#0" expanded="true" />
+            <element signature="e#0#39390#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#6329#17887#0" expanded="true" />
-            <element signature="e#17886#17887#0" expanded="true" />
-            <element signature="e#31651#31652#0" expanded="true" />
-            <element signature="e#31695#31696#0" expanded="true" />
-            <element signature="e#31807#31808#0" expanded="true" />
-            <element signature="e#31847#31848#0" expanded="true" />
-            <element signature="e#32079#32080#0" expanded="true" />
-            <element signature="e#32116#32117#0" expanded="true" />
+            <element signature="e#6329#17855#0" expanded="true" />
+            <element signature="e#17854#17855#0" expanded="true" />
+            <element signature="e#31619#31620#0" expanded="true" />
+            <element signature="e#31663#31664#0" expanded="true" />
+            <element signature="e#31775#31776#0" expanded="true" />
+            <element signature="e#31815#31816#0" expanded="true" />
+            <element signature="e#32047#32048#0" expanded="true" />
+            <element signature="e#32084#32085#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3389,48 +3372,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java">
+    <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="197" column="45" selection-start-line="197" selection-start-column="45" selection-end-line="197" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/service/BluetoothLeService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="145" column="46" selection-start-line="145" selection-start-column="46" selection-end-line="145" selection-end-column="46" />
-          <folding />
+        <state relative-caret-position="-735">
+          <caret line="345" column="22" selection-start-line="345" selection-start-column="22" selection-end-line="345" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
+        <state relative-caret-position="132">
+          <caret line="195" column="21" selection-start-line="195" selection-start-column="21" selection-end-line="195" selection-end-column="21" />
           <folding>
-            <element signature="e#0#39422#0" expanded="true" />
+            <element signature="e#0#39390#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#6329#17887#0" expanded="true" />
-            <element signature="e#17886#17887#0" expanded="true" />
-            <element signature="e#31651#31652#0" expanded="true" />
-            <element signature="e#31695#31696#0" expanded="true" />
-            <element signature="e#31807#31808#0" expanded="true" />
-            <element signature="e#31847#31848#0" expanded="true" />
-            <element signature="e#32079#32080#0" expanded="true" />
-            <element signature="e#32116#32117#0" expanded="true" />
+            <element signature="e#6329#17855#0" expanded="true" />
+            <element signature="e#17854#17855#0" expanded="true" />
+            <element signature="e#31619#31620#0" expanded="true" />
+            <element signature="e#31663#31664#0" expanded="true" />
+            <element signature="e#31775#31776#0" expanded="true" />
+            <element signature="e#31815#31816#0" expanded="true" />
+            <element signature="e#32047#32048#0" expanded="true" />
+            <element signature="e#32084#32085#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java">
+    <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/service/BluetoothLeService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="441" column="87" selection-start-line="441" selection-start-column="87" selection-end-line="441" selection-end-column="87" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="242">
+          <caret line="206" column="37" selection-start-line="206" selection-start-column="37" selection-end-line="206" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="197" column="35" selection-start-line="197" selection-start-column="35" selection-end-line="197" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>

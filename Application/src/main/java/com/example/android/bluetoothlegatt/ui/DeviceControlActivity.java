@@ -193,7 +193,6 @@ public class DeviceControlActivity extends Activity {
                     mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic, false);
                     if (WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 1) != 1) {
                         new Handler().postDelayed(new SecondMatch(), 1000);
-                        return;
                     }
                 } else {
                     WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 0);
