@@ -17,9 +17,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.android.bluetoothlegatt.BufferRecycler;
-import com.example.android.bluetoothlegatt.DeviceItem;
+import com.example.android.bluetoothlegatt.models.DeviceItem;
 import com.example.android.bluetoothlegatt.constant.Constants;
-import com.example.android.bluetoothlegatt.PrefUtils;
+import com.example.android.bluetoothlegatt.util.PrefUtils;
 import com.example.android.bluetoothlegatt.ble.BleServiceHelper;
 import com.example.android.bluetoothlegatt.ble.LinkBleDevice;
 import com.example.android.bluetoothlegatt.ble.WriteToDevice;

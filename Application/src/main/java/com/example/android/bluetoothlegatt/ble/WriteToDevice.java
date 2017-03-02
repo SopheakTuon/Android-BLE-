@@ -5,9 +5,8 @@ import android.support.v4.view.MotionEventCompat;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.example.android.bluetoothlegatt.constant.Constants;
-import com.example.android.bluetoothlegatt.SmileConstants;
 import com.example.android.bluetoothlegatt.TimeUtils;
+import com.example.android.bluetoothlegatt.constant.Constants;
 
 public class WriteToDevice {
     private static final int ID_MARK = 170;
@@ -53,7 +52,7 @@ public class WriteToDevice {
         Log.i("sqs", "\u5f00\u59cb\u540c\u6b65\u65f6\u95f4 getNowTime = " + times);
         byte[] bytes = new byte[15];
         bytes[0] = (byte) 18;
-        bytes[1] = SmileConstants.TOKEN_KEY_LONG_STRING;
+        bytes[1] = Constants.Smile.TOKEN_KEY_LONG_STRING;
         bytes[2] = (byte) 11;
         bytes[3] = (byte) 18;
         bytes[4] = (byte) 4;
@@ -87,7 +86,7 @@ public class WriteToDevice {
         bytes[11] = (byte) 0;
         bytes[12] = (byte) 0;
         bytes[13] = (byte) 67;
-        bytes[14] = SmileConstants.TOKEN_LITERAL_NULL;
+        bytes[14] = Constants.Smile.TOKEN_LITERAL_NULL;
         boolean result = false;
         int count = 0;
         while (!result && count < 100000) {
@@ -120,7 +119,7 @@ public class WriteToDevice {
         bytes[15] = chksum[2];
         bytes[16] = chksum[3];
         bytes[17] = (byte) 67;
-        bytes[18] = SmileConstants.TOKEN_LITERAL_NULL;
+        bytes[18] = Constants.Smile.TOKEN_LITERAL_NULL;
         Log.d(TAG, "\u53d1\u9001\u8840\u538b\u6807\u5b9a\u503c \u5339\u914d\u4fe1\u606f : " + bytesToInt(chksum, 0));
         int count = 0;
         boolean writeStatus = false;
@@ -156,7 +155,7 @@ public class WriteToDevice {
         bytes[11] = chksum[2];
         bytes[12] = chksum[3];
         bytes[13] = (byte) 67;
-        bytes[14] = SmileConstants.TOKEN_LITERAL_NULL;
+        bytes[14] = Constants.Smile.TOKEN_LITERAL_NULL;
         Log.v(TAG, "\u5339\u914d\u4fe1\u606f: " + bytesToInt(chksum, 0));
         int count = 0;
         boolean writeStatus = false;
@@ -196,7 +195,7 @@ public class WriteToDevice {
         byte_info[11] = chksum[2];
         byte_info[12] = chksum[3];
         byte_info[13] = (byte) 67;
-        byte_info[14] = SmileConstants.TOKEN_LITERAL_NULL;
+        byte_info[14] = Constants.Smile.TOKEN_LITERAL_NULL;
         Log.v(TAG, "\u53d1\u9001MAC\u5339\u914d\u4fe1\u606f  = " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(byte_info));
         int count = 0;
         boolean writeStatus = false;
@@ -229,7 +228,7 @@ public class WriteToDevice {
         bytes[8] = chksum[2];
         bytes[9] = chksum[3];
         bytes[10] = (byte) 67;
-        bytes[11] = SmileConstants.TOKEN_LITERAL_NULL;
+        bytes[11] = Constants.Smile.TOKEN_LITERAL_NULL;
         Log.v(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f = " + bytesToInt(chksum, 0));
         int count = 0;
         boolean writeStatus = false;
@@ -265,7 +264,7 @@ public class WriteToDevice {
         bytes[6] = r2[2];
         bytes[7] = r2[3];
         bytes[8] = (byte) 67;
-        bytes[9] = SmileConstants.TOKEN_LITERAL_NULL;
+        bytes[9] = Constants.Smile.TOKEN_LITERAL_NULL;
         Log.v(TAG, "\u89e3\u9664\u7ed1\u5b9a \u54cd\u5e94\u4fe1\u606f" + bytesToInt(r2, 0));
         int count = 0;
         boolean writeStatus = false;
@@ -290,7 +289,7 @@ public class WriteToDevice {
     public static int stopMeasuring(Context context) {
         int i = 1;
         Log.i(TAG, "\u505c\u6b62\u5f53\u524d\u6d4b\u91cf\uff0c\u8ba9\u8bbe\u5907\u5173\u706f");
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 15, (byte) 25, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 15, (byte) 25, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -314,7 +313,7 @@ public class WriteToDevice {
     public static int letMeashineDown(Context context) {
         int i = 1;
         Log.i(TAG, "\u8ba9\u8bbe\u5907\u5173\u673a\u6307\u4ee4");
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 14, (byte) 24, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 14, (byte) 24, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -338,7 +337,7 @@ public class WriteToDevice {
     public static int measureHr(Context context) {
         boolean z = true;
         Log.i(TAG, "\u5fc3\u7387\u6d4b\u91cf\u6307\u4ee4");
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 2, (byte) 12, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 2, (byte) 12, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -360,13 +359,13 @@ public class WriteToDevice {
         if (!writeStatus) {
             z = true;
         }
-        return z? 1 : -1;
+        return z ? 1 : -1;
     }
 
     public static int measureBp(Context context) {
         boolean z = true;
         Log.i(TAG, "\u8840\u538b\u6d4b\u91cf\u6307\u4ee4");
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 12, (byte) 22, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 12, (byte) 22, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -394,7 +393,7 @@ public class WriteToDevice {
     public static int measureECG(Context context) {
         boolean z = true;
         Log.i(TAG, "ECG\u6d4b\u91cf\u6307\u4ee4");
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 10, (byte) 20, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 10, (byte) 20, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -416,13 +415,13 @@ public class WriteToDevice {
         if (!writeStatus) {
             z = true;
         }
-        return z? 1: -1;
+        return z ? 1 : -1;
     }
 
     public static int measureBr(Context context) {
         boolean z = true;
         Log.i(TAG, "\u547c\u5438\u9891\u7387\u6d4b\u91cf\u6307\u4ee4");
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 11, (byte) 21, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 11, (byte) 21, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -443,13 +442,13 @@ public class WriteToDevice {
         if (!writeStatus) {
             z = true;
         }
-        return z? 1: -1;
+        return z ? 1 : -1;
     }
 
     public static int measureMF(Context context) {
         boolean z = true;
         Log.i(TAG, "\u5fc3\u60c5\u75b2\u52b3\u503c\u6d4b\u91cf\u6307\u4ee4");
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 6, (byte) 16, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 6, (byte) 16, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -470,14 +469,14 @@ public class WriteToDevice {
         if (!writeStatus) {
             z = true;
         }
-        return z? 1: -1;
+        return z ? 1 : -1;
     }
 
     public static int measurePW(Context context) {
         boolean z = true;
         Log.i(TAG, "\u8109\u640f\u6ce2\u6d4b\u91cf\u6307\u4ee4");
         byte[] bb = new byte[10];
-        byte[] cc = new byte[]{(byte) 18, (byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 10, (byte) 97, (byte) 107, (byte) 3, (byte) 13};
+        byte[] cc = new byte[]{(byte) 18, (byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 10, (byte) 97, (byte) 107, (byte) 3, (byte) 13};
         bb[5] = (byte) 0;
         cc[5] = (byte) 0;
         bb[6] = (byte) 0;
@@ -486,8 +485,8 @@ public class WriteToDevice {
         cc[7] = (byte) 0;
         bb[8] = (byte) 67;
         cc[8] = (byte) 67;
-        bb[9] = SmileConstants.TOKEN_LITERAL_NULL;
-        cc[9] = SmileConstants.TOKEN_LITERAL_NULL;
+        bb[9] = Constants.Smile.TOKEN_LITERAL_NULL;
+        cc[9] = Constants.Smile.TOKEN_LITERAL_NULL;
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -524,7 +523,7 @@ public class WriteToDevice {
             if (!writeStatus) {
                 z = true;
             }
-            return z? 1: -1;
+            return z ? 1 : -1;
         }
         Log.i(TAG, "\u53d1\u9001\u8109\u640f\u6ce2\u6d4b\u91cf\u6307\u4ee4\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
         return -1;
@@ -542,7 +541,7 @@ public class WriteToDevice {
         bytes[11] = r2[2];
         bytes[12] = r2[3];
         bytes[13] = (byte) 67;
-        bytes[14] = SmileConstants.TOKEN_LITERAL_NULL;
+        bytes[14] = Constants.Smile.TOKEN_LITERAL_NULL;
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -576,7 +575,7 @@ public class WriteToDevice {
         bytes[8] = r2[2];
         bytes[9] = r2[3];
         bytes[10] = (byte) 67;
-        bytes[11] = SmileConstants.TOKEN_LITERAL_NULL;
+        bytes[11] = Constants.Smile.TOKEN_LITERAL_NULL;
         int count = 0;
         boolean writeStatus = false;
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
@@ -613,7 +612,7 @@ public class WriteToDevice {
         bytes[11] = r2[2];
         bytes[12] = r2[3];
         bytes[13] = (byte) 67;
-        bytes[14] = SmileConstants.TOKEN_LITERAL_NULL;
+        bytes[14] = Constants.Smile.TOKEN_LITERAL_NULL;
         int count = 0;
         boolean writeStatus = false;
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
@@ -639,7 +638,7 @@ public class WriteToDevice {
     public static int getSteps(Context context) {
         boolean z = true;
         Log.i(TAG, "\u83b7\u53d6\u6b65\u6570\u6307\u4ee4");
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 1, (byte) 11, (byte) 0, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 1, (byte) 11, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -661,7 +660,7 @@ public class WriteToDevice {
         if (!writeStatus) {
             z = true;
         }
-        return z? 1: -1;
+        return z ? 1 : -1;
     }
 
     public static int setLedLight(Context context, int data1, int data2) {
@@ -669,7 +668,7 @@ public class WriteToDevice {
         Log.i("sqs", "\u53d1\u9001\u8bbe\u7f6eled\u4eae\u5ea6");
         byte[] r2 = new byte[4];
         r2 = intToBytes((data1 + 110) + data2);
-        byte[] bytes = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 11, (byte) 97, (byte) 2, (byte) data1, (byte) data2, r2[0], r2[1], r2[2], r2[3], (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 11, (byte) 97, (byte) 2, (byte) data1, (byte) data2, r2[0], r2[1], r2[2], r2[3], (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -690,7 +689,7 @@ public class WriteToDevice {
         if (!writeStatus) {
             z = true;
         }
-        return z? 1: -1;
+        return z ? 1 : -1;
     }
 
     public static int startSendDecryToken(Context context, int dataLength) {
@@ -704,7 +703,7 @@ public class WriteToDevice {
         bb[11] = r2[2];
         bb[12] = r2[3];
         bb[13] = (byte) 67;
-        bb[14] = SmileConstants.TOKEN_LITERAL_NULL;
+        bb[14] = Constants.Smile.TOKEN_LITERAL_NULL;
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -740,7 +739,7 @@ public class WriteToDevice {
         String bytesToHexString = bytesToHexString(r7);
         byte[] bb = new byte[19];
         bb[0] = (byte) 18;
-        bb[1] = SmileConstants.TOKEN_KEY_LONG_STRING;
+        bb[1] = Constants.Smile.TOKEN_KEY_LONG_STRING;
         bb[2] = (byte) 11;
         bb[3] = (byte) 30;
         bb[4] = (byte) 8;
@@ -754,7 +753,7 @@ public class WriteToDevice {
         bb[15] = r5[2];
         bb[16] = r5[3];
         bb[17] = (byte) 67;
-        bb[18] = SmileConstants.TOKEN_LITERAL_NULL;
+        bb[18] = Constants.Smile.TOKEN_LITERAL_NULL;
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -777,7 +776,7 @@ public class WriteToDevice {
 //    public static int sendReviseAutoTime(Context context) {
 //        byte b = (byte) 1;
 //        Log.i(TAG, "sendReviseAutoTime");
-//        byte[] bb = new byte[]{(byte) 18, SmileConstants.TOKEN_KEY_LONG_STRING, (byte) 11, (byte) 23, (byte) 1, (byte) -1, (byte) ((((bb[2] + bb[3]) + bb[4]) + bb[5]) % MotionEventCompat.ACTION_MASK), (byte) 1, (byte) 0, (byte) 0, (byte) 67, SmileConstants.TOKEN_LITERAL_NULL};
+//        byte[] bb = new byte[]{(byte) 18, Smile.TOKEN_KEY_LONG_STRING, (byte) 11, (byte) 23, (byte) 1, (byte) -1, (byte) ((((bb[2] + bb[3]) + bb[4]) + bb[5]) % MotionEventCompat.ACTION_MASK), (byte) 1, (byte) 0, (byte) 0, (byte) 67, Smile.TOKEN_LITERAL_NULL};
 //        Log.i("min :", new StringBuilder(String.valueOf(bb[5])).toString());
 //        int count = 0;
 //        boolean writeStatus = false;

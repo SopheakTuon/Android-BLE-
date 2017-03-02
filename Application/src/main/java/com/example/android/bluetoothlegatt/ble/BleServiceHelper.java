@@ -9,7 +9,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import com.example.android.bluetoothlegatt.constant.Constants;
-import com.example.android.bluetoothlegatt.PrefUtils;
+import com.example.android.bluetoothlegatt.util.PrefUtils;
 
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
