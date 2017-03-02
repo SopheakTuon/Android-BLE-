@@ -406,6 +406,43 @@ public class WriteCommand {
         return writeStatus ? 1 : -1;
     }
 
+    public static int initDeviceLoadCode(BluetoothGatt bluetoothGatt) {
+        byte b = (byte) 1;
+        Log.i(TAG, "\u4fdd\u62a4\u8bbe\u5907\u7a0b\u5e8f\u52a0\u8f7d");
+        byte[] bytes = new byte[15];
+        Log.i(TAG, "CHKSUM==" + 42);
+        byte[] r2 = new byte[4];
+        r2 = intToBytes(42);
+        bytes[9] = r2[0];
+        bytes[10] = r2[1];
+        bytes[11] = r2[2];
+        bytes[12] = r2[3];
+        bytes[13] = (byte) 67;
+        bytes[14] = Constants.Smile.TOKEN_LITERAL_NULL;
+        int count = 0;
+        boolean writeStatus = false;
+        BluetoothGattService bluetoothGattService = bluetoothGatt.getService(UUID.fromString("2aabcdef-1111-2222-0000-facebeadaaaa"));
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGattService.getCharacteristic(UUID.fromString("facebead-ffff-eeee-0100-facebeadaaaa"));
+        while (!writeStatus) {
+            bluetoothGattCharacteristic.setValue(bytes);
+            writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
+//            if (Constants.status_Connected) {
+//                if (count > Constants.DELAY_TIME_LINKING_BLE) {
+//                    break;
+//                }
+//                count++;
+//            } else {
+//                return -1;
+//            }
+        }
+        Log.i(TAG, "\u53d1\u9001\u4fdd\u62a4\u8bbe\u5907\u7a0b\u5e8f\u52a0\u8f7d\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
+        if (!writeStatus) {
+            b = (byte) -1;
+        }
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        return b;
+    }
+
     /**
      * @param bluetoothGatt
      * @return

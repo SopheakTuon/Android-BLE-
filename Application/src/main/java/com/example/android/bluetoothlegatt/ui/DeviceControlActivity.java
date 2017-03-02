@@ -184,16 +184,29 @@ public class DeviceControlActivity extends Activity {
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
-            } else if (Constants.ACTION_GATT_DEVICE_MATCH_ACK.equals(action) || Constants.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
-                new Handler().postDelayed(new Bind(), 200);
+            } else if (Constants.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
+//                new Handler().postDelayed(new Bind(), 200);
+                long data = intent.getLongExtra(action, -1);
+                if (data == 1) {
+                    new Handler().postDelayed(new UpdateNewDateTimeRunnable(), 500);
+                    BluetoothGattCharacteristic bluetoothGattCharacteristic = mBluetoothLeService.getmBluetoothGatt().getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0010-facebeadaaaa"));
+                    mBluetoothLeService.getmBluetoothGatt().setCharacteristicNotification(bluetoothGattCharacteristic, false);
+                    if (WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 1) != 1) {
+                        new Handler().postDelayed(new SecondMatch(), 1000);
+                        return;
+                    }
+                    return;
+                }
+                WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 0);
+            } else if (Constants.ACTION_GATT_DEVICE_BIND_REQUEST.equals(action)) {
                 new Handler().postDelayed(new SecondMatch(), 300);
+                new Handler().postDelayed(new Bind(), 500);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         enableElements(true);
                     }
-                }, 500);
-
+                }, 1000);
             } else if (Constants.ACTION_MAIN_DATA_ECG_ALL_DATA.equals(action)) {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -642,7 +655,8 @@ public class DeviceControlActivity extends Activity {
 //                secondMatch();
 //            }
 //        });
-        new Handler().postDelayed(new MatchInfo(), 50);
+        new Handler().postDelayed(new MatchInfo(), 500);
+//        new Handler().postDelayed(new InitDeviceLoadCode(), 1000);
     }
 
     class MatchInfo implements Runnable {
@@ -650,6 +664,21 @@ public class DeviceControlActivity extends Activity {
         @Override
         public void run() {
             matchInfo();
+        }
+    }
+
+    class InitDeviceLoadCode implements Runnable {
+        @Override
+        public void run() {
+            initDeviceLoadCode();
+        }
+    }
+
+    class UpdateNewDateTimeRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            updateTimeSync();
         }
     }
 
@@ -678,6 +707,10 @@ public class DeviceControlActivity extends Activity {
         return WriteCommand.matchInfo(mBluetoothLeService.getmBluetoothGatt(), WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
     }
 
+    private int initDeviceLoadCode() {
+        return WriteCommand.initDeviceLoadCode(mBluetoothLeService.getmBluetoothGatt());
+    }
+
     //Request Bind
 
     /**
@@ -694,6 +727,13 @@ public class DeviceControlActivity extends Activity {
      */
     private int secondMatch() {
         return WriteCommand.secondMatch(mBluetoothLeService.getmBluetoothGatt(), 1);
+    }
+
+    /**
+     * @return
+     */
+    private int updateTimeSync() {
+        return WriteCommand.UpdateNewTime(mBluetoothLeService.getmBluetoothGatt());
     }
 
     /**
