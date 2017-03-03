@@ -154,11 +154,11 @@ public class BluetoothLeService extends Service {
             Log.d("onCharacteristicChanged", stringBuilder.toString());
             if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0004-facebeadaaaa")) {
                 BluetoothLeService.this.broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG_ALL_DATA, stringBuilder.toString());
-            }else if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0005-facebeadaaaa")) {
+            } else if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0005-facebeadaaaa")) {
                 BluetoothLeService.this.broadcastUpdate(Constants.ACTION_MAIN_DATA_PW, stringBuilder.toString());
             } else if (uuid.equals("1aabcdef-1111-2222-0000-facebeadaaaa")) {
                 BluetoothLeService.this.sendBindBroadcast(stringBuilder.toString());
-            }else {
+            } else {
 //                broadcastUpdate(ACTION_DATA_AVAILABLE, stringBuilder.toString());
                 BluetoothLeService.this.sendDataBroadcast(stringBuilder.toString());
             }
@@ -212,32 +212,32 @@ public class BluetoothLeService extends Service {
                 return;
             }
             if (Constants.DataType.DATA_MOOD.equals(dataType)) {
-//                broadcastUpdate(Constants.DATA_MOOD, parseMoodIntData(data));
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_MOOD, parseMoodIntData(data));
                 return;
             }
-//            if (dataType.equals("3C")) {
-//                broadcastUpdate(Constants.DATA_FATIGUE, parseMoodIntData(data));
-//                return;
-//            }
+            if (Constants.DataType.DATA_FATIGUE.equals(dataType)) {
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_FATIGUE, parseMoodIntData(data));
+                return;
+            }
             if (Constants.DataType.DATA_BREATH_RATE.equals(dataType)) {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_BREATH, parseBRData(data));
                 return;
             }
-//            if (dataType.equals("34")) {
-//                broadcastUpdate(Constants.DATA_KLL, parseSingeData(data));
-//                return;
-//            }
-//            if (dataType.equals("35")) {
-//                broadcastUpdate(Constants.DATA_SLEEP, parseSleepData(data));
-//                return;
-//            }
-//            if (dataType.equals("41")) {
-//                Log.v(TAG, "bp = " + data);
-//                broadcastUpdate(Constants.DATA_BP, parseBpData(data));
-//                return;
-//            }
+            if (Constants.DataType.DATA_KLL.equals(dataType)) {
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_KLL, parseSingeData(data));
+                return;
+            }
+            if (Constants.DataType.DATA_SLEEP.equals(dataType)) {
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_SLEEP, parseSleepData(data));
+                return;
+            }
+            if (Constants.DataType.DATA_BP.equals(dataType)) {
+                Log.v(TAG, "bp = " + data);
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_BP, parseBpData(data));
+                return;
+            }
 //            if (dataType.equals("42")) {
-//                broadcastUpdate(Constants.DATA_ECG, parseEcgData(data));
+//                broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG, parseEcgData(data));
 //                return;
 //            }
 //            if (dataType.equals("43")) {
@@ -279,15 +279,44 @@ public class BluetoothLeService extends Service {
 
     }
 
+
+    private int pareseBatteryData(String data) {
+        return Integer.parseInt(data.substring(15, 17), 16);
+    }
+
     private String parseSingeData(String data) {
         String dataStr = data.substring(27, 38);
         return new StringBuilder(String.valueOf((long) Integer.parseInt(dataStr.substring(9, 11) + dataStr.substring(6, 8) + dataStr.substring(3, 5) + dataStr.substring(0, 2), 16))).toString();
+    }
+
+    private long parseSleepData(String data) {
+        String dataStr = data.substring(27, 38);
+        String dateStr = data.substring(15, 26);
+        return (long) Integer.parseInt(dataStr.substring(9, 11) + dataStr.substring(6, 8) + dataStr.substring(3, 5) + dataStr.substring(0, 2), 16);
+    }
+
+    private String parseBpData(String data) {
+        Log.v(TAG, "bp data = " + data);
+        String dataStr = data.substring(27, 32);
+        Log.v(TAG, "bp dataStr = " + dataStr);
+        return dataStr;
+    }
+
+    private String parseEcgData(String data) {
+        Log.v(TAG, "Ecg data = " + data);
+        String dataStr = data.substring(27, 29);
+        Log.v(TAG, "Ecg dataStr = " + dataStr);
+        return dataStr;
     }
 
     private String parseBRData(String data) {
         String dataStr = data.substring(27, 29);
         Log.v(TAG, "BR DATA = " + dataStr);
         return new StringBuilder(String.valueOf((long) Integer.parseInt(dataStr, 16))).toString();
+    }
+
+    private String parseMoodIntData(String data) {
+        return data.substring(27, 29);
     }
 
 
@@ -496,7 +525,6 @@ public class BluetoothLeService extends Service {
     public BluetoothGatt getmBluetoothGatt() {
         return mBluetoothGatt;
     }
-
 
 
     public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
