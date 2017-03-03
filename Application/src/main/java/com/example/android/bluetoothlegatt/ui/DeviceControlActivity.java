@@ -619,7 +619,7 @@ public class DeviceControlActivity extends Activity {
 //        for (BluetoothGattService gattService : gattServices) {
 //            HashMap<String, String> currentServiceData = new HashMap<>();
 //            uuid = gattService.getUuid().toString();
-////            Log.d("Service", "UUID : " + uuid + "\n" + "Type : " + gattService.getType() + "\n" + "InstanceId : " + gattService.getInstanceId());
+////            Log.d("Service", "UUID : " + uuid + "\n" + "CMD : " + gattService.getType() + "\n" + "InstanceId : " + gattService.getInstanceId());
 ////            allServiceUUID += uuid + "\n";
 //            currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
 //            currentServiceData.put(LIST_UUID, uuid);

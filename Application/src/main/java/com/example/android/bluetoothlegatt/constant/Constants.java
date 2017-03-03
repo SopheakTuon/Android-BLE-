@@ -169,7 +169,7 @@ public class Constants {
     public static final String ACTION_GATT_SLEEP_NEW = "ACTION_GATT_SLEEP_NEW";
 
     public static final String ACTION_MAIN_DATA_BATTERY_POWER = "BUTTERY_POWER";
-    public static final String ACTION_MAIN_DATA_BP = "BluetoothLeService.DATA_BP";
+    public static final String ACTION_MAIN_DATA_BP = "BluetoothLeService.DATA_BLOOD_PRESSURE";
     public static final String ACTION_MAIN_DATA_BREATH = "DATA_BREATH_RATE";
     public static final String ACTION_MAIN_DATA_ECG = "DATA_ECG";
 
@@ -193,77 +193,89 @@ public class Constants {
     /**
      *
      */
-    public final class Type {
+    public final class CMD {
+        //BIND COMMAND
+        public static final String START_SYCHRONIZATION = "21";
+        public static final String STOP_SYCHRONIZATIO = "22";
+        public static final String DEVICE_BIND_REQUEST = "23";
 
+        //DATA COMMAND
+        public static final String GATT_SOS = "24";
+        public static final String DATA_STEP_COUNT = "31";
         public static final String DATA_HEART_RATE = "32";
-        public static final String DATA_MOOD = "3B";
-        public static final String DATA_BREATH_RATE = "3D";
-        public static final String DATA_FATIGUE = "3C";
+        public static final String DATA_PPG = "33";
         public static final String DATA_KLL = "34";
         public static final String DATA_SLEEP = "35";
-        public static final String DATA_BP = "41";
-        public static final String DATA_ECG = "42";
-        public static final String DATA_BATTERY_POWER = "43";
-        public static final String GATT_SOS = "24";
         public static final String DEVICE_MATCH_ACK = "37";
         public static final String DEVICE_UNBIND_ACK = "38";
-        public static final String DEVICE_BIND_REQUEST = "23";
+        public static final String DATA_MOOD = "3B";
+        public static final String DATA_FATIGUE = "3C";
+        public static final String DATA_BREATH_RATE = "3D";
+        public static final String HEALTH_PLAN = "3E";
+        public static final String CRC_DATA_SYNCHRONIZATION = "3F";
+
+        public static final String DATA_BLOOD_PRESSURE = "41";
+        public static final String DATA_ECG = "42";
+        public static final String DATA_BATTERY_POWER = "43";
+        public static final String SLEEP_DATA = "44";
+
+
     }
 
 
     public final class Smile {
-        public static final byte BYTE_MARKER_END_OF_CONTENT = (byte) -1;
-        public static final byte BYTE_MARKER_END_OF_STRING = (byte) -4;
-        public static final int HEADER_BIT_HAS_RAW_BINARY = 4;
-        public static final int HEADER_BIT_HAS_SHARED_NAMES = 1;
-        public static final int HEADER_BIT_HAS_SHARED_STRING_VALUES = 2;
-        public static final byte HEADER_BYTE_1 = (byte) 58;
-        public static final byte HEADER_BYTE_2 = (byte) 41;
-        public static final byte HEADER_BYTE_3 = (byte) 10;
-        public static final byte HEADER_BYTE_4 = (byte) 0;
-        public static final int HEADER_VERSION_0 = 0;
-        public static final int INT_MARKER_END_OF_STRING = 252;
-        public static final int MAX_SHARED_NAMES = 1024;
-        public static final int MAX_SHARED_STRING_LENGTH_BYTES = 65;
-        public static final int MAX_SHARED_STRING_VALUES = 1024;
-        public static final int MAX_SHORT_NAME_ASCII_BYTES = 64;
-        public static final int MAX_SHORT_NAME_UNICODE_BYTES = 56;
-        public static final int MAX_SHORT_VALUE_STRING_BYTES = 64;
-        public static final int MIN_BUFFER_FOR_POSSIBLE_SHORT_STRING = 196;
-        public static final byte TOKEN_KEY_EMPTY_STRING = (byte) 32;
+//        public static final byte BYTE_MARKER_END_OF_CONTENT = (byte) -1;
+//        public static final byte BYTE_MARKER_END_OF_STRING = (byte) -4;
+//        public static final int HEADER_BIT_HAS_RAW_BINARY = 4;
+//        public static final int HEADER_BIT_HAS_SHARED_NAMES = 1;
+//        public static final int HEADER_BIT_HAS_SHARED_STRING_VALUES = 2;
+//        public static final byte HEADER_BYTE_1 = (byte) 58;
+//        public static final byte HEADER_BYTE_2 = (byte) 41;
+//        public static final byte HEADER_BYTE_3 = (byte) 10;
+//        public static final byte HEADER_BYTE_4 = (byte) 0;
+//        public static final int HEADER_VERSION_0 = 0;
+//        public static final int INT_MARKER_END_OF_STRING = 252;
+//        public static final int MAX_SHARED_NAMES = 1024;
+//        public static final int MAX_SHARED_STRING_LENGTH_BYTES = 65;
+//        public static final int MAX_SHARED_STRING_VALUES = 1024;
+//        public static final int MAX_SHORT_NAME_ASCII_BYTES = 64;
+//        public static final int MAX_SHORT_NAME_UNICODE_BYTES = 56;
+//        public static final int MAX_SHORT_VALUE_STRING_BYTES = 64;
+//        public static final int MIN_BUFFER_FOR_POSSIBLE_SHORT_STRING = 196;
+//        public static final byte TOKEN_KEY_EMPTY_STRING = (byte) 32;
         public static final byte TOKEN_KEY_LONG_STRING = (byte) 52;
         public static final byte TOKEN_LITERAL_EMPTY_STRING = (byte) 32;
         public static final byte TOKEN_LITERAL_END_ARRAY = (byte) -7;
         public static final byte TOKEN_LITERAL_END_OBJECT = (byte) -5;
         public static final byte TOKEN_LITERAL_FALSE = (byte) 34;
         public static final byte TOKEN_LITERAL_NULL = (byte) 33;
-        public static final byte TOKEN_LITERAL_START_ARRAY = (byte) -8;
-        public static final byte TOKEN_LITERAL_START_OBJECT = (byte) -6;
-        public static final byte TOKEN_LITERAL_TRUE = (byte) 35;
-        public static final int TOKEN_MISC_BINARY_7BIT = 232;
-        public static final int TOKEN_MISC_BINARY_RAW = 253;
-        public static final int TOKEN_MISC_FLOAT_32 = 0;
-        public static final int TOKEN_MISC_FLOAT_64 = 1;
-        public static final int TOKEN_MISC_FLOAT_BIG = 2;
-        public static final int TOKEN_MISC_FP = 40;
-        public static final int TOKEN_MISC_INTEGER = 36;
-        public static final int TOKEN_MISC_INTEGER_32 = 0;
-        public static final int TOKEN_MISC_INTEGER_64 = 1;
-        public static final int TOKEN_MISC_INTEGER_BIG = 2;
-        public static final int TOKEN_MISC_LONG_TEXT_ASCII = 224;
-        public static final int TOKEN_MISC_LONG_TEXT_UNICODE = 228;
-        public static final int TOKEN_MISC_SHARED_STRING_LONG = 236;
-        public static final int TOKEN_PREFIX_KEY_ASCII = 128;
-        public static final int TOKEN_PREFIX_KEY_SHARED_LONG = 48;
-        public static final int TOKEN_PREFIX_KEY_SHARED_SHORT = 64;
-        public static final int TOKEN_PREFIX_KEY_UNICODE = 192;
-        public static final int TOKEN_PREFIX_MISC_OTHER = 224;
-        public static final int TOKEN_PREFIX_SHARED_STRING_SHORT = 0;
-        public static final int TOKEN_PREFIX_SHORT_UNICODE = 160;
-        public static final int TOKEN_PREFIX_SMALL_ASCII = 96;
-        public static final int TOKEN_PREFIX_SMALL_INT = 192;
-        public static final int TOKEN_PREFIX_TINY_ASCII = 64;
-        public static final int TOKEN_PREFIX_TINY_UNICODE = 128;
+//        public static final byte TOKEN_LITERAL_START_ARRAY = (byte) -8;
+//        public static final byte TOKEN_LITERAL_START_OBJECT = (byte) -6;
+//        public static final byte TOKEN_LITERAL_TRUE = (byte) 35;
+//        public static final int TOKEN_MISC_BINARY_7BIT = 232;
+//        public static final int TOKEN_MISC_BINARY_RAW = 253;
+//        public static final int TOKEN_MISC_FLOAT_32 = 0;
+//        public static final int TOKEN_MISC_FLOAT_64 = 1;
+//        public static final int TOKEN_MISC_FLOAT_BIG = 2;
+//        public static final int TOKEN_MISC_FP = 40;
+//        public static final int TOKEN_MISC_INTEGER = 36;
+//        public static final int TOKEN_MISC_INTEGER_32 = 0;
+//        public static final int TOKEN_MISC_INTEGER_64 = 1;
+//        public static final int TOKEN_MISC_INTEGER_BIG = 2;
+//        public static final int TOKEN_MISC_LONG_TEXT_ASCII = 224;
+//        public static final int TOKEN_MISC_LONG_TEXT_UNICODE = 228;
+//        public static final int TOKEN_MISC_SHARED_STRING_LONG = 236;
+//        public static final int TOKEN_PREFIX_KEY_ASCII = 128;
+//        public static final int TOKEN_PREFIX_KEY_SHARED_LONG = 48;
+//        public static final int TOKEN_PREFIX_KEY_SHARED_SHORT = 64;
+//        public static final int TOKEN_PREFIX_KEY_UNICODE = 192;
+//        public static final int TOKEN_PREFIX_MISC_OTHER = 224;
+//        public static final int TOKEN_PREFIX_SHARED_STRING_SHORT = 0;
+//        public static final int TOKEN_PREFIX_SHORT_UNICODE = 160;
+//        public static final int TOKEN_PREFIX_SMALL_ASCII = 96;
+//        public static final int TOKEN_PREFIX_SMALL_INT = 192;
+//        public static final int TOKEN_PREFIX_TINY_ASCII = 64;
+//        public static final int TOKEN_PREFIX_TINY_UNICODE = 128;
     }
 
 }

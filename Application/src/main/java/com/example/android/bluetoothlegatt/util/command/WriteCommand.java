@@ -8,7 +8,6 @@ import android.text.format.Time;
 import android.util.Log;
 
 import com.example.android.bluetoothlegatt.TimeUtils;
-import com.example.android.bluetoothlegatt.constant.Constants;
 
 import java.util.UUID;
 
@@ -20,6 +19,20 @@ import java.util.UUID;
 public class WriteCommand {
     private static final String TAG = "WriteCommand";
 
+
+    //HEADER
+    public static final byte PACKAGE_HEADER0 = (byte) 0x12;
+    public static final byte PACKAGE_HEADER1 = (byte) 0x34;
+
+    //TYPE
+    public static final byte SINGLE_BYTE_COMMAND_TYPE = (byte) 0x0A;
+    public static final byte MULTI_BYTE_COMMAND_TYPE = (byte) 0x0B;
+
+    //TRAILER
+    public static final byte PACKAGE_TRAILER0 = (byte) 0x43;
+    public static final byte PACKAGE_TRAILER1 = (byte) 0x21;
+
+
     /**
      * @param bluetoothGatt
      * @param userid
@@ -30,9 +43,9 @@ public class WriteCommand {
         byte[] r4;
         r4 = intToBytes(userid);
         byte[] bytes = new byte[15];
-        bytes[0] = (byte) 0x12;
-        bytes[1] = (byte) 0x34;
-        bytes[2] = (byte) 0x0b;// type
+        bytes[0] = PACKAGE_HEADER0;
+        bytes[1] = PACKAGE_HEADER1;
+        bytes[2] = MULTI_BYTE_COMMAND_TYPE;// type
         bytes[3] = (byte) 0x11;// cmd
         bytes[4] = (byte) 0x04;// length
         bytes[5] = r4[0];
@@ -47,8 +60,8 @@ public class WriteCommand {
         bytes[10] = chksum[1];
         bytes[11] = chksum[2];
         bytes[12] = chksum[3];
-        bytes[13] = (byte) 67;
-        bytes[14] = Constants.Smile.TOKEN_LITERAL_NULL;
+        bytes[13] = PACKAGE_TRAILER0;
+        bytes[14] = PACKAGE_TRAILER1;
         Log.v(TAG, "Match: " + bytesToInt(chksum, 0));
 //        int count = 0;
         boolean writeStatus = false;
@@ -79,9 +92,9 @@ public class WriteCommand {
         int s6 = Integer.parseInt(mac.substring(10), 16);
         byte[] byte_info = new byte[15];
 
-        byte_info[0] = (byte) 0x12;
-        byte_info[1] = (byte) 0x34;
-        byte_info[2] = (byte) 0x0b;// type
+        byte_info[0] = PACKAGE_HEADER0;
+        byte_info[1] = PACKAGE_HEADER1;
+        byte_info[2] = MULTI_BYTE_COMMAND_TYPE;// type
         byte_info[3] = (byte) 0x11;// cmd
         byte_info[4] = (byte) 0x04;// length
         byte_info[5] = (byte) s3;
@@ -96,8 +109,8 @@ public class WriteCommand {
         byte_info[10] = chksum[2];
         byte_info[11] = chksum[0];
         byte_info[12] = chksum[1];
-        byte_info[13] = (byte) 0x43;
-        byte_info[14] = (byte) 0x21;
+        byte_info[13] = PACKAGE_TRAILER0;
+        byte_info[14] = PACKAGE_TRAILER1;
         Log.v(TAG, "Match  = " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(byte_info));
 //        int count = 0;
         boolean writeStatus = false;
@@ -117,9 +130,9 @@ public class WriteCommand {
      */
     public static int ackForBindRequest(BluetoothGatt bluetoothGatt, int status) {
         byte[] bytes = new byte[12];
-        bytes[0] = (byte) 0x12;
-        bytes[1] = (byte) 0x34;
-        bytes[2] = (byte) 0x0b;// type
+        bytes[0] = PACKAGE_HEADER0;
+        bytes[1] = PACKAGE_HEADER1;
+        bytes[2] = MULTI_BYTE_COMMAND_TYPE;// type
         bytes[3] = (byte) 0x13;// cmd
         bytes[4] = (byte) 0x01;// length
         bytes[5] = (byte) status;
@@ -130,8 +143,8 @@ public class WriteCommand {
         bytes[7] = chksum[2];
         bytes[8] = chksum[0];
         bytes[9] = chksum[1];
-        bytes[10] = (byte) 67;
-        bytes[11] = Constants.Smile.TOKEN_LITERAL_NULL;
+        bytes[10] = PACKAGE_TRAILER0;
+        bytes[11] = PACKAGE_TRAILER1;
 //        Log.v(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f = " + bytesToInt(chksum, 0));
         Log.v(TAG, "Ack For Bind Request " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(bytes));
 //        int count = 0;
@@ -163,9 +176,9 @@ public class WriteCommand {
      */
     public static int secondMatch(BluetoothGatt bluetoothGatt, int cmd) {
         byte[] bytes = new byte[12];
-        bytes[0] = (byte) 0x12;
-        bytes[1] = (byte) 0x34;
-        bytes[2] = (byte) 0x0b;// type
+        bytes[0] = PACKAGE_HEADER0;
+        bytes[1] = PACKAGE_HEADER1;
+        bytes[2] = MULTI_BYTE_COMMAND_TYPE;// type
         bytes[3] = (byte) 0x1b;// cmd
         bytes[4] = (byte) 0x01;// length
         bytes[5] = (byte) cmd;
@@ -177,8 +190,8 @@ public class WriteCommand {
         bytes[7] = r2[2];
         bytes[8] = r2[0];
         bytes[9] = r2[1];
-        bytes[10] = (byte) 67;
-        bytes[11] = Constants.Smile.TOKEN_LITERAL_NULL;
+        bytes[10] = PACKAGE_TRAILER0;
+        bytes[11] = PACKAGE_TRAILER1;
 //        int count = 0;
         boolean writeStatus = false;
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
@@ -200,8 +213,8 @@ public class WriteCommand {
         String times = getNowTime();
         Log.v(TAG, "\u5f00\u59cb\u540c\u6b65\u65f6\u95f4 getNowTime = " + times);
         byte[] bytes = new byte[15];
-        bytes[0] = (byte) 18;
-        bytes[1] = Constants.Smile.TOKEN_KEY_LONG_STRING;
+        bytes[0] = PACKAGE_HEADER0;
+        bytes[1] = PACKAGE_HEADER1;
         bytes[2] = (byte) 11;
         bytes[3] = (byte) 18;
         bytes[4] = (byte) 4;
@@ -234,8 +247,8 @@ public class WriteCommand {
         }
         bytes[11] = (byte) 0;
         bytes[12] = (byte) 0;
-        bytes[13] = (byte) 67;
-        bytes[14] = Constants.Smile.TOKEN_LITERAL_NULL;
+        bytes[13] = PACKAGE_TRAILER0;
+        bytes[14] = PACKAGE_TRAILER1;
         boolean result = false;
         int count = 0;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("1aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0020-facebeadaaaa"));
@@ -266,9 +279,9 @@ public class WriteCommand {
     public static int unbindDevice(BluetoothGatt bluetoothGatt) {
         Log.i(TAG, "Unbind with the device");
         byte[] bytes = new byte[10];
-        bytes[0] = (byte) 0x12;
-        bytes[1] = (byte) 0x34;
-        bytes[2] = (byte) 0x0a;// type
+        bytes[0] = PACKAGE_HEADER0;
+        bytes[1] = PACKAGE_HEADER1;
+        bytes[2] = SINGLE_BYTE_COMMAND_TYPE;// type
         bytes[3] = (byte) 0x09;// cmd
         int a = Integer.parseInt("0a", 16) + Integer.parseInt("09", 16);
 
@@ -279,8 +292,8 @@ public class WriteCommand {
         bytes[5] = chksum[1];
         bytes[6] = chksum[2];
         bytes[7] = chksum[3];
-        bytes[8] = (byte) 0x43;
-        bytes[9] = (byte) 0x21;
+        bytes[8] = PACKAGE_TRAILER0;
+        bytes[9] = PACKAGE_TRAILER1;
 
         Log.v(TAG, "Unbind with the device" + bytesToInt(chksum, 0));
 //        int count = 0;
@@ -306,16 +319,16 @@ public class WriteCommand {
     public static int measureECG(BluetoothGatt bluetoothGatt) {
         Log.i(TAG, "ECG Measurement CMD");
         byte[] bytes = new byte[10];
-        bytes[0] = (byte) 0x12;
-        bytes[1] = (byte) 0x34;
-        bytes[2] = (byte) 0x0A;
+        bytes[0] = PACKAGE_HEADER0;
+        bytes[1] = PACKAGE_HEADER1;
+        bytes[2] = SINGLE_BYTE_COMMAND_TYPE;
         bytes[3] = (byte) 0x0A;
         bytes[4] = (byte) 0x14;
         bytes[5] = (byte) 0x00;
         bytes[6] = (byte) 0x00;
         bytes[7] = (byte) 0x00;
-        bytes[8] = (byte) 0x43;
-        bytes[9] = (byte) 0x21;
+        bytes[8] = PACKAGE_TRAILER0;
+        bytes[9] = PACKAGE_TRAILER1;
 //        int count = 0;
         boolean writeStatus = false;
 
@@ -348,10 +361,10 @@ public class WriteCommand {
         byte[] bb, cc;
         bb = new byte[10];
         cc = new byte[10];
-        cc[0] = bb[0] = (byte) 0x12;
-        cc[1] = bb[1] = (byte) 0x34;
+        cc[0] = bb[0] = PACKAGE_HEADER0;
+        cc[1] = bb[1] = PACKAGE_HEADER1;
 
-        cc[2] = bb[2] = (byte) 0x0A;
+        cc[2] = bb[2] = SINGLE_BYTE_COMMAND_TYPE;
 
         bb[3] = (byte) 0x61;
         bb[4] = (byte) 0x6b;
@@ -363,8 +376,8 @@ public class WriteCommand {
         cc[6] = bb[6] = (byte) 0x00;
         cc[7] = bb[7] = (byte) 0x00;
 
-        cc[8] = bb[8] = (byte) 0x43;
-        cc[9] = bb[9] = (byte) 0x21;
+        cc[8] = bb[8] = PACKAGE_TRAILER0;
+        cc[9] = bb[9] = PACKAGE_TRAILER1;
         int count = 0;
         boolean writeStatus = false;
 
@@ -417,8 +430,8 @@ public class WriteCommand {
         bytes[10] = r2[1];
         bytes[11] = r2[2];
         bytes[12] = r2[3];
-        bytes[13] = (byte) 67;
-        bytes[14] = Constants.Smile.TOKEN_LITERAL_NULL;
+        bytes[13] = PACKAGE_TRAILER0;
+        bytes[14] = PACKAGE_TRAILER1;
         int count = 0;
         boolean writeStatus = false;
         BluetoothGattService bluetoothGattService = bluetoothGatt.getService(UUID.fromString("2aabcdef-1111-2222-0000-facebeadaaaa"));
@@ -449,7 +462,7 @@ public class WriteCommand {
      */
     public static int stopMeasuring(BluetoothGatt bluetoothGatt) {
         int i = 1;
-        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 15, (byte) 25, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 15, (byte) 25, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
         int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0001-facebeadaaaa"));
@@ -476,7 +489,7 @@ public class WriteCommand {
      * @return int
      */
     public static int measureHr(BluetoothGatt bluetoothGatt) {
-        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 2, (byte) 12, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 2, (byte) 12, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
 //        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
@@ -499,7 +512,7 @@ public class WriteCommand {
 
     public static int measureBr(BluetoothGatt bluetoothGatt) {
         boolean z = true;
-        byte[] bytes = new byte[]{(byte) 18, Constants.Smile.TOKEN_KEY_LONG_STRING, (byte) 10, (byte) 11, (byte) 21, (byte) 0, (byte) 0, (byte) 0, (byte) 67, Constants.Smile.TOKEN_LITERAL_NULL};
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 11, (byte) 21, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
 //        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothGatt.getService(UUID.fromString("0aabcdef-1111-2222-0000-facebeadaaaa")).getCharacteristic(UUID.fromString("facebead-ffff-eeee-0002-facebeadaaaa"));
@@ -548,4 +561,5 @@ public class WriteCommand {
         }
         return stringBuilder.toString();
     }
+
 }

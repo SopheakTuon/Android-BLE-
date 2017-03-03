@@ -368,7 +368,7 @@ public class DeviceScanActivity extends ListActivity {
                 e.printStackTrace();
             }
 
-            Log.d("DEBUG", "Length: " + length + " Type : " + type + " Data : " + ByteArrayToString(data));
+            Log.d("DEBUG", "Length: " + length + " CMD : " + type + " Data : " + ByteArrayToString(data));
         }
 
         // ...
