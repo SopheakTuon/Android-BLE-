@@ -193,7 +193,7 @@ public class Constants {
     /**
      *
      */
-    public final class DataType {
+    public final class Type {
 
         public static final String DATA_HEART_RATE = "32";
         public static final String DATA_MOOD = "3B";
@@ -205,6 +205,9 @@ public class Constants {
         public static final String DATA_ECG = "42";
         public static final String DATA_BATTERY_POWER = "43";
         public static final String GATT_SOS = "24";
+        public static final String DEVICE_MATCH_ACK = "37";
+        public static final String DEVICE_UNBIND_ACK = "38";
+        public static final String DEVICE_BIND_REQUEST = "23";
     }
 
 

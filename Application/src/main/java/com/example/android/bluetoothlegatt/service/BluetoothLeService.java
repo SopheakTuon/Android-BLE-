@@ -195,13 +195,13 @@ public class BluetoothLeService extends Service {
      */
     private void sendBindBroadcast(String data) {
         String cmdType = data.substring(9, 11);
-        if (cmdType.equals("37")) {
+        if (cmdType.equals(Constants.Type.DEVICE_MATCH_ACK)) {
             Constants.isMatchInfo = true;
             broadcastUpdate(Constants.ACTION_GATT_DEVICE_MATCH_ACK, Long.valueOf(data.substring(15, 17), 16));
-        } else if (cmdType.equals("38")) {
-            String valuse = data.substring(15, 17);
-            broadcastUpdate(Constants.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(valuse, 16));
-        } else if (cmdType.equals("23")) {
+        } else if (cmdType.equals(Constants.Type.DEVICE_UNBIND_ACK)) {
+            String values = data.substring(15, 17);
+            broadcastUpdate(Constants.ACTION_GATT_DEVICE_UNBIND_ACK, Long.valueOf(values, 16));
+        } else if (cmdType.equals(Constants.Type.DEVICE_BIND_REQUEST)) {
             broadcastUpdate(Constants.ACTION_GATT_DEVICE_BIND_REQUEST);
         }
     }
@@ -214,36 +214,36 @@ public class BluetoothLeService extends Service {
         if (!data.equals("CF")) {
             String dataType = data.substring(9, 11);
             Log.v(TAG, "Data Type =========== " + dataType);
-            if (Constants.DataType.DATA_HEART_RATE.equals(dataType)) {
+            if (Constants.Type.DATA_HEART_RATE.equals(dataType)) {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_HR, parseSingeData(data));
                 return;
             }
-            if (Constants.DataType.DATA_MOOD.equals(dataType)) {
+            if (Constants.Type.DATA_MOOD.equals(dataType)) {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_MOOD, parseMoodIntData(data));
                 return;
             }
-            if (Constants.DataType.DATA_FATIGUE.equals(dataType)) {
+            if (Constants.Type.DATA_FATIGUE.equals(dataType)) {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_FATIGUE, parseMoodIntData(data));
                 return;
             }
-            if (Constants.DataType.DATA_BREATH_RATE.equals(dataType)) {
+            if (Constants.Type.DATA_BREATH_RATE.equals(dataType)) {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_BREATH, parseBRData(data));
                 return;
             }
-            if (Constants.DataType.DATA_KLL.equals(dataType)) {
+            if (Constants.Type.DATA_KLL.equals(dataType)) {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_KLL, parseSingeData(data));
                 return;
             }
-            if (Constants.DataType.DATA_SLEEP.equals(dataType)) {
+            if (Constants.Type.DATA_SLEEP.equals(dataType)) {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_SLEEP, parseSleepData(data));
                 return;
             }
-            if (Constants.DataType.DATA_BP.equals(dataType)) {
+            if (Constants.Type.DATA_BP.equals(dataType)) {
                 Log.v(TAG, "bp = " + data);
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_BP, parseBpData(data));
                 return;
             }
-            if (Constants.DataType.DATA_ECG.equals(dataType)) {
+            if (Constants.Type.DATA_ECG.equals(dataType)) {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG, parseEcgData(data));
                 return;
             }
