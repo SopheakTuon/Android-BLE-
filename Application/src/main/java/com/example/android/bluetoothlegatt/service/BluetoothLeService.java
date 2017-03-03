@@ -150,11 +150,11 @@ public class BluetoothLeService extends Service {
                 stringBuilder.append(String.format("%02X ", new Object[]{Byte.valueOf(data[i])}));
             }
             String uuid = characteristic.getService().getUuid().toString();
-            String charactUUID = characteristic.getUuid().toString();
+            String characteristicUUID = characteristic.getUuid().toString();
             Log.d("onCharacteristicChanged", stringBuilder.toString());
-            if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0004-facebeadaaaa")) {
+            if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && characteristicUUID.equals("facebead-ffff-eeee-0004-facebeadaaaa")) {
                 BluetoothLeService.this.broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG_ALL_DATA, stringBuilder.toString());
-            } else if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && charactUUID.equals("facebead-ffff-eeee-0005-facebeadaaaa")) {
+            } else if (uuid.equals("0aabcdef-1111-2222-0000-facebeadaaaa") && characteristicUUID.equals("facebead-ffff-eeee-0005-facebeadaaaa")) {
                 BluetoothLeService.this.broadcastUpdate(Constants.ACTION_MAIN_DATA_PW, stringBuilder.toString());
             } else if (uuid.equals("1aabcdef-1111-2222-0000-facebeadaaaa")) {
                 BluetoothLeService.this.sendBindBroadcast(stringBuilder.toString());
@@ -189,6 +189,10 @@ public class BluetoothLeService extends Service {
         }
     };
 
+    /**
+     *
+     * @param data
+     */
     private void sendBindBroadcast(String data) {
         String cmdType = data.substring(9, 11);
         if (cmdType.equals("37")) {
@@ -202,6 +206,9 @@ public class BluetoothLeService extends Service {
         }
     }
 
+    /**
+     * @param data
+     */
     private void sendDataBroadcast(String data) {
         Log.v(TAG, "Send Data = " + data);
         if (!data.equals("CF")) {
@@ -236,65 +243,50 @@ public class BluetoothLeService extends Service {
                 broadcastUpdate(Constants.ACTION_MAIN_DATA_BP, parseBpData(data));
                 return;
             }
-//            if (dataType.equals("42")) {
-//                broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG, parseEcgData(data));
-//                return;
-//            }
-//            if (dataType.equals("43")) {
-//                int batteryData = pareseBatteryData(data);
-//                int i = 0;
-//                while (true) {
-//                    int length = Constants.low_batery.length;
-//                    if (i >= r0) {
-//                        Constants.POWER_BATTERY = batteryData;
-//                        long j = (long) batteryData;
-//                        broadcastUpdate(Constants.DATA_BATTERY_POWER, j);
-//                        return;
-//                    }
-//                    if (batteryData == Constants.low_batery[i]) {
-//                        String replace = getResources().getString(C0328R.string.notification_lowbatery).replace("{0}", new StringBuilder(String.valueOf(batteryData)).toString());
-//                        MyApplication.Notification(getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.app_name), replace, Constants.notification_count_lowbetery, 6);
-//                    }
-//                    i++;
-//                }
-//            } else {
-//                if (dataType.equals("24")) {
-//                    Constants.notification_count_sos++;
-//                    MyApplication.Notification(getResources().getString(C0328R.string.new_message_coming), getResources().getString(C0328R.string.app_name), getResources().getString(C0328R.string.helo_had_send_a_sos), Constants.notification_count_sos, 2);
-//                    broadcastUpdate(Constants.GATT_SOS);
-//                    return;
-//                }
-//                if (dataType.equals("45")) {
-//                    Log.d("sqs", "\u8bbe\u5907\u53d1\u6765 LED  result = " + data);
-//                    if (data != null) {
-//                        String substring = data.substring(15, 17);
-//                        Log.d("sqs", "\u8bbe\u5907\u53d1\u6765 LED substring = " + substring);
-//                        if ("01".equals(substring)) {
-//                            broadcastUpdate(Constants.LEDCONTORLLSUCCESS);
-//                        }
-//                    }
-//                }
-//            }
+            if (Constants.DataType.DATA_ECG.equals(dataType)) {
+                broadcastUpdate(Constants.ACTION_MAIN_DATA_ECG, parseEcgData(data));
+                return;
+            }
         }
 
     }
 
 
+    /**
+     *
+     * @param data
+     * @return value of battery
+     */
     private int pareseBatteryData(String data) {
         return Integer.parseInt(data.substring(15, 17), 16);
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     private String parseSingeData(String data) {
         String dataStr = data.substring(27, 38);
         return new StringBuilder(String.valueOf((long) Integer.parseInt(dataStr.substring(9, 11) + dataStr.substring(6, 8) + dataStr.substring(3, 5) + dataStr.substring(0, 2), 16))).toString();
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     private long parseSleepData(String data) {
         String dataStr = data.substring(27, 38);
         String dateStr = data.substring(15, 26);
         return (long) Integer.parseInt(dataStr.substring(9, 11) + dataStr.substring(6, 8) + dataStr.substring(3, 5) + dataStr.substring(0, 2), 16);
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     private String parseBpData(String data) {
         Log.v(TAG, "bp data = " + data);
         String dataStr = data.substring(27, 32);
@@ -302,6 +294,11 @@ public class BluetoothLeService extends Service {
         return dataStr;
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     private String parseEcgData(String data) {
         Log.v(TAG, "Ecg data = " + data);
         String dataStr = data.substring(27, 29);
@@ -309,28 +306,51 @@ public class BluetoothLeService extends Service {
         return dataStr;
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     private String parseBRData(String data) {
         String dataStr = data.substring(27, 29);
         Log.v(TAG, "BR DATA = " + dataStr);
         return new StringBuilder(String.valueOf((long) Integer.parseInt(dataStr, 16))).toString();
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     private String parseMoodIntData(String data) {
         return data.substring(27, 29);
     }
 
-
+    /**
+     *
+     * @param action
+     * @param dataf
+     */
     private void broadcastUpdate(String action, long dataf) {
         Intent intent = new Intent(action);
         intent.putExtra(action, dataf);
         sendBroadcast(intent);
     }
 
+    /**
+     *
+     * @param action
+     */
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
         sendBroadcast(intent);
     }
 
+    /**
+     *
+     * @param action
+     * @param data
+     */
     private void broadcastUpdate(final String action,
                                  final String data) {
         final Intent intent = new Intent(action);
