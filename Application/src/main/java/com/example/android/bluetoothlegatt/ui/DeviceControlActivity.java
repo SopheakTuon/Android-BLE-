@@ -96,7 +96,6 @@ public class DeviceControlActivity extends Activity {
         public void run() {
             handler.postDelayed(runnableECG, 1000);
             timeMeasure++;
-            Log.d("Time", "==== Time ==== : " + timeMeasure);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -117,7 +116,6 @@ public class DeviceControlActivity extends Activity {
         public void run() {
             handler.postDelayed(runnablePW, 1000);
             timeMeasure++;
-            Log.d("Time", "==== Time ==== : " + timeMeasure);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
