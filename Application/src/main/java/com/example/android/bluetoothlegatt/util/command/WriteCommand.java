@@ -71,8 +71,7 @@ public class WriteCommand {
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
         }
         if (writeStatus) {
-            if (bluetoothGattCharacteristic != null)
-                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
             return 1;
         }
         return -1;
@@ -264,9 +263,7 @@ public class WriteCommand {
         }
 //        Log.i(TAG, "\u540c\u6b65\u65f6\u95f4 result = " + result);
         if (result) {
-            if (bluetoothGattCharacteristic != null) {
-                bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-            }
+            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
             return 1;
         }
         return -1;
@@ -303,9 +300,7 @@ public class WriteCommand {
             bluetoothGattCharacteristic.setValue(bytes);
             writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
         }
-        if (bluetoothGattCharacteristic != null) {
-            bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-        }
+        bluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         return writeStatus ? 1 : -1;
     }
 

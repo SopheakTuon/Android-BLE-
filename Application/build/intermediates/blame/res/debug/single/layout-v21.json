@@ -1,18 +1,18 @@
 [
     {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
-        "source": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout-v21\\notification_template_custom_big.xml"
+        "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout-v21\\notification_template_custom_big.xml"
     },
     {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
-        "source": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout-v21\\notification_action.xml"
+        "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout-v21\\notification_action.xml"
     },
     {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
-        "source": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout-v21\\notification_template_icon_group.xml"
+        "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout-v21\\notification_template_icon_group.xml"
     },
     {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
-        "source": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout-v21\\notification_action_tombstone.xml"
+        "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout-v21\\notification_action_tombstone.xml"
     }
 ]
