@@ -191,7 +191,7 @@ public class Constants {
 
 
     /**
-     *
+     *Data direction: BLE device -> App
      */
     public final class CMD {
         //BIND COMMAND
@@ -220,6 +220,36 @@ public class Constants {
         public static final String SLEEP_DATA = "44";
 
 
+    }
+
+    /**
+     * Data direction: APP -> BLE Device
+     */
+    public static final class WriteCommandCode{
+        public static final byte STEP_COUNT = 0x01;
+        public static final byte HEART_RATE = 0x02;
+        public static final byte PPG = 0x03;
+        public static final byte CALORY_DATA = 0x04;
+        public static final byte SLEEP_DATA = 0x05;
+        public static final byte MOOD_FATIGUE = 0x06;
+        public static final byte FATIGUE = 0x07;
+        public static final byte CLEAR_DISTANCE = 0x08;
+        public static final byte REQUEST_UNBIND = 0x09;
+        public static final byte ECG = 0x0A;
+        public static final byte BREATH_RATE = 0x0B;
+        public static final byte TURN_OFF_DEVICE = 0x0E;
+        public static final byte STOP_CURRENT_MEASUREMENT = 0x0F;
+        public static final byte PAIR_INFORMATION = 0x11;
+        public static final byte DATE_TIME_SYNCHRONIZATION = 0x12;
+        public static final byte REQUEST_TO_BINDING = 0x13;
+        public static final byte TIMER = 0x14;
+        public static final byte HEALTH_PLAN = 0x17;
+        public static final byte CALIBRATION_BLOOD_PRESSURE = 0x19;
+        public static final byte SECOND_MATCH = 0x1B;
+        public static final byte START_DATA_SYNCHRONIZATION = 0x21;
+        public static final byte END_DATA_SYNCHRONIZATION = 0x22;
+        public static final byte REQUEST_TO_BIND = 0x23;
+        public static final byte SOS = 0x24;
     }
 
 
@@ -278,32 +308,6 @@ public class Constants {
 //        public static final int TOKEN_PREFIX_TINY_UNICODE = 128;
     }
 
-    public static final class WriteCommandCode{
-        public static final byte STEP_COUNT = 0x01;
-        public static final byte HEART_RATE = 0x02;
-        public static final byte PPG = 0x03;
-        public static final byte CALORY_DATA = 0x04;
-        public static final byte SLEEP_DATA = 0x05;
-        public static final byte MOOD_FATIGUE = 0x06;
-        public static final byte FATIGUE = 0x07;
-        public static final byte CLEAR_DISTANCE = 0x08;
-        public static final byte REQUEST_UNBIND = 0x09;
-        public static final byte ECG = 0x0A;
-        public static final byte BREATH_RATE = 0x0B;
-        public static final byte TURN_OFF_DEVICE = 0x0E;
-        public static final byte STOP_CURRENT_MEASUREMENT = 0x0F;
-        public static final byte PAIR_INFORMATION = 0x11;
-        public static final byte DATE_TIME_SYNCHRONIZATION = 0x12;
-        public static final byte REQUEST_TO_BINDING = 0x13;
-        public static final byte TIMER = 0x14;
-        public static final byte HEALTH_PLAN = 0x17;
-        public static final byte SECOND_MATCH = 0x1B;
-        public static final byte START_DATA_SYNCHRONIZATION = 0x21;
-        public static final byte END_DATA_SYNCHRONIZATION = 0x22;
-        public static final byte REQUEST_TO_BIND = 0x23;
-        public static final byte SOS = 0x24;
-        public static final byte CALIBRATION_BLOOD_PRESSURE = 0x19;
 
-    }
 
 }

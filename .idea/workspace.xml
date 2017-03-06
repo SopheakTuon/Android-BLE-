@@ -16,9 +16,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/constant/Constants$Smile.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/constant/Constants$Smile.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/constant/Constants$WriteCommandCode.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/constant/Constants$WriteCommandCode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/constant/Constants.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/constant/Constants.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/util/command/WriteCommand.class" afterPath="$PROJECT_DIR$/Application/build/intermediates/classes/debug/com/example/android/bluetoothlegatt/util/command/WriteCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/pre-dexed/debug/debug_e89da08c3f4071e51f2b2568cc62590f70ebf1c3.jar" afterPath="$PROJECT_DIR$/Application/build/intermediates/pre-dexed/debug/debug_e89da08c3f4071e51f2b2568cc62590f70ebf1c3.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex" afterPath="$PROJECT_DIR$/Application/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/outputs/apk/Application-debug.apk" afterPath="$PROJECT_DIR$/Application/build/outputs/apk/Application-debug.apk" />
@@ -26,7 +26,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/incremental/packageDebug/dex-renamer-state.txt" afterPath="$PROJECT_DIR$/Application/build/intermediates/incremental/packageDebug/dex-renamer-state.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/build/intermediates/incremental/packageDebug/file-input-save-data.txt" afterPath="$PROJECT_DIR$/Application/build/intermediates/incremental/packageDebug/file-input-save-data.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java" afterPath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java" afterPath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java" afterPath="$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java" />
     </list>
     <ignored path="Android-BLE-.iws" />
@@ -124,8 +123,8 @@
       <file leaf-file-name="WriteCommand.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4739">
-              <caret line="431" column="133" selection-start-line="431" selection-start-column="133" selection-end-line="431" selection-end-column="133" />
+            <state relative-caret-position="389">
+              <caret line="437" column="92" selection-start-line="437" selection-start-column="92" selection-end-line="437" selection-end-column="92" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -171,8 +170,8 @@
       <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="299" column="53" selection-start-line="299" selection-start-column="53" selection-end-line="299" selection-end-column="53" />
+            <state relative-caret-position="419">
+              <caret line="209" column="60" selection-start-line="209" selection-start-column="60" selection-end-line="209" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -2284,7 +2283,7 @@
     <property name="DEBUGGABLE_PROCESS" value="com.example.android.bluetoothlegatt" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="DEBUGGER_ID" value="Auto" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java&#10;Const&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java&#10;wr&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.util.command.WriteCommand&#10;Con&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java&#10;Wri&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java&#10;BL&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/service/BluetoothLeService.java&#10;w&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.util.command.WriteCommand&#10;Ble&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/service/BluetoothLeService.java&#10;Comm&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.util.command.WriteCommand&#10;Wr&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/WriteCommand.java&#10;on&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/annotations.zip&#10;D&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.DeviceControlActivity&#10;Dev&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.DeviceControlActivity&#10;My&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/myapp/MyApplication.java&#10;Bl&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/BluetoothLeService.java&#10;Devi&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceScanActivity.java&#10;Mul&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/MultiByteCommand.java&#10;BluetoothCh&#9;PSI&#9;JAVA://android.bluetooth.BluetoothGattCharacteristic" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java&#10;Const&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java&#10;wr&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.util.command.WriteCommand&#10;Con&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/ui/DeviceControlActivity.java&#10;Wri&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java&#10;BL&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/service/BluetoothLeService.java&#10;w&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.util.command.WriteCommand&#10;Ble&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/service/BluetoothLeService.java&#10;Comm&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.util.command.WriteCommand&#10;Wr&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/WriteCommand.java&#10;on&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/annotations.zip&#10;D&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.DeviceControlActivity&#10;Dev&#9;PSI&#9;JAVA://com.example.android.bluetoothlegatt.DeviceControlActivity&#10;My&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/myapp/MyApplication.java&#10;Bl&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/BluetoothLeService.java&#10;Devi&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/DeviceScanActivity.java&#10;Mul&#9;FILE&#9;file://D:/PathMazing  Workspace/Android BLE/Android-BLE-/Application/src/main/java/com/example/android/bluetoothlegatt/util/MultiByteCommand.java&#10;BluetoothCh&#9;PSI&#9;JAVA://android.bluetooth.BluetoothGattCharacteristic" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
   </component>
   <component name="RecentsManager">
@@ -2665,18 +2664,19 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1858217" sideWeight="0.3118644" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1858217" sideWeight="0.30847457" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33333334" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33333334" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1858217" sideWeight="0.68813556" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1858217" sideWeight="0.6915254" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2695,7 +2695,6 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921588" sideWeight="0.33628318" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295838" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -3187,16 +3186,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/constant/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="299" column="53" selection-start-line="299" selection-start-column="53" selection-end-line="299" selection-end-column="53" />
+        <state relative-caret-position="419">
+          <caret line="209" column="60" selection-start-line="209" selection-start-column="60" selection-end-line="209" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/src/main/java/com/example/android/bluetoothlegatt/util/command/WriteCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4739">
-          <caret line="431" column="133" selection-start-line="431" selection-start-column="133" selection-end-line="431" selection-end-column="133" />
+        <state relative-caret-position="389">
+          <caret line="437" column="92" selection-start-line="437" selection-start-column="92" selection-end-line="437" selection-end-column="92" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

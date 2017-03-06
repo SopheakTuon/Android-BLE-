@@ -431,10 +431,11 @@ public class WriteCommand {
         Log.i(TAG, "\u5fc3\u60c5\u75b2\u52b3\u503c\u6d4b\u91cf\u6307\u4ee4");
         byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, Constants.WriteCommandCode.MOOD_FATIGUE, (byte) 16, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
         boolean writeStatus = false;
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0003-facebeadaaaa");
         while (!writeStatus) {
-            writeStatus = bluetoothLeService.writeRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0003-facebeadaaaa", bytes);
+            writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
         }
-        bluetoothLeService.setCharacteristicNotification("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0003-facebeadaaaa", true);
+        bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         Log.i(TAG, "\u53d1\u9001\u5fc3\u60c5\u75b2\u52b3\u503c\u6d4b\u91cf\u6307\u4ee4\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
         return writeStatus ? 1 : -1;
     }
