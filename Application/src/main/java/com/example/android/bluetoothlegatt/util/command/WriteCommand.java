@@ -489,7 +489,7 @@ public class WriteCommand {
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa");
         while (!writeStatus) {
-            bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
+            writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
 //            if (Constants.status_Connected) {
 //                if (count > 5000) {
 //                    break;
