@@ -1,11 +1,13 @@
 package com.example.android.bluetoothlegatt.util.command;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.text.format.Time;
 import android.util.Log;
 
 import com.example.android.bluetoothlegatt.TimeUtils;
+import com.example.android.bluetoothlegatt.ble.LinkBleDevice;
 import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.service.BluetoothLeService;
 
@@ -304,6 +306,24 @@ public class WriteCommand {
         bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic1, true);
         Log.i(TAG, "result of ECG Measurement CMD£ºwriteStatus = " + writeStatus);
         return writeStatus ? 1 : -1;
+    }
+
+    public static int measureBp(BluetoothLeService bluetoothLeService) {
+        boolean z = true;
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 12, (byte) 22, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
+        int count = 0;
+        boolean writeStatus = false;
+        while (!writeStatus) {
+            writeStatus = bluetoothLeService.writeRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", bytes);
+        }
+        if (writeStatus) {
+            bluetoothLeService.setCharacteristicNotification("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", true);
+            bluetoothLeService.setCharacteristicNotification(("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", true);
+        }
+        if (!writeStatus) {
+            z = true;
+        }
+        return z ? 1 : -1;
     }
 
     /**
