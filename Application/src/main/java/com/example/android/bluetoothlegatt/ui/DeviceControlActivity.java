@@ -778,7 +778,7 @@ public class DeviceControlActivity extends Activity {
     private int startMeasureBR() {
         isHR = false;
         displayData("Collecting BR data...");
-        return WriteCommand.measureBr(mBluetoothLeService);
+        return WriteCommand.measureBreathRate(mBluetoothLeService);
     }
 
     /**
@@ -807,7 +807,7 @@ public class DeviceControlActivity extends Activity {
         isHR = true;
         displayData("Collecting data...");
         enableElements(false);
-        int result = WriteCommand.measureHr(mBluetoothLeService);
+        int result = WriteCommand.measureHeartRate(mBluetoothLeService);
         isMeasuring = result == 1;
         return result;
     }

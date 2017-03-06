@@ -6,6 +6,7 @@ import android.text.format.Time;
 import android.util.Log;
 
 import com.example.android.bluetoothlegatt.TimeUtils;
+import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.service.BluetoothLeService;
 
 /**
@@ -43,7 +44,7 @@ public class WriteCommand {
         bytes[0] = PACKAGE_HEADER0;
         bytes[1] = PACKAGE_HEADER1;
         bytes[2] = MULTI_BYTE_COMMAND_TYPE;// type
-        bytes[3] = (byte) 0x11;// cmd
+        bytes[3] = Constants.WriteCommandCode.PAIR_INFORMATION;// cmd
         bytes[4] = (byte) 0x04;// length
         bytes[5] = r4[0];
         bytes[6] = r4[1];
@@ -90,7 +91,7 @@ public class WriteCommand {
         byte_info[0] = PACKAGE_HEADER0;
         byte_info[1] = PACKAGE_HEADER1;
         byte_info[2] = MULTI_BYTE_COMMAND_TYPE;// type
-        byte_info[3] = (byte) 0x11;// cmd
+        byte_info[3] = Constants.WriteCommandCode.PAIR_INFORMATION;// cmd
         byte_info[4] = (byte) 0x04;// length
         byte_info[5] = (byte) s3;
         byte_info[6] = (byte) s4;
@@ -98,23 +99,22 @@ public class WriteCommand {
         byte_info[8] = (byte) s6;
         int a = (Integer.parseInt("0b", 16) + Integer.parseInt("11", 16)) + Integer.parseInt("04", 16);
         Log.v(TAG, "Match Info : " + "CHKSUM = " + ((((a + s5) + s6) + s3) + s4));
-        byte[] chksum;
-        chksum = intToBytes((((a + s5) + s6) + s3) + s4);
-        byte_info[9] = chksum[3];
-        byte_info[10] = chksum[2];
-        byte_info[11] = chksum[0];
-        byte_info[12] = chksum[1];
+        byte[] checkSum;
+        checkSum = intToBytes((((a + s5) + s6) + s3) + s4);
+        byte_info[9] = checkSum[3];
+        byte_info[10] = checkSum[2];
+        byte_info[11] = checkSum[0];
+        byte_info[12] = checkSum[1];
         byte_info[13] = PACKAGE_TRAILER0;
         byte_info[14] = PACKAGE_TRAILER1;
-        Log.v(TAG, "Match  = " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(byte_info));
-//        int count = 0;
+        Log.v(TAG, "Match  = " + bytesToInt(checkSum, 0) + "\nbyte_info = " + bytesToHexString(byte_info));
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa");
         while (!writeStatus) {
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, byte_info);
         }
         bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-        return -1;
+        return writeStatus ? 1 : -1;
     }
 
     /**
@@ -127,7 +127,7 @@ public class WriteCommand {
         bytes[0] = PACKAGE_HEADER0;
         bytes[1] = PACKAGE_HEADER1;
         bytes[2] = MULTI_BYTE_COMMAND_TYPE;// type
-        bytes[3] = (byte) 0x13;// cmd
+        bytes[3] = Constants.WriteCommandCode.REQUEST_TO_BINDING;// cmd
         bytes[4] = (byte) 0x01;// length
         bytes[5] = (byte) status;
         byte[] chksum;
@@ -139,21 +139,11 @@ public class WriteCommand {
         bytes[9] = chksum[1];
         bytes[10] = PACKAGE_TRAILER0;
         bytes[11] = PACKAGE_TRAILER1;
-//        Log.v(TAG, "\u7ed1\u5b9a\u8bbe\u5907 \u54cd\u5e94\u4fe1\u606f = " + bytesToInt(chksum, 0));
         Log.v(TAG, "Ack For Bind Request " + bytesToInt(chksum, 0) + "\nbyte_info = " + bytesToHexString(bytes));
-//        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa");
         while (!writeStatus) {
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
-//            if (Constants.status_Connected) {
-//                if (count > 5000) {
-//                    break;
-//                }
-//                count++;
-//            } else {
-//                return -1;
-//            }
         }
 //        if (MainActivity.iOnBondListener != null) {
 //            MainActivity.iOnBondListener.onBond(writeStatus);
@@ -172,7 +162,7 @@ public class WriteCommand {
         bytes[0] = PACKAGE_HEADER0;
         bytes[1] = PACKAGE_HEADER1;
         bytes[2] = MULTI_BYTE_COMMAND_TYPE;// type
-        bytes[3] = (byte) 0x1b;// cmd
+        bytes[3] = Constants.WriteCommandCode.SECOND_MATCH;// cmd
         bytes[4] = (byte) 0x01;// length
         bytes[5] = (byte) cmd;
         int chk = cmd + 39;
@@ -185,9 +175,7 @@ public class WriteCommand {
         bytes[9] = r2[1];
         bytes[10] = PACKAGE_TRAILER0;
         bytes[11] = PACKAGE_TRAILER1;
-//        int count = 0;
         boolean writeStatus = false;
-        Log.i(TAG, "bytes==" + bytesToHexString(bytes));
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa");
         while (!writeStatus) {
@@ -203,12 +191,11 @@ public class WriteCommand {
      */
     public static int UpdateNewTime(BluetoothLeService bluetoothLeService) {
         String times = getNowTime();
-        Log.v(TAG, "\u5f00\u59cb\u540c\u6b65\u65f6\u95f4 getNowTime = " + times);
         byte[] bytes = new byte[15];
         bytes[0] = PACKAGE_HEADER0;
         bytes[1] = PACKAGE_HEADER1;
-        bytes[2] = (byte) 11;
-        bytes[3] = (byte) 18;
+        bytes[2] = MULTI_BYTE_COMMAND_TYPE;
+        bytes[3] = Constants.WriteCommandCode.DATE_TIME_SYNCHRONIZATION;
         bytes[4] = (byte) 4;
         bytes[5] = (byte) Integer.parseInt(times.substring(6, 8), 16);
         bytes[6] = (byte) Integer.parseInt(times.substring(4, 6), 16);
@@ -246,12 +233,8 @@ public class WriteCommand {
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0020-facebeadaaaa");
         while (!result && count < 100000) {
             result = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
-//            if (!Constants.status_Connected) {
-//                return -1;
-//            }
             count++;
         }
-//        Log.i(TAG, "\u540c\u6b65\u65f6\u95f4 result = " + result);
         if (result) {
             bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
             return 1;
@@ -269,7 +252,7 @@ public class WriteCommand {
         bytes[0] = PACKAGE_HEADER0;
         bytes[1] = PACKAGE_HEADER1;
         bytes[2] = SINGLE_BYTE_COMMAND_TYPE;// type
-        bytes[3] = (byte) 0x09;// cmd
+        bytes[3] = Constants.WriteCommandCode.REQUEST_UNBIND;// cmd
         int a = Integer.parseInt("0a", 16) + Integer.parseInt("09", 16);
 
         Log.d(TAG, "CHKSUM==" + a);
@@ -283,7 +266,6 @@ public class WriteCommand {
         bytes[9] = PACKAGE_TRAILER1;
 
         Log.v(TAG, "Unbind with the device" + bytesToInt(chksum, 0));
-//        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa");
         while (!writeStatus) {
@@ -305,23 +287,17 @@ public class WriteCommand {
         bytes[0] = PACKAGE_HEADER0;
         bytes[1] = PACKAGE_HEADER1;
         bytes[2] = SINGLE_BYTE_COMMAND_TYPE;
-        bytes[3] = (byte) 0x0A;
+        bytes[3] = Constants.WriteCommandCode.ECG;
         bytes[4] = (byte) 0x14;
         bytes[5] = (byte) 0x00;
         bytes[6] = (byte) 0x00;
         bytes[7] = (byte) 0x00;
         bytes[8] = PACKAGE_TRAILER0;
         bytes[9] = PACKAGE_TRAILER1;
-//        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa");
         while (!writeStatus) {
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
-//            if (Constants.status_Connected == false)
-//                return -1;
-//            if (count > 5000) {
-//                break;
-//            } else count++;
         }
         bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0004-facebeadaaaa");
@@ -349,7 +325,7 @@ public class WriteCommand {
         bb[3] = (byte) 0x61;
         bb[4] = (byte) 0x6b;
 
-        cc[3] = (byte) 0x03;
+        cc[3] = Constants.WriteCommandCode.PPG;
         cc[4] = (byte) 0x0d;
 
         cc[5] = bb[5] = (byte) 0x00;
@@ -358,30 +334,16 @@ public class WriteCommand {
 
         cc[8] = bb[8] = PACKAGE_TRAILER0;
         cc[9] = bb[9] = PACKAGE_TRAILER1;
-        int count = 0;
         boolean writeStatus = false;
-
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa");
         while (!writeStatus) {
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bb);
-//            if (Constants.status_Connected == false)
-//                return -1;
-//            if (count > 50000) {
-//                break;
-//            } else count++;
         }
         if (writeStatus) {
-//            count = 0;
             writeStatus = false;
             while (!writeStatus) {
                 writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, cc);
-//                if (Constants.status_Connected == false)
-//                    return -1;
-//                if (count > 100000) {
-//                    break;
-//                } else count++;
             }
-
             BluetoothGattCharacteristic bluetoothGattCharacteristic1 = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0005-facebeadaaaa");
             bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic1, true);
             BluetoothGattCharacteristic bluetoothGattCharacteristic2 = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "ffacebead-ffff-eeee-0004-facebeadaaaa");
@@ -399,7 +361,7 @@ public class WriteCommand {
         Log.i(TAG, "\u4fdd\u62a4\u8bbe\u5907\u7a0b\u5e8f\u52a0\u8f7d");
         byte[] bytes = new byte[15];
         Log.i(TAG, "CHKSUM==" + 42);
-        byte[] r2 = new byte[4];
+        byte[] r2;
         r2 = intToBytes(42);
         bytes[9] = r2[0];
         bytes[10] = r2[1];
@@ -407,19 +369,10 @@ public class WriteCommand {
         bytes[12] = r2[3];
         bytes[13] = PACKAGE_TRAILER0;
         bytes[14] = PACKAGE_TRAILER1;
-        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa");
         while (!writeStatus) {
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
-//            if (Constants.status_Connected) {
-//                if (count > Constants.DELAY_TIME_LINKING_BLE) {
-//                    break;
-//                }
-//                count++;
-//            } else {
-//                return -1;
-//            }
         }
         if (!writeStatus) {
             b = (byte) -1;
@@ -435,21 +388,10 @@ public class WriteCommand {
     public static int stopMeasuring(BluetoothLeService bluetoothLeService) {
         int i = 1;
         byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 15, (byte) 25, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
-        int count = 0;
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0001-facebeadaaaa");
         while (!writeStatus) {
-//            bluetoothGattCharacteristic.setValue(bytes);
-//            writeStatus = bluetoothGatt.writeCharacteristic(bluetoothGattCharacteristic);
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
-//            if (Constants.status_Connected) {
-//                if (count > 5000) {
-//                    break;
-//                }
-//                count++;
-//            } else {
-//                return -1;
-//            }
         }
         if (!writeStatus) {
             i = -1;
@@ -461,46 +403,40 @@ public class WriteCommand {
      * @param bluetoothLeService
      * @return int
      */
-    public static int measureHr(BluetoothLeService bluetoothLeService) {
-        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 2, (byte) 12, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
-//        int count = 0;
+    public static int measureHeartRate(BluetoothLeService bluetoothLeService) {
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, Constants.WriteCommandCode.HEART_RATE, (byte) 12, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa");
         while (!writeStatus) {
-//            count++;
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
-//            if (Constants.status_Connected) {
-//                if (count > 5000) {
-//                    break;
-//                }
-//                count++;
-//            } else {
-//                return -1;
-//            }
         }
         bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         return writeStatus ? 1 : -1;
     }
 
-    public static int measureBr(BluetoothLeService bluetoothLeService) {
+    public static int measureBreathRate(BluetoothLeService bluetoothLeService) {
         boolean z = true;
-        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 11, (byte) 21, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
-//        int count = 0;
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, Constants.WriteCommandCode.BREATH_RATE, (byte) 21, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa");
         while (!writeStatus) {
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
-//            if (Constants.status_Connected) {
-//                if (count > 5000) {
-//                    break;
-//                }
-//                count++;
-//            } else {
-//                return -1;
-//            }
         }
         bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         return z ? 1 : -1;
+    }
+
+    public static int measureMoodFatigue(BluetoothLeService bluetoothLeService) {
+        boolean z = true;
+        Log.i(TAG, "\u5fc3\u60c5\u75b2\u52b3\u503c\u6d4b\u91cf\u6307\u4ee4");
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, Constants.WriteCommandCode.MOOD_FATIGUE, (byte) 16, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
+        boolean writeStatus = false;
+        while (!writeStatus) {
+            writeStatus = bluetoothLeService.writeRXCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0003-facebeadaaaa", bytes);
+        }
+        bluetoothLeService.setCharacteristicNotification("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0003-facebeadaaaa", true);
+        Log.i(TAG, "\u53d1\u9001\u5fc3\u60c5\u75b2\u52b3\u503c\u6d4b\u91cf\u6307\u4ee4\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
+        return writeStatus ? 1 : -1;
     }
 
     private static String getNowTime() {
