@@ -1,13 +1,11 @@
 package com.example.android.bluetoothlegatt.util.command;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.text.format.Time;
 import android.util.Log;
 
 import com.example.android.bluetoothlegatt.TimeUtils;
-import com.example.android.bluetoothlegatt.ble.LinkBleDevice;
 import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.service.BluetoothLeService;
 
@@ -318,7 +316,7 @@ public class WriteCommand {
         }
         if (writeStatus) {
             bluetoothLeService.setCharacteristicNotification("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0002-facebeadaaaa", true);
-            bluetoothLeService.setCharacteristicNotification(("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", true);
+            bluetoothLeService.setCharacteristicNotification("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa", true);
         }
         if (!writeStatus) {
             z = true;
