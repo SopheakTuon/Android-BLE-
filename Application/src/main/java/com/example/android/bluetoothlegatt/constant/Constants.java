@@ -237,6 +237,7 @@ public class Constants {
         public static final byte REQUEST_UNBIND = 0x09;
         public static final byte ECG = 0x0A;
         public static final byte BREATH_RATE = 0x0B;
+        public static final byte BLOOD_PRESSURE = 0x0C;
         public static final byte TURN_OFF_DEVICE = 0x0E;
         public static final byte STOP_CURRENT_MEASUREMENT = 0x0F;
         public static final byte PAIR_INFORMATION = 0x11;

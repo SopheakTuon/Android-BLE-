@@ -308,7 +308,7 @@ public class WriteCommand {
 
     public static int measureBp(BluetoothLeService bluetoothLeService) {
         boolean z = true;
-        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 12, (byte) 22, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, Constants.WriteCommandCode.BLOOD_PRESSURE, (byte) 22, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
         int count = 0;
         boolean writeStatus = false;
         while (!writeStatus) {
@@ -405,7 +405,7 @@ public class WriteCommand {
      */
     public static int stopMeasuring(BluetoothLeService bluetoothLeService) {
         int i = 1;
-        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, (byte) 15, (byte) 25, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
+        byte[] bytes = new byte[]{PACKAGE_HEADER0, PACKAGE_HEADER1, SINGLE_BYTE_COMMAND_TYPE, Constants.WriteCommandCode.STOP_CURRENT_MEASUREMENT, (byte) 25, (byte) 0, (byte) 0, (byte) 0, PACKAGE_TRAILER0, PACKAGE_TRAILER1};
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0001-facebeadaaaa");
         while (!writeStatus) {
@@ -452,7 +452,6 @@ public class WriteCommand {
             writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
         }
         bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
-        Log.i(TAG, "\u53d1\u9001\u5fc3\u60c5\u75b2\u52b3\u503c\u6d4b\u91cf\u6307\u4ee4\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
         return writeStatus ? 1 : -1;
     }
 
@@ -466,7 +465,6 @@ public class WriteCommand {
         if (writeStatus) {
             bluetoothLeService.setCharacteristicNotification("0aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0001-facebeadaaaa", true);
         }
-        Log.i(TAG, "\u53d1\u9001\u83b7\u53d6\u6b65\u6570\u6307\u4ee4\u5199\u5165\u7ed3\u679c\uff1awriteStatus = " + writeStatus);
         if (!writeStatus) {
             z = true;
         }
