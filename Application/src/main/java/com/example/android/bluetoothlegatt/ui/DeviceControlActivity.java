@@ -718,7 +718,7 @@ public class DeviceControlActivity extends Activity {
      * @return return 1 : -1
      */
     private int matchInfo() {
-        return WriteCommand.matchInfo(mBluetoothLeService, WriteCommand.bytesToHexString(BluetoothLeService.getSelfBlueMac(DeviceControlActivity.this)));
+        return WriteCommand.matchInfo(mBluetoothLeService, WriteCommand.bytesToHexString(WriteCommand.getSelfBlueMac(DeviceControlActivity.this)));
     }
 
     private int initDeviceLoadCode() {

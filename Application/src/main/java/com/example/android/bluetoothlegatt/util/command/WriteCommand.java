@@ -1,6 +1,9 @@
 package com.example.android.bluetoothlegatt.util.command;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
+import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.text.format.Time;
 import android.util.Log;
@@ -8,6 +11,10 @@ import android.util.Log;
 import com.example.android.bluetoothlegatt.TimeUtils;
 import com.example.android.bluetoothlegatt.constant.Constants;
 import com.example.android.bluetoothlegatt.service.BluetoothLeService;
+import com.example.android.bluetoothlegatt.util.PrefUtils;
+
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 
 /**
  * @author Sopheak Tuon
@@ -499,6 +506,44 @@ public class WriteCommand {
             stringBuilder.append(hv);
         }
         return stringBuilder.toString();
+    }
+
+
+    public static byte[] getSelfBlueMac(Context ctx) {
+        String MacStr = "";
+        if (PrefUtils.getString(ctx, "bindMax", "").equals("")) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                MacStr = getMac();
+            } else {
+                MacStr = BluetoothAdapter.getDefaultAdapter().getAddress();
+            }
+            PrefUtils.setString(ctx, "bindMax", MacStr);
+        } else {
+            MacStr = PrefUtils.getString(ctx, "bindMax", "");
+        }
+        if (MacStr.equals("")) {
+            return null;
+        }
+        String[] Mac = MacStr.split(":");
+        return new byte[]{(byte) Integer.parseInt(Mac[0], 16), (byte) Integer.parseInt(Mac[1], 16), (byte) Integer.parseInt(Mac[2], 16), (byte) Integer.parseInt(Mac[3], 16), (byte) Integer.parseInt(Mac[4], 16), (byte) Integer.parseInt(Mac[5], 16)};
+    }
+
+    public static String getMac() {
+        String str = "";
+        String macSerial = "";
+        try {
+            LineNumberReader input = new LineNumberReader(new InputStreamReader(Runtime.getRuntime().exec("cat /sys/class/net/wlan0/address ").getInputStream()));
+            while (str != null) {
+                str = input.readLine();
+                if (str != null) {
+                    macSerial = str.trim();
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return macSerial;
     }
 
 }
