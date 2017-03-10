@@ -118,9 +118,15 @@ public class WriteCommand {
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa");
         while (!writeStatus) {
-            writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, byte_info);
+            if (bluetoothGattCharacteristic != null) {
+                writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, byte_info);
+            } else {
+                break;
+            }
         }
-        bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        if (bluetoothGattCharacteristic != null) {
+            bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        }
         return writeStatus ? 1 : -1;
     }
 
@@ -150,12 +156,17 @@ public class WriteCommand {
         boolean writeStatus = false;
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("1aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0010-facebeadaaaa");
         while (!writeStatus) {
-            writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
+            if (bluetoothGattCharacteristic != null) {
+                writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
+            } else {
+                break;
+            }
         }
 //        if (MainActivity.iOnBondListener != null) {
 //            MainActivity.iOnBondListener.onBond(writeStatus);
 //        }
-        bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        if (bluetoothGattCharacteristic != null)
+            bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         return writeStatus ? 1 : -1;
     }
 
@@ -186,9 +197,14 @@ public class WriteCommand {
         Log.i(TAG, "bytes==" + bytesToHexString(bytes));
         BluetoothGattCharacteristic bluetoothGattCharacteristic = bluetoothLeService.getBluetoothGattCharacteristic("2aabcdef-1111-2222-0000-facebeadaaaa", "facebead-ffff-eeee-0100-facebeadaaaa");
         while (!writeStatus) {
-            writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
+            if (bluetoothGattCharacteristic != null) {
+                writeStatus = bluetoothLeService.writeRXCharacteristic(bluetoothGattCharacteristic, bytes);
+            } else {
+                break;
+            }
         }
-        bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+        if (bluetoothGattCharacteristic != null)
+            bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
         return writeStatus ? 1 : -1;
     }
 
@@ -243,7 +259,8 @@ public class WriteCommand {
             count++;
         }
         if (result) {
-            bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
+            if (bluetoothGattCharacteristic != null)
+                bluetoothLeService.setCharacteristicNotification(bluetoothGattCharacteristic, true);
             return 1;
         }
         return -1;

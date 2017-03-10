@@ -342,9 +342,6 @@ public class DeviceControlActivity extends Activity {
 
     };
 
-
-    public static final int TIME_DONE = 300;
-
     private void listToEcgAlg2() {
         int[] result = new int[5];
         if (this.ecgDataAllList != null && this.ecgDataAllList.size() != 0) {
