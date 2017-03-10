@@ -182,8 +182,8 @@ public class DeviceControlActivity extends Activity {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             } else if (Constants.ACTION_GATT_DEVICE_MATCH_ACK.equals(action)) {
 //                new Handler().postDelayed(new Bind(), 200);
-                /**
-                 * After Match
+                /*
+                  After Match
                  */
                 long data = intent.getLongExtra(action, -1);
                 if (data == 1) {
@@ -343,7 +343,6 @@ public class DeviceControlActivity extends Activity {
     };
 
 
-    private int time = 0;
     public static final int TIME_DONE = 300;
 
     private void listToEcgAlg2() {
@@ -605,7 +604,9 @@ public class DeviceControlActivity extends Activity {
     // In this sample, we populate the data structure that is bound to the ExpandableListView
     // on the UI.
     private void displayGattServices(List<BluetoothGattService> gattServices) {
-        if (gattServices == null) return;
+        if (gattServices == null) {
+            return;
+        }
 //        String uuid = null;
 //        String unknownServiceString = getResources().getString(R.string.unknown_service);
 //        String unknownCharaString = getResources().getString(R.string.unknown_characteristic);
@@ -655,21 +656,7 @@ public class DeviceControlActivity extends Activity {
 //                new int[]{android.R.id.text1, android.R.id.text2}
 //        );
 //        mGattServicesList.setAdapter(gattServiceAdapter);
-//        Log.d("UUID", allServiceUUID);
-
-//        Log.d("Mac", "" + WriteToDevice.bytesToHexString(BleServiceHelper.getSelfBlueMac(DeviceControlActivity.this)));
-
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                matchInfo();
-//                ackForBindRequest();
-//                updateTime();
-//                secondMatch();
-//            }
-//        });
         new Handler().postDelayed(new MatchInfo(), 500);
-//        new Handler().postDelayed(new InitDeviceLoadCode(), 1000);
     }
 
     class MatchInfo implements Runnable {
@@ -677,13 +664,6 @@ public class DeviceControlActivity extends Activity {
         @Override
         public void run() {
             matchInfo();
-        }
-    }
-
-    class InitDeviceLoadCode implements Runnable {
-        @Override
-        public void run() {
-            initDeviceLoadCode();
         }
     }
 
@@ -707,7 +687,7 @@ public class DeviceControlActivity extends Activity {
 
         @Override
         public void run() {
-            WriteCommand.UpdateNewTime(mBluetoothLeService);
+            secondMatch();
         }
     }
 
@@ -794,7 +774,6 @@ public class DeviceControlActivity extends Activity {
             displayData("Collecting PW data...");
             runnablePW = new MeasurePWRunnable();
             handler.post(runnablePW);
-            time = 0;
         } catch (Exception e) {
             e.printStackTrace();
             enableElements(true);
@@ -818,7 +797,6 @@ public class DeviceControlActivity extends Activity {
      * @return
      */
     private int stopMeasure() {
-        time = 0;
         timeMeasure = 0;
         isMeasuring = false;
         enableElements(true);
