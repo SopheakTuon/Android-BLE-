@@ -4,6 +4,10 @@
         "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout\\abc_list_menu_item_icon.xml"
     },
     {
+        "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action.xml",
+        "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout\\notification_action.xml"
+    },
+    {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
         "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout\\abc_popup_menu_header_item_layout.xml"
     },
@@ -38,6 +42,10 @@
     {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
         "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout\\notification_template_icon_group.xml"
     },
     {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines_media.xml",
@@ -90,6 +98,10 @@
     {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
         "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout\\abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\rinda-PC\\.android\\build-cache\\d6112f57122c9ad3c374027c86ac0cc3f2270aca\\output\\res\\layout\\notification_action_tombstone.xml"
     },
     {
         "merged": "D:\\PathMazing  Workspace\\Android BLE\\Android-BLE-\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",

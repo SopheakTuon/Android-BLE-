@@ -119,6 +119,11 @@ public class DeviceScanActivity extends ListActivity {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an app-defined int constant
             }
+        } else {
+            scanLeDevice(true);
+            if (!isGPSEnable()) {
+                showSettingsAlert();
+            }
         }
     }
 
